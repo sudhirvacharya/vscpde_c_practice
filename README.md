@@ -1,11 +1,34 @@
 # vscpde_c_practice
 all programs available
-
+## C Question
 # Storage classes:
     extern
     auto
     reg
     static
+
+# Volatile Keyword in C
+
+    The **`volatile`** keyword is a type qualifier in C that tells the compiler:
+    > "This variable may change at any time, outside the control of the program."
+
+    ---
+
+    ## Key Points
+    - **Prevents optimization**: The compiler must always fetch the variable’s value directly from memory, not assume it stays constant.
+    - **External changes**: Useful when values can be modified by hardware, interrupts, or other threads.
+    - **Instruction ordering**: The compiler must not reorder reads/writes of volatile variables.
+
+    ---
+
+    ## Example
+    ```c
+    volatile int status;
+
+    while (status == 0) {
+        // Wait until hardware or interrupt changes 'status'
+    }
+
 
 # qualifiers :are keywords that modify the behavior of variables and data types
     const
@@ -28,11 +51,36 @@ all programs available
     |       Text        |
     +-------------------+
 
-# compilation state
+# compilation stage
 
-[ Preprocessor ] --> .i --> [ Compiler ] --> .s --> [ Assembler ] --> .o --> [ Linker ] --> .exe / .bin / .hex / .mot
+    [ Preprocessor ] --> .i --> [ Compiler ] --> .s --> [ Assembler ] --> .o --> [ Linker ] --> .exe / .bin / .hex / .mot
                                                                                            +
                                                                                            + DLL files (runtime linking)
+
+
+
+# Embedded System Startup Flow or reset to main or power on
+
+When an embedded system powers on:
+
+- **Reset Vector**: CPU fetches the reset vector, which points to the startup code (written in assembly).
+- **Startup Code**:
+  - Sets up the **stack pointer**.
+  - Copies initialized variables from **FLASH to RAM** (`.data` section).
+  - Zeros out uninitialized variables (`.bss` section).
+- **SystemInit()**: Configures system clocks and hardware setup.
+- **main()**: Application entry point.  
+  - In embedded systems, `main()` should **never return**.
+
+---
+
+# Sequence
+Power ON / Reset → Reset Vector → Startup Code → SystemInit() → main()
+
+## asm
+
+# assembler directive
+
 
 
 
