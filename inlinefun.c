@@ -10,7 +10,9 @@
 	//in asm also you can verigy there is no push pop operation
 
 
-//in vs studio i am not seeing diffrence, but in eclispse ican see, you can see it in compile time only.by commneting and adding fcuntion
+//in vs studio i am not seeing diffrence, but in eclispse ican see,
+// you can see it in compile time only.by commneting and adding fcuntion
+// in asmu can see without inline there is push pop ocde, with inline u can see with puh pop operation
 inline int add(int a, int b) __attribute__((always_inline));
 
 
