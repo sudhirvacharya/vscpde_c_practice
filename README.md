@@ -1,6 +1,20 @@
 # vscpde_c_practice
 all programs available
 ## C Question
+
+# ascii table
+    ascii value table decimal
+    '0' = 48
+    'A' = 65
+    'a' = 97
+
+    convert lower case to upper case  97-65=32 , do -32 each ascii value
+    str[i] = str[i] - 32;   // or str[i] - ('a' - 'A')
+
+    convert upper case to lower case           , do +32 each asci value
+    str[i] = str[i] + 32;   // or str[i] + ('a' - 'A')
+
+
 # Storage classes:
     extern
     auto
