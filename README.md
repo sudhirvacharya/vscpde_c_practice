@@ -121,6 +121,19 @@ When an embedded system powers on:
 Power ON / Reset → Reset Vector → Startup Code → SystemInit() → main()
 
 
+## Bit Manipulation
+
+Checking if a number is power of 2
+
+Counting set bits
+
+XOR tricks (finding unique element)
+
+## Data structure algorithm (DSA)
+    Two Pointers Technique:
+        Sliding Window Problems 
+
+
 
 
 
