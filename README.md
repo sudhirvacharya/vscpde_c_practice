@@ -105,6 +105,12 @@ When an embedded system powers on:
     free:
      Releases memory
 
+//google interview
+    how to create our own malloc, my malloc?
+        simply create statci int char[500] --> this will exceeds data segment and cross heap section
+
+        we cant use pointer like assigning heap adress to ptr, next moment if we use malloca this adress wil be occupied
+
 ---
 
 
