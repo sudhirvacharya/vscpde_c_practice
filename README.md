@@ -86,14 +86,39 @@ When an embedded system powers on:
 - **main()**: Application entry point.  
   - In embedded systems, `main()` should **never return**.
 
+
+# Dynamic memoy allocation 
+    malloc:
+     used for dynamic memory allocation, reserving a block of memory on the heap at runtime
+     this will allocated osme bytes called book keppeing, it holeds how many bytes its taken
+
+    int *ptr =malloc(sizeof(int));
+
+    calloc:
+    Allocates and initializes memory to zero.
+       int *ptr =calloc(10, (sizeof(int));
+
+    realloc:
+    Resizes existing memory blocks
+    ptr = (int *)realloc(ptr, 10 * sizeof(int));
+
+    free:
+     Releases memory
+
 ---
 
-# Sequence
-Power ON / Reset → Reset Vector → Startup Code → SystemInit() → main()
+
 
 ## asm
 
 # assembler directive
+ commands in assembly language source code that instruct the assembler software how to process the program, rather than being translated into machine code instructions
+ in Linker we have .bss, .data, .txt this are assebler directiver
+
+
+## Micro Controller related 
+ # Sequence
+Power ON / Reset → Reset Vector → Startup Code → SystemInit() → main()
 
 
 
