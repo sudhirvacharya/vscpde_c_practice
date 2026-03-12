@@ -4,9 +4,9 @@ all programs available
 
 # ascii table
     ascii value table decimal
-    '0' = 48
-    'A' = 65
-    'a' = 97
+    '0' = 0x30
+    'A' = 0x41
+    'a' = 0x61
 
     convert lower case to upper case  97-65=32 , do -32 each ascii value
     str[i] = str[i] - 32;   // or str[i] - ('a' - 'A')
@@ -14,6 +14,8 @@ all programs available
     convert upper case to lower case           , do +32 each asci value
     str[i] = str[i] + 32;   // or str[i] + ('a' - 'A')
 
+# prmitive data types
+    In C, the primitive (basic) data types are the built-in types provided by the language itself: int, char, float, and double
 
 # Storage classes:
     extern
@@ -58,12 +60,15 @@ all programs available
     +-------------------+
     |       Heap        |  ← grows upward
     +-------------------+
-    |       BSS         |
+    |       .BSS         |
     +-------------------+
-    |       Data        |
+    |       .Data        |
     +-------------------+
-    |       Text        |
+    |       .Text        |
     +-------------------+
+
+    .txt, .data is Assembler directives are commands for the assembler
+     to control how data and code are organized, processed, or stored
 
 # compilation stage
 
@@ -105,7 +110,7 @@ When an embedded system powers on:
     free:
      Releases memory
 
-//google interview
+   # google interview
     how to create our own malloc, my malloc?
         simply create statci int char[500] --> this will exceeds data segment and cross heap section
 
