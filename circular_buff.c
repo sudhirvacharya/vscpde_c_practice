@@ -13,14 +13,12 @@ typedef struct
 circular_buff *cb=NULL;
 void produce(char tmp)
 {
-    if (cb->head->==MAX_BUFF )
+    if (cb->head ==MAX_BUFF )
         cb->head=0;
 
     cb->data[cb->head]=tmp;
     printf("produce data %d \n", cb->data[cb->head]);
     cb->head++;
-   
-
 }
 
 void consume()
@@ -42,7 +40,4 @@ int main(void)
     produce(20);
     consume();
     consume();
-
-
-
 }

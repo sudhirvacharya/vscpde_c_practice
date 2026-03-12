@@ -144,6 +144,8 @@ XOR tricks (finding unique element)
     Two Pointers Technique:
         Sliding Window Problems 
 
+## RTOS and Linux
+
 
 
 
