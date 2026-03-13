@@ -2,6 +2,11 @@
 #include<stdlib.h>
 //001212
 //low-->0, mid-->1, high-->2
+
+
+//input:0, 1, 2, 0, 1, 2
+//output:0 0 1 1 2 2
+
 void sort012(int *array, int n)
 {
     int low=0, mid=0, high=n-1, tmp=0;
