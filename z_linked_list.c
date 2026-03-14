@@ -7,22 +7,30 @@ typedef struct node
     struct node *next;
 }node;
 
+//double pointer
 void insertend(node **head, int data)
 {
+    // Allocate memory for new node
     node *new_node= malloc(sizeof(node));
     new_node->data=data;
     new_node->next=NULL;
 
+    // If list is empty, new node becomes the head
+    //its compared same as how declared in main
     if(*head == NULL)
     {
         *head=new_node;
         return;
     }
 
-    node *tmp=*head;
-    while(tmp->next != NULL)
+      // Use a temporary pointer to traverse the list
+    node *tmp=*head; // don't move *head itself!
+    while(tmp->next != NULL)// move until last node
         tmp=tmp->next;
 
+    // Attach new node at the end
+    //here tmp->next is NULL
+    //new_node->next is NULL so we passing whole struct adress
     tmp->next=new_node;
 
 }
@@ -33,41 +41,52 @@ void print_list(node *head)
     while(tempp !=NULL)
     {
         printf("%d-->", tempp->data);
-        tempp=tempp->next;
+        tempp=tempp->next;//this hsolb be place here , this soemthing i++;
     }
     printf("NULL \n");
 
 
 }
 
-// Delete a node by value using double pointer
+/// Delete a node by value using double pointer
+// head: pointer to the head pointer (so we can change the head if needed)
+// data: the value we want to delete from the list
 void delete_node(node **head, int data)
 {
-node *curr = *head;
-    node *prev = NULL;
+    node *curr = *head;  // curr starts at the first node
+    node *prev = NULL;   // prev tracks the node BEFORE curr (starts as nothing)
 
-    // Traverse the list
-    while (curr != NULL)
+    // Walk through the list one node at a time
+    while (curr != NULL)  // stop when we reach the end of the list
     {
-        if (curr->data == data)
+        if (curr->data == data)  // found the node we want to delete!
         {
-            // If deleting the head node
+            // Special case: the node to delete is the very first node (head)
+            // We need to move the head forward to the next node
             if (prev == NULL)
             {
-                *head = curr->next;
+                *head = curr->next;  // head now points to the 2nd node
             }
             else
             {
+                // Normal case: skip over curr by connecting prev directly to curr's next
+                // Before: prev -> curr -> curr->next
+                // After:  prev -> curr->next
                 prev->next = curr->next;
             }
-            free(curr);
-            return;
-        }
-        prev = curr;
-        curr = curr->next;
-    }
-}
 
+            free(curr);  // release the memory of the deleted node
+            return;      // job done, exit the function
+        }
+
+        // Not found yet — move both pointers one step forward
+        prev = curr;        // prev catches up to curr
+        curr = curr->next;  // curr moves to the next node
+    }
+
+    // If we reach here, the value was not found in the list
+    // (the function just exits quietly — no deletion happened)
+}
 int main()
 {
     node *head=NULL;
