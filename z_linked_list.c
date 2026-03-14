@@ -18,11 +18,11 @@ void insertend(node **head, int data)
     // If list is empty, new node becomes the head
     //its compared same as how declared in main
     if(*head == NULL)
-    {
-        *head=new_node;
-        return;
-    }
-
+        {
+                *head=new_node;
+                        return;
+                            }
+                            
       // Use a temporary pointer to traverse the list
     node *tmp=*head; // don't move *head itself!
     while(tmp->next != NULL)// move until last node
@@ -47,6 +47,11 @@ void print_list(node *head)
 
 
 }
+
+//double pointer explaination
+//0x100  [int x = 2]          →  value lives here
+//0x101  [int *ptr = 0x100]   →  *ptr  == 2   (single pointer: holds address of int)
+//0x102  [int **pptr = 0x101] →  **pptr == 2  (double pointer: holds address of pointer)
 
 /// Delete a node by value using double pointer
 // head: pointer to the head pointer (so we can change the head if needed)
