@@ -2,80 +2,175 @@
 all programs available
 ## C Question
 
-# ascii table
-    ascii value table decimal
-    '0' = 0x30
-    'A' = 0x41
-    'a' = 0x61
+-------------------------------------------------------------------------------
+## 1. ASCII & Characters
+-------------------------------------------------------------------------------
 
-    convert lower case to upper case  97-65=32 , do -32 each ascii value
-    str[i] = str[i] - 32;   // or str[i] - ('a' - 'A')
+    '0' = 0x30 = 48
+    'A' = 0x41 = 65
+    'a' = 0x61 = 97
+    Difference between upper and lower case = 32
 
-    convert upper case to lower case           , do +32 each asci value
-    str[i] = str[i] + 32;   // or str[i] + ('a' - 'A')
+    Lowercase to Uppercase:   str[i] = str[i] - 32
+    Uppercase to Lowercase:   str[i] = str[i] + 32
 
 # prmitive data types
-    In C, the primitive (basic) data types are the built-in types provided by the language itself: int, char, float, and double
+
+    Type       Size      Range (signed)
+    -------    ------    ----------------------------
+    char       1 byte    -128 to 127
+    int        4 bytes   -2,147,483,648 to 2,147,483,647
+    float      4 bytes   ~6-7 decimal digits
+    double     8 bytes   ~15-16 decimal digits
 
 # Storage classes:
-    extern
-    auto
-    reg
-    static
+    Keyword     Lifetime     Scope          Stored In
+    ---------   ----------   ------------   -----------
+    auto        Block        Local          Stack
+    static      Program      Local/File     .data / .bss
+    extern      Program      Global         .data
+    register    Block        Local          CPU Register (hint only)
 
 # Volatile Keyword in C
 
-    The **`volatile`** keyword is a type qualifier in C that tells the compiler:
-    > "This variable may change at any time, outside the control of the program."
+    volatile uint32_t *TIMER_REG = (uint32_t *)0x40000000;
 
-    ---
-
-    ## Key Points
-    - **Prevents optimization**: The compiler must always fetch the variable’s value directly from memory, not assume it stays constant.
-    - **External changes**: Useful when values can be modified by hardware, interrupts, or other threads.
-    - **Instruction ordering**: The compiler must not reorder reads/writes of volatile variables.
-
-    ---
-
-    ## Example
-    ```c
-    volatile int status;
-
-    while (status == 0) {
-        // Wait until hardware or interrupt changes 'status'
+    while (*TIMER_REG == 0) {
+        // Without volatile: compiler reads once, caches value
+        //                   --> loop never exits (wrong!)
+        // With volatile:    reads from HW register every iteration (correct)
     }
+
+# What is const volatile — does it make sense?
+
+    const volatile uint32_t *STATUS_REG = (uint32_t *)0x40000010;
+
+    YES — makes perfect sense for read-only hardware status registers:
+      const    --> your code cannot write to it
+      volatile --> compiler must re-read it every time (hardware changes it)
+
 
 
 # qualifiers :are keywords that modify the behavior of variables and data types
-    const
-    volatile
+    const    --> value cannot change, compiler enforces read-only
+    volatile --> value can change outside compiler's knowledge,
+                 prevents compiler optimization
+
+-------------------------------------------------------------------------------
+## 5. Pointers
+-------------------------------------------------------------------------------
+
+    int  x   = 10;
+    int *ptr = &x;    // ptr holds address of x
+    *ptr = 20;        // dereference: changes x to 20
+    ptr++;            // moves to next int (4 bytes ahead on 32-bit)
+
+# Difference between *ptr++, (*ptr)++, and *++ptr?
+
+    int arr[] = {10, 20, 30};
+    int *ptr = arr;
+
+    *ptr++    --> returns 10, then moves ptr to arr[1]
+    (*ptr)++  --> increments VALUE at ptr, arr[0] becomes 11, ptr unchanged
+    *++ptr    --> moves ptr to arr[1] first, then returns 20
+
+# Difference between const int *ptr and int * const ptr?
+
+    const int *ptr        --> can change ptr, cannot change *ptr
+    int * const ptr       --> can change *ptr, cannot change ptr
+    const int * const ptr --> cannot change either
+
+# What is a function pointer? Embedded use case?
+
+    typedef void (*CallbackFn)(void);
+
+    void onButtonPress(void) { printf("Button!\n"); }
+    void onTimeout(void)     { printf("Timeout!\n"); }
+
+    CallbackFn isrTable[2] = { onButtonPress, onTimeout };
+    isrTable[0]();    // calls onButtonPress
+
+    Used for: interrupt vector tables, state machines, callbacks.
 
 # Identifier: identifier is simply the name used to identify variables, functions, arrays, structures, or any other user-defined element in a program. It’s how you give a meaningful label to entities in your code.
     int a;
     void add()
 
-# memor layout
-    +-------------------+
-    |       Stack       |  ← grows downward
-    +-------------------+
-    |       Heap        |  ← grows upward
-    +-------------------+
-    |       .BSS         |
-    +-------------------+
-    |       .Data        |
-    +-------------------+
-    |       .Text        |
-    +-------------------+
+-------------------------------------------------------------------------------
+## 6. Memory Layout
+-------------------------------------------------------------------------------
 
-    .txt, .data is Assembler directives are commands for the assembler
-     to control how data and code are organized, processed, or stored
+    High Address
+    +---------------------+
+    |        Stack        |   Local vars, function frames  (grows downward)
+    +---------------------+
+    |    (free space)     |
+    +---------------------+
+    |        Heap         |   malloc/calloc                 (grows upward)
+    +---------------------+
+    |        .BSS         |   Uninitialized globals/statics (zeroed at startup)
+    +---------------------+
+    |        .Data        |   Initialized globals/statics   (copied FLASH->RAM)
+    +---------------------+
+    |        .Text        |   Code / machine instructions   (FLASH, read-only)
+    +---------------------+
+    Low Address
 
-# compilation stage
+-------------------------------------------------------------------------------
+## 7. Compilation Stages
+-------------------------------------------------------------------------------
 
-    [ Preprocessor ] --> .i --> [ Compiler ] --> .s --> [ Assembler ] --> .o --> [ Linker ] --> .exe / .bin / .hex / .mot
-                                                                                           +
-                                                                                           + DLL files (runtime linking)
+    .c --> [Preprocessor] --> .i --> [Compiler] --> .s --> [Assembler] --> .o --> [Linker] --> .elf/.bin/.hex
 
+    Stage          Input    Output   Job
+    -----------    -----    ------   -------------------------------------------
+    Preprocessor   .c       .i       Expand macros, #include, #ifdef, remove comments
+    Compiler       .i       .s       Generate assembly (syntax + semantic check)
+    Assembler      .s       .o       Generate machine code object file
+    Linker         .o       .elf     Resolve symbols, link libs, apply memory map
+
+# Difference between .bin, .hex, and .elf?
+
+    Format   Description                          Used For
+    ------   ----------------------------------   --------------------
+    .bin     Raw binary bytes                     Direct flash write
+    .hex     Intel HEX (ASCII + address + CRC)    Most programmers
+    .elf     With debug symbols                   GDB debugging
+    .mot     Motorola S-Record                    Automotive tools
+
+# Bootup sequence
+    Power ON / Reset
+        │
+        ▼
+    Reset Vector ──► points to startup code (written in assembly)
+        │
+        ▼
+    Startup Code
+    ├── Set up Stack Pointer
+    ├── Copy .data section: FLASH → RAM
+    └── Zero out .bss section
+        │
+        ▼
+    SystemInit()  ──► Configure system clocks & hardware
+        │
+        ▼
+    main()  ──► Application entry point
+                ⚠️  Must NEVER return in embedded systems!
+
+###  What is a Reset Vector?
+
+    Fixed memory address the CPU fetches and jumps to after reset.
+    On ARM Cortex-M:
+        0x00000000 = initial Stack Pointer value
+        0x00000004 = Reset Handler address (start of startup code)
+
+# What does startup code do before main()?
+
+    1. Set Stack Pointer (SP) to top of RAM
+    2. Copy .data section from FLASH to RAM
+    3. Zero out .bss section
+    4. Call SystemInit() -- configure clocks and PLL
+    5. Call main()
 
 
 # Embedded System Startup Flow or reset to main or power on
@@ -92,23 +187,14 @@ When an embedded system powers on:
   - In embedded systems, `main()` should **never return**.
 
 
-# Dynamic memoy allocation 
-    malloc:
-     used for dynamic memory allocation, reserving a block of memory on the heap at runtime
-     this will allocated osme bytes called book keppeing, it holeds how many bytes its taken
+-------------------------------------------------------------------------------
+## 9. Dynamic Memory Allocation
+-------------------------------------------------------------------------------
 
-    int *ptr =malloc(sizeof(int));
-
-    calloc:
-    Allocates and initializes memory to zero.
-       int *ptr =calloc(10, (sizeof(int));
-
-    realloc:
-    Resizes existing memory blocks
-    ptr = (int *)realloc(ptr, 10 * sizeof(int));
-
-    free:
-     Releases memory
+    malloc(size)        allocate, memory is UNINITIALIZED (garbage)
+    calloc(n, size)     allocate n items, memory is ZERO-INITIALIZED
+    realloc(ptr, size)  resize existing allocation (may move memory)
+    free(ptr)           release -- always set ptr = NULL after!
 
    # google interview
     how to create our own malloc, my malloc?
@@ -116,10 +202,205 @@ When an embedded system powers on:
 
         we cant use pointer like assigning heap adress to ptr, next moment if we use malloca this adress wil be occupied
 
+
+
+### Q2. What is a memory leak? How to detect?
+
+    void leak(void) {
+        int *ptr = malloc(100);
+        return;   // forgot free() --> heap shrinks on every call
+    }             //                --> eventually malloc returns NULL --> crash
+
+    Fix: always pair malloc with free:
+        int *ptr = malloc(100);
+        if (ptr == NULL) return;
+        // ... use ptr ...
+        free(ptr);
+        ptr = NULL;
+
+    Detection tools: Valgrind (Linux), heap usage hooks, custom malloc wrappers.
+
+### Q3. Why is malloc avoided in safety-critical embedded?
+
+    - Non-deterministic timing (MISRA C rule violation)
+    - Heap fragmentation over time
+    - Memory leaks cause silent failure
+    - Limited RAM on MCU gets exhausted unpredictably
+
+    Alternative -- static memory pool:
+
+        uint8_t pool[NUM_BUFS][BUF_SIZE];
+        uint8_t inUse[NUM_BUFS] = {0};
+
+        uint8_t *poolAlloc(void) {
+            for (int i = 0; i < NUM_BUFS; i++)
+                if (!inUse[i]) { inUse[i] = 1; return pool[i]; }
+            return NULL;
+        }
+
+        void poolFree(uint8_t *p) {
+            int i = (p - pool[0]) / BUF_SIZE;
+            inUse[i] = 0;
+        }
+
+
+### Q7. Reverse the bits of a 32-bit integer.
+
+    uint32_t reverseBits(uint32_t n) {
+        uint32_t result = 0;
+        for (int i = 0; i < 32; i++) {
+            result = (result << 1) | (n & 1);
+            n >>= 1;
+        }
+        return result;
+    }
+
+
+### Q2. What is interrupt latency?
+
+    Time from interrupt signal assertion to first ISR instruction executing.
+    Factors: CPU pipeline flush, saving context (stacking registers), priority.
+    ARM Cortex-M3: typically 12 clock cycles minimum latency.
+
+
+
+### Q3. What is a race condition between ISR and main? How to fix?
+
+    Problem:
+        volatile uint32_t counter = 0;
+        void TIMER_ISR(void) { counter++; }
+
+        int main(void) {
+            uint32_t val = counter;   // ISR may fire between read and write!
+        }
+
+    counter++ is a 3-step operation: read, modify, write.
+    ISR can interrupt between any step --> corrupted value.
+
+    Fix: disable interrupts around the critical section:
+        __disable_irq();
+        uint32_t val = counter;
+        __enable_irq();
+
+
+### Q5. What is interrupt priority and nesting?
+
+    Higher priority interrupts can preempt lower priority ISRs.
+    ARM Cortex-M: lower number = higher priority (0 = highest).
+    Configured via NVIC (Nested Vectored Interrupt Controller).
+
+        NVIC_SetPriority(UART1_IRQn, 1);   // high priority
+        NVIC_SetPriority(TIM2_IRQn,  5);   // lower priority
+
+-------------------------------------------------------------------------------
+## 12. RTOS Concepts
+-------------------------------------------------------------------------------
+
+    RTOS = Real-Time Operating System
+    Schedules multiple tasks with deterministic timing.
+    Guarantees response within a deadline.
+
+### Q1. Difference between a task and a thread?
+
+    Same concept, different names.
+    FreeRTOS calls them tasks.
+    POSIX (Linux) calls them threads.
+    Each has its own stack and program counter, scheduled independently.
+
+### Q2. What is a semaphore? Give an embedded example.
+
+    Binary semaphore -- like a signal flag between ISR and task.
+
+        SemaphoreHandle_t sem = xSemaphoreCreateBinary();
+
+        void UART_ISR(void) {
+            xSemaphoreGiveFromISR(sem, NULL);   // signal from ISR
+        }
+
+        void uartTask(void *arg) {
+            while (1) {
+                xSemaphoreTake(sem, portMAX_DELAY);  // block until ISR fires
+                processData();
+            }
+        }
+
+
+### Q3. Difference between mutex and semaphore?
+
+    Feature              Mutex                         Semaphore
+    ----------------     --------------------------    ----------------------
+    Ownership            Owned by locking task         No ownership
+    Priority inversion   Protected                     Not protected
+    Use case             Mutual exclusion (shared data) Signaling
+
+        xSemaphoreTake(mutex, portMAX_DELAY);
+        sharedBuffer[0] = 42;   // critical section
+        xSemaphoreGive(mutex);
+
+
+### Q4. What is priority inversion? How is it solved?
+
+    Scenario:
+    - Low-priority task holds mutex
+    - High-priority task needs that mutex -- blocks
+    - Medium-priority task runs instead (doesn't need mutex)
+    - High-priority task effectively runs at low priority
+
+    Solution: Priority Inheritance
+    - Temporarily boost low-priority task to match high-priority waiter
+    - FreeRTOS mutexes support this automatically
+
+
+### Q5. What is a deadlock? How to avoid it?
+
+    Task A holds Mutex1, waits for Mutex2.
+    Task B holds Mutex2, waits for Mutex1.
+    Both block forever --> deadlock.
+
+    Prevention:
+    - Always acquire mutexes in the SAME ORDER across all tasks
+    - Use timeouts instead of blocking forever
+    - Minimize number of mutexes held at the same time
+
+-------------------------------------------------------------------------------
+## 13. Watchdog Timer
+-------------------------------------------------------------------------------
+
+    Hardware timer that resets the MCU if not kicked within a timeout.
+    Detects software hangs and crashes.
+    Essential for unattended and safety-critical systems.
+
+### Q1. Difference between UART, SPI, and I2C?
+
+    Feature      UART               SPI                      I2C
+    ---------    ----------------   ----------------------   ----------------------
+    Wires        2 (TX, RX)         4 (MOSI,MISO,SCK,CS)     2 (SDA, SCL)
+    Speed        up to ~5 Mbps      up to 50+ Mbps           100k / 400k / 1MHz
+    Topology     Point-to-point     1 master, multi slave    Multi master+slave
+    Addressing   None               Chip Select per slave    7-bit address
+    Synchronous  No (async)         Yes                      Yes
+    Use case     Debug, GPS, BT     Flash, ADC, display      Sensors, EEPROM
+
+
+### Q3. What is I2C clock stretching?
+
+    Slave holds SCL line LOW to pause the master while preparing data.
+    Master must wait until slave releases SCL.
+    Some I2C masters do not support clock stretching -- check datasheet!
+
+
+### Q4. What is SPI mode (CPOL and CPHA)?
+
+    Mode   CPOL   CPHA   Clock idle   Data sampled
+    ----   ----   ----   ----------   ------------
+    0      0      0      LOW          Rising edge
+    1      0      1      LOW          Falling edge
+    2      1      0      HIGH         Falling edge
+    3      1      1      HIGH         Rising edge
+
+
+
 ---
-
-
-
 ## asm
 
 # assembler directive
