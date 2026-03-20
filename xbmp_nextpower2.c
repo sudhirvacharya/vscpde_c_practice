@@ -29,6 +29,14 @@ n |= n>>4  0000 0111 (no change, bits already set)
 n + 1    → 8       = 0000 1000  ✓
 */
 
+//left shift by 1, example 5-> 00101
+//16 8 4 2 1
+//0  0 0 0 0
+//0  0 0 0 1
+//0  0 0 1 0
+//0  0 1 0 0
+//0  1 0 0 0
+//1  0 0 0 0
 uint32_t next_pow2_loop(uint32_t n) {
     uint32_t p = 1;
     while (p < n)

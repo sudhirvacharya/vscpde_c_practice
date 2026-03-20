@@ -1,49 +1,56 @@
-#include "stm32g0xx.h"
-
-void ADC_Init(void)
+void Adc_Init()
 {
-    /* 1. Enable clocks */
-    RCC->IOPENR  |= RCC_IOPENR_GPIOAEN;
-    RCC->APBENR2 |= RCC_APBENR2_ADC1EN;   // ← fixed macro
 
-    /* 2. PA0 → analog, no pull */
-    GPIOA->MODER &= ~(0x3U << 0);         // ← clear first
-    GPIOA->MODER |=  (0x3U << 0);         // analog mode
-    GPIOA->PUPDR &= ~(0x3U << 0);         // no pull
+	RCC->CFGR |= (6 <<12); //APB = HCLK/8 = 8Mhz
+	RCC->APBENR2 |= (1<<20); //adc clock
+	if(ADC1->ISR & (1<<0)) //ADC READY
+	{
+		ADC1->CR |= 1<<1;//DISABLED ADC
+	}
+	ADC1->CR |= 1<<28; //REGULATOR ENABLE
+	delay_ms(1);
+	ADC1->CR |= 1<<31; //ADC CALIBARATION STARTED
+	delay_ms(1);
+	while(ADC1->CR & (1<<31));
 
-    /* 3. Enable voltage regulator */
-    ADC1->CR |= ADC_CR_ADVREGEN;
-    for (volatile int i = 0; i < 80000; i++); // ← volatile + longer delay
 
-    /* 4. Calibrate BEFORE enabling */        // ← was missing entirely
-    ADC1->CR |= ADC_CR_ADCAL;
-    while (ADC1->CR & ADC_CR_ADCAL);
+}
+void Adc_Cfg(uint8_t ch)
+{
+	//22,24
+	ADC1_COMMON->CCR |= (1<<24); //VBAT
 
-    /* 5. Set sampling time & channel */
-    ADC1->SMPR  |= ADC_SMPR_SMP1_0 | ADC_SMPR_SMP1_1;
-    ADC1->CHSELR = ADC_CHSELR_CHSEL0;     // = not |= (avoid stale bits)
-
-    /* 6. Enable ADC */
-    ADC1->ISR |= ADC_ISR_ADRDY;           // clear stale ADRDY
-    ADC1->CR  |= ADC_CR_ADEN;
-    while (!(ADC1->ISR & ADC_ISR_ADRDY));
+	ADC1_COMMON->CCR |= (1<<22); //VREGU
+	delay_ms(10);
+	ADC1->CHSELR |= (1<<ch);
+	ADC1->SMPR |= 4<<0; //SAMPLING RATE
+	ADC1->CR |= 1<<0; //ADC EN
+	while(!(ADC1->ISR & (1<<0))); //AD   RDY
 }
 
-uint16_t ADC_Read(void)
+uint16_t Adc_Read()
 {
-    ADC1->CR |= ADC_CR_ADSTART;
-    while (!(ADC1->ISR & ADC_ISR_EOC));
-    uint16_t val = (uint16_t)(ADC1->DR & 0x0FFF);  // ← mask 12-bit
-    ADC1->ISR |= ADC_ISR_EOC;                       // ← explicit clear
-    return val;
+	ADC1->CR |= 1<<2; //ADC START
+	while(!(ADC1->ISR & (1<<2))); //eoc
+	return ADC1->DR;
+
 }
 
+#define DEBUG 1
 int main(void)
 {
-    ADC_Init();
-    while (1)
-    {
-        uint16_t value = ADC_Read();
-        (void)value;
-    }
+	uint16_t raw_value;
+
+	float voltage;
+	Adc_Init();
+	while(1)
+	{
+		Adc_Cfg(14); //p7
+
+		raw_value=Adc_Read();
+		raw_value1= raw_value;
+		voltage = (raw_value*3.3)/4095 ;
+	}
+
+
 }
