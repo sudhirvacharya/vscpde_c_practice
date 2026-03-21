@@ -1,19 +1,25 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
-
 bool bit;
-int main()
+void bin(unsigned char n)
 {
-    int var=170; //1010 1010
-    int tmp=0;
 
-    for (int i=7; i >=0 ;i--)
+    unsigned char result=0;
+    for(int i =7 ; i>=0 ; i--)
     {
-        bit = (var >> i ) & 1 ;
+        bit |=n >> i ;
         printf( " %d", bit);
+    
 
     }
+  
+}
+int main()
+{
+    unsigned char n=3;
+
+    bin(n);
 
     return 0;
 }
