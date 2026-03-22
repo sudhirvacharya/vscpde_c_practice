@@ -2,6 +2,13 @@
 all programs available
 ## C Question
 
+# what is rentrant fucntion
+    If you call a function once, pause the execution while it's in the middle of running, then call it a second time, the function is now running in two "contexts." The point is that the function can be running multiple times simultaneously, which usually means in multiple threads.
+    int add(int a, int b) {
+        int c = a + b;   // c is on the stack, local to this call
+        return c;
+    }
+
 ##  array vs pointer
 
 int main() {
