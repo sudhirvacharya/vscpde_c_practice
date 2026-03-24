@@ -77,6 +77,16 @@ result : 03
     const    --> value cannot change, compiler enforces read-only
     volatile --> value can change outside compiler's knowledge,
                  prevents compiler optimization
+    
+    example:
+    const int var
+    vaoltile int var
+    const volatile int  var
+
+    const volatile int *ptr → pointer to read-only volatile int (cannot modify the value, but pointer can change).
+
+    int volatile *const ptr → constant pointer to a volatile int (can modify the value, but pointer cannot change)
+
 
 -------------------------------------------------------------------------------
 ## 5. Pointers
