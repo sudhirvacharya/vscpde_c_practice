@@ -3,16 +3,13 @@
 #include <stdbool.h>
 
 
-bool bits;
-void displaybits(unsigned char n)
+void display_bits(unsigned char n)
 {
-    for(int i=7 ;i >=0 ;i--)
+    for(int i = 7; i >= 0; i--)
     {
-        bits =( n >> i ) &1;
-
-        printf(" %c ",     bits > 0 ?  '1' : '0'       ) ;
+        printf("%c", ((n >> i) & 1) ? '1' : '0');
     }
-
+    printf("\n");
 }
 int main()
 {

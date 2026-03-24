@@ -9,6 +9,11 @@ all programs available
         return c;
     }
 
+# What is priority inversion and what is the solution?
+Imagine there are three task each with a medium ,low and high priority. At some point in time , the low priority task was running with a resource which was also needed by high priority task. However , the low priority task spent a bit too much time and then it was the turn of medium priority task to run.
+So the medium task got the resource and high priority task is left to starve , which simply means that the priority has inverted without any inputs from the developer.
+The solution is to raise the priority of the lower priority task to maximum so that the medium priority task can not preempt it and we should use mutexes to protect the resources.
+
 ##  array vs pointer
 
 int main() {
