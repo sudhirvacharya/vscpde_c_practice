@@ -2,18 +2,24 @@
 #include <stdlib.h>
 #include <stdbool.h>
 
-bool bit;
+
+bool bits;
+void displaybits(unsigned char n)
+{
+    for(int i=7 ;i >=0 ;i--)
+    {
+        bits =( n >> i ) &1;
+
+        printf(" %c ",     bits > 0 ?  '1' : '0'       ) ;
+    }
+
+}
 int main()
 {
-    int var=170; //1010 1010
-    int tmp=0;
+    
+    displaybits(6);
 
-    for (int i=7; i >=0 ;i--)
-    {
-        bit = (var >> i ) & 1 ;
-        printf( " %d", bit);
 
-    }
 
     return 0;
 }
