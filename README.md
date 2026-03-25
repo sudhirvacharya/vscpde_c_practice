@@ -3,16 +3,14 @@ all programs available
 ## C Question
 
 # what is rentrant fucntion
-    If you call a function once, pause the execution while it's in the middle of running, then call it a second time, the function is now running in two "contexts." The point is that the function can be running multiple times simultaneously, which usually means in multiple threads.
+    If you call a function once, pause the execution while it's in the middle of running,
+    then call it a second time, the function is now running in two "contexts."
+    The point is that the function can be running multiple times simultaneously, which usually means in multiple threads.
     int add(int a, int b) {
         int c = a + b;   // c is on the stack, local to this call
         return c;
     }
 
-# What is priority inversion and what is the solution?
-Imagine there are three task each with a medium ,low and high priority. At some point in time , the low priority task was running with a resource which was also needed by high priority task. However , the low priority task spent a bit too much time and then it was the turn of medium priority task to run.
-So the medium task got the resource and high priority task is left to starve , which simply means that the priority has inverted without any inputs from the developer.
-The solution is to raise the priority of the lower priority task to maximum so that the medium priority task can not preempt it and we should use mutexes to protect the resources.
 
 ##  array vs pointer
 
@@ -114,13 +112,20 @@ result : 03
 
 # What is a function pointer? Embedded use case?
 
-    typedef void (*CallbackFn)(void);
+    int add(int a, int b)
+    {
+        return a + b;
+    }
 
-    void onButtonPress(void) { printf("Button!\n"); }
-    void onTimeout(void)     { printf("Timeout!\n"); }
+    int main(void)
+    {
+        int (*fnptr)(int, int);   // declare function pointer
+        fnptr = add;              // point it at add()
 
-    CallbackFn isrTable[2] = { onButtonPress, onTimeout };
-    isrTable[0]();    // calls onButtonPress
+        int result = fnptr(3, 4); // call through pointer
+        printf("Result = %d\n", result);  // prints 7
+        return 0;
+    }
 
     Used for: interrupt vector tables, state machines, callbacks.
 
@@ -196,15 +201,6 @@ result : 03
         0x00000000 = initial Stack Pointer value
         0x00000004 = Reset Handler address (start of startup code)
 
-# What does startup code do before main()?
-
-    1. Set Stack Pointer (SP) to top of RAM
-    2. Copy .data section from FLASH to RAM
-    3. Zero out .bss section
-    4. Call SystemInit() -- configure clocks and PLL
-    5. Call main()
-
-
 # Embedded System Startup Flow or reset to main or power on
 
 When an embedded system powers on:
@@ -276,18 +272,6 @@ When an embedded system powers on:
         }
 
 
-### Q7. Reverse the bits of a 32-bit integer.
-
-    uint32_t reverseBits(uint32_t n) {
-        uint32_t result = 0;
-        for (int i = 0; i < 32; i++) {
-            result = (result << 1) | (n & 1);
-            n >>= 1;
-        }
-        return result;
-    }
-
-
 ### Q2. What is interrupt latency?
 
     Time from interrupt signal assertion to first ISR instruction executing.
@@ -300,7 +284,10 @@ When an embedded system powers on:
 
     Problem:
         volatile uint32_t counter = 0;
-        void TIMER_ISR(void) { counter++; }
+        void TIMER_ISR(void) 
+        { 
+            counter++; 
+            }
 
         int main(void) {
             uint32_t val = counter;   // ISR may fire between read and write!
@@ -334,10 +321,13 @@ When an embedded system powers on:
 
 ### Q1. Difference between a task and a thread?
 
-    Same concept, different names.
-    FreeRTOS calls them tasks.
-    POSIX (Linux) calls them threads.
-    Each has its own stack and program counter, scheduled independently.
+    Process (one program running)
+    │
+    ├── Shared: heap, globals, code, file descriptors
+    │
+    ├── Thread 1 → own stack, PC, registers
+    ├── Thread 2 → own stack, PC, registers
+    └── Thread 3 → own stack, PC, registers
 
 ### Q2. What is a semaphore? Give an embedded example.
 
@@ -436,28 +426,11 @@ When an embedded system powers on:
 ## asm
 
 # assembler directive
- commands in assembly language source code that instruct the assembler software how to process the program, rather than being translated into machine code instructions
+ commands in assembly language source code that instruct the assembler software how to process the program,
+ rather than being translated into machine code instructions
  in Linker we have .bss, .data, .txt this are assebler directiver
 
 
-## Micro Controller related 
- # Sequence
-Power ON / Reset → Reset Vector → Startup Code → SystemInit() → main()
-
-
-## Bit Manipulation
-
-Checking if a number is power of 2
-
-Counting set bits
-
-XOR tricks (finding unique element)
-
-## Data structure algorithm (DSA)
-    Two Pointers Technique:
-        Sliding Window Problems 
-
-## RTOS and Linux
 
 
 
