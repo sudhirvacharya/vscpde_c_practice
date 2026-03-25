@@ -2,6 +2,8 @@
 //Achieved by Virtual Functions + Inheritance
 //g++ runtime_poly.cpp -o a   ----------> run with this cmd
 
+// this is also called funtion over riding
+
 #include <stdio.h>
 
 class Animal {

@@ -2,13 +2,12 @@
 #include <stdlib.h>
 #include <stdbool.h>
 
-#define BIT 8
+int *ptr= NULL;
 
 int main()
 {
-    unsigned char var=1;
-   unsigned char  tmp= ( var >> 1 ) | ( var << (BIT -1));
-   printf(" tmp: %x", tmp);
+  *ptr=10;
+   printf(" %d", *ptr);
 
 
     return 0;

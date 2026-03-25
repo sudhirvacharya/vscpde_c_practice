@@ -11,6 +11,21 @@ all programs available
         return c;
     }
 
+# Polymorphism in C++
+    Polymorphism means **one interface, multiple behaviors**.
+    Two types: Compile time and Runtime.
+
+# Function Overloading — Compile Time Polymorphism
+    Same function name, different parameter types or count.
+    Compiler decides which function to call at **compile time**.
+
+    int add(int a, int b)         { return a + b; }
+    float add(float a, float b)   { return a + b; }
+
+# Function Overriding — Runtime Polymorphism
+
+    Child class redefines a parent class function.
+    Decision is made at **runtime** using virtual table (vtable).
 
 ##  array vs pointer
 
@@ -104,6 +119,10 @@ result : 03
     (*ptr)++  --> increments VALUE at ptr, arr[0] becomes 11, ptr unchanged
     *++ptr    --> moves ptr to arr[1] first, then returns 20
 
+    *Note: 
+    if + is near to p adress will increment  *++p or *p++
+    if + is near to * data will increment (*ptr)++, ++*p, 
+
 # Difference between const int *ptr and int * const ptr?
 
     const int *ptr        --> can change ptr, cannot change *ptr
@@ -128,6 +147,46 @@ result : 03
     }
 
     Used for: interrupt vector tables, state machines, callbacks.
+
+# Pointer Types
+
+    NULL Pointer:A pointer that is explicitly assigned NULL.It does not point to any valid memory address.
+    int *p = NULL;
+    Dereferencing a NULL pointer causes segmentation fault.
+
+    Wild Pointer:A pointer that is declared but NOT initialized.
+    It points to some random/garbage address — behavior is undefined.
+    int *p;       // wild pointer — NOT initialized
+    *p = 10;      // dangerous! writing to unknown address
+    Fix: always initialize to NULL if address is not known yet.
+
+    Dangling Pointer:
+    A pointer that points to memory that has already been freed.
+    After free(), the pointer still holds the old address — using it is undefined behavior.
+    int *p = malloc(sizeof(int));
+    free(p);      // memory released
+    *p = 10;      // DANGLING — undefined behavior
+    Fix: after free(), always set p = NULL.
+
+    Double Pointer (Pointer to Pointer):
+    A pointer that stores the address of another pointer.
+    int a = 10;
+    int *p = &a;
+    int **pp = &p;   // pp → p → a
+    Used in: dynamic 2D arrays, modifying pointer inside a function.
+
+    Void Pointer (Generic Pointer):
+    A pointer with no associated data type.
+    Can be type-casted to any pointer type.
+    void *p;
+    int a = 10;
+    p = &a;                    // valid — no cast needed
+    printf("%d", *(int*)p);    // type cast required to dereference
+    Used in: malloc(), memcpy(), generic functions like qsort().
+
+# how to type case pointer adress
+    (void *) ptr
+    (char *)ptr
 
 # Identifier: identifier is simply the name used to identify variables, functions, arrays, structures, or any other user-defined element in a program. It’s how you give a meaningful label to entities in your code.
     int a;
