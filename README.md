@@ -11,6 +11,9 @@ all programs available
         return c;
     }
 
+    what is the use?
+      That’s why you can call add(2,3) and add(5,7) at the same time FROM DIFFRENT THREAD— each call has its own c.
+
 # Polymorphism in C++
     Polymorphism means **one interface, multiple behaviors**.
     Two types: Compile time and Runtime.
