@@ -2,6 +2,14 @@
 all programs available
 ## C Question
 
+# intreview structure
+        basic c qurstion
+        programminng
+            bit manipulation
+            dsa or array
+        prohetc explanation
+        problem you have faced
+        
 # what is rentrant fucntion
     If you call a function once, pause the execution while it's in the middle of running,
     then call it a second time, the function is now running in two "contexts."
