@@ -1,7 +1,3 @@
-# vscpde_c_practice
-all programs available
-## C Question
-
 # intreview structure
         basic c qurstion
         programminng
