@@ -1,4 +1,4 @@
-# intreview structure
+### intreview structure
         basic c qurstion
         programminng
             bit manipulation
@@ -6,7 +6,7 @@
         prohetc explanation
         problem you have faced
         
-# what is rentrant fucntion
+### what is rentrant fucntion
     If you call a function once, pause the execution while it's in the middle of running,
     then call it a second time, the function is now running in two "contexts."
     The point is that the function can be running multiple times simultaneously, which usually means in multiple threads.
@@ -18,23 +18,23 @@
     what is the use?
       That’s why you can call add(2,3) and add(5,7) at the same time FROM DIFFRENT THREAD— each call has its own c.
 
-# Polymorphism in C++
+### Polymorphism in C++
     Polymorphism means **one interface, multiple behaviors**.
     Two types: Compile time and Runtime.
 
-# Function Overloading — Compile Time Polymorphism
+### Function Overloading — Compile Time Polymorphism
     Same function name, different parameter types or count.
     Compiler decides which function to call at **compile time**.
 
     int add(int a, int b)         { return a + b; }
     float add(float a, float b)   { return a + b; }
 
-# Function Overriding — Runtime Polymorphism
+### Function Overriding — Runtime Polymorphism
 
     Child class redefines a parent class function.
     Decision is made at **runtime** using virtual table (vtable).
 
-##  array vs pointer
+####  array vs pointer
 
 int main() {
     int a[] = {1, 2, 3};
@@ -45,7 +45,7 @@ int main() {
 
 result : 03
 -------------------------------------------------------------------------------
-## 1. ASCII & Characters
+# 1. ASCII & Characters
 -------------------------------------------------------------------------------
 
     '0' = 0x30 = 48
@@ -56,7 +56,7 @@ result : 03
     Lowercase to Uppercase:   str[i] = str[i] - 32
     Uppercase to Lowercase:   str[i] = str[i] + 32
 
-# prmitive data types
+### prmitive data types
 
     Type       Size      Range (signed)
     -------    ------    ----------------------------
@@ -65,7 +65,7 @@ result : 03
     float      4 bytes   ~6-7 decimal digits
     double     8 bytes   ~15-16 decimal digits
 
-# Storage classes:
+### Storage classes:
     Keyword     Lifetime     Scope          Stored In
     ---------   ----------   ------------   -----------
     auto        Block        Local          Stack
@@ -73,7 +73,7 @@ result : 03
     extern      Program      Global         .data
     register    Block        Local          CPU Register (hint only)
 
-# Volatile Keyword in C
+### Volatile Keyword in C
 
     volatile uint32_t *TIMER_REG = (uint32_t *)0x40000000;
 
@@ -83,7 +83,7 @@ result : 03
         // With volatile:    reads from HW register every iteration (correct)
     }
 
-# What is const volatile — does it make sense?
+### What is const volatile — does it make sense?
 
     const volatile uint32_t *STATUS_REG = (uint32_t *)0x40000010;
 
@@ -93,7 +93,7 @@ result : 03
 
 
 
-# qualifiers :are keywords that modify the behavior of variables and data types
+### qualifiers :are keywords that modify the behavior of variables and data types
     const    --> value cannot change, compiler enforces read-only
     volatile --> value can change outside compiler's knowledge,
                  prevents compiler optimization
@@ -109,7 +109,7 @@ result : 03
 
 
 -------------------------------------------------------------------------------
-## 5. Pointers
+###### 5. Pointers
 -------------------------------------------------------------------------------
 
     int  x   = 10;
@@ -117,7 +117,7 @@ result : 03
     *ptr = 20;        // dereference: changes x to 20
     ptr++;            // moves to next int (4 bytes ahead on 32-bit)
 
-# Difference between *ptr++, (*ptr)++, and *++ptr?
+### Difference between *ptr++, (*ptr)++, and *++ptr?
 
     int arr[] = {10, 20, 30};
     int *ptr = arr;
@@ -130,13 +130,13 @@ result : 03
     if + is near to p adress will increment  *++p or *p++
     if + is near to * data will increment (*ptr)++, ++*p, 
 
-# Difference between const int *ptr and int * const ptr?
+### Difference between const int *ptr and int * const ptr?
 
     const int *ptr        --> can change ptr, cannot change *ptr
     int * const ptr       --> can change *ptr, cannot change ptr
     const int * const ptr --> cannot change either
 
-# What is a function pointer? Embedded use case?
+### What is a function pointer? Embedded use case?
 
     int add(int a, int b)
     {
@@ -155,7 +155,7 @@ result : 03
 
     Used for: interrupt vector tables, state machines, callbacks.
 
-# Pointer Types
+### Pointer Types
 
     NULL Pointer:A pointer that is explicitly assigned NULL.It does not point to any valid memory address.
     int *p = NULL;
@@ -191,16 +191,16 @@ result : 03
     printf("%d", *(int*)p);    // type cast required to dereference
     Used in: malloc(), memcpy(), generic functions like qsort().
 
-# how to type case pointer adress
+### how to type case pointer adress
     (void *) ptr
     (char *)ptr
 
-# Identifier: identifier is simply the name used to identify variables, functions, arrays, structures, or any other user-defined element in a program. It’s how you give a meaningful label to entities in your code.
+### Identifier: identifier is simply the name used to identify variables, functions, arrays, structures, or any other user-defined element in a program. It’s how you give a meaningful label to entities in your code.
     int a;
     void add()
 
 -------------------------------------------------------------------------------
-## 6. Memory Layout
+###### 6. Memory Layout
 -------------------------------------------------------------------------------
 
     High Address
@@ -220,19 +220,19 @@ result : 03
     Low Address
 
 -------------------------------------------------------------------------------
-## 7. Compilation Stages
+###### 7. Compilation Stages
 -------------------------------------------------------------------------------
 
     .c --> [Preprocessor] --> .i --> [Compiler] --> .s --> [Assembler] --> .o --> [Linker] --> .elf/.bin/.hex
 
     Stage          Input    Output   Job
     -----------    -----    ------   -------------------------------------------
-    Preprocessor   .c       .i       Expand macros, #include, #ifdef, remove comments
+    Preprocessor   .c       .i       Expand macros, ###include, ###ifdef, remove comments
     Compiler       .i       .s       Generate assembly (syntax + semantic check)
     Assembler      .s       .o       Generate machine code object file
     Linker         .o       .elf     Resolve symbols, link libs, apply memory map
 
-# Difference between .bin, .hex, and .elf?
+### Difference between .bin, .hex, and .elf?
 
     Format   Description                          Used For
     ------   ----------------------------------   --------------------
@@ -241,7 +241,7 @@ result : 03
     .elf     With debug symbols                   GDB debugging
     .mot     Motorola S-Record                    Automotive tools
 
-# Bootup sequence
+### Bootup sequence
     Power ON / Reset
         │
         ▼
@@ -260,14 +260,14 @@ result : 03
     main()  ──► Application entry point
                 ⚠️  Must NEVER return in embedded systems!
 
-###  What is a Reset Vector?
+#########  What is a Reset Vector?
 
     Fixed memory address the CPU fetches and jumps to after reset.
     On ARM Cortex-M:
         0x00000000 = initial Stack Pointer value
         0x00000004 = Reset Handler address (start of startup code)
 
-# Embedded System Startup Flow or reset to main or power on
+### Embedded System Startup Flow or reset to main or power on
 
 When an embedded system powers on:
 
@@ -282,7 +282,7 @@ When an embedded system powers on:
 
 
 -------------------------------------------------------------------------------
-## 9. Dynamic Memory Allocation
+###### 9. Dynamic Memory Allocation
 -------------------------------------------------------------------------------
 
     malloc(size)        allocate, memory is UNINITIALIZED (garbage)
@@ -290,7 +290,7 @@ When an embedded system powers on:
     realloc(ptr, size)  resize existing allocation (may move memory)
     free(ptr)           release -- always set ptr = NULL after!
 
-   # google interview
+   ### google interview
     how to create our own malloc, my malloc?
         simply create statci int char[500] --> this will exceeds data segment and cross heap section
 
