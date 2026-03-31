@@ -34,6 +34,21 @@
     Child class redefines a parent class function.
     Decision is made at **runtime** using virtual table (vtable).
 
+### Trap C questions
+    --
+    unsigned char x= 0xff;
+
+    if(~x)
+        printf("hello");
+    else
+        printf("world")
+    
+    Result: it will print hello,
+    x is promoted to integer from char in bit mainpualtion before ~
+    --
+
+    (*fnptr)++; //this will incremnet  the value
+
 ####  array vs pointer
 
 int main() {
