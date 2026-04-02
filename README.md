@@ -6,6 +6,15 @@
         prohetc explanation
         problem you have faced
 
+### MISRA C
+    Example:
+        char a, b, c;
+        c=a+b // here ans will overf flow and c should be int
+
+    dynmica allocation not allowed
+
+    recursion not allowed
+
 ### Pre processor directives
 #include <stdio.h>       // include system header
 
@@ -71,7 +80,19 @@
     Access            All members accessible anytime      Only last-written member valid
     Use case          Group related data fields            Memory-efficient variant types
     Padding           Yes — compiler may add padding      Yes — based on largest member
-        
+
+### Q7. typedef vs #define
+
+    Feature           typedef                             #define
+    -----------       ------------------------------      ------------------------------
+    Processed by      Compiler                            Preprocessor (before compile)
+    Type checking     Yes — real type alias               No — pure text substitution
+    Scope             Follows C scoping rules             Global from point of definition
+    Pointer types     Correct and safe                    Dangerous — see trap below
+    Debugger          Shows type name                     Expanded text, no type name
+    Arrays / complex  Works cleanly                       Breaks easily
+
+       
 ### what is rentrant fucntion
     If you call a function once, pause the execution while it's in the middle of running,
     then call it a second time, the function is now running in two "contexts."
