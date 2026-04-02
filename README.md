@@ -61,6 +61,16 @@
         Use Inline   ->  Any computation involving arguments
                          When type safety matters
                          When you need to step through in debugger
+
+### Structure vs Union
+
+    Feature           struct                              union
+    -----------       ------------------------------      ------------------------------
+    Memory            Sum of all member sizes             Size of largest member only
+    Storage           Each member has its own memory      All members share same memory
+    Access            All members accessible anytime      Only last-written member valid
+    Use case          Group related data fields            Memory-efficient variant types
+    Padding           Yes — compiler may add padding      Yes — based on largest member
         
 ### what is rentrant fucntion
     If you call a function once, pause the execution while it's in the middle of running,
