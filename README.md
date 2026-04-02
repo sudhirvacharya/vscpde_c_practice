@@ -5,6 +5,62 @@
             dsa or array
         prohetc explanation
         problem you have faced
+
+### Pre processor directives
+#include <stdio.h>       // include system header
+
+#define PI 3.14          // object-like macro
+#undef PI                // undefine macro
+
+#ifdef DEBUG             // if macro defined
+#endif
+
+#ifndef HEADER_H         // if macro NOT defined (include guard)
+#define HEADER_H
+#endif
+
+#pragma pack(1)          // struct alignment
+
+#error "message"         // force compile error
+#warning "message"       // compile warning (GCC extension)
+
+### inline vs MACRO
+### Q3. Inline Function vs Macro
+
+    Feature           Macro (#define)                     Inline Function
+    -----------       ------------------------------      ------------------------------
+    Expansion         Preprocessor (text substitution)    Compiler (code inlining hint)
+    Type checking     None                                Yes — full C type checking
+    Debugging         Hard — no symbol in debugger        Easy — shows in stack trace
+    Scope             Global (no scope rules)             Follows C scoping rules
+    Side effects      Dangerous — args evaluated twice    Safe — args evaluated once
+    Return value      No (expression only)                Yes — has a return type
+    Recursion         Not possible                        Possible (compiler may not inline)
+    Header needed     No                                  Defined in header (static inline)
+
+    Side effect trap (Macro):
+
+        #define SQ(x)  ((x) * (x))
+
+        int a = 3;
+        int r = SQ(a++);   // expands to ((a++) * (a++)) — UB, a incremented twice
+
+    Safe with inline:
+
+        static inline int sq(int x) { return x * x; }
+
+        int a = 3;
+        int r = sq(a++);   // a++ evaluated once, safe — r = 9, a = 4
+
+    When to use which:
+
+        Use Macro    ->  Simple constants (#define MAX 100)
+                         Conditional compilation (#ifdef DEBUG)
+                         Stringification / token pasting (# and ##)
+
+        Use Inline   ->  Any computation involving arguments
+                         When type safety matters
+                         When you need to step through in debugger
         
 ### what is rentrant fucntion
     If you call a function once, pause the execution while it's in the middle of running,
@@ -473,16 +529,16 @@ When an embedded system powers on:
     Detects software hangs and crashes.
     Essential for unattended and safety-critical systems.
 
-### Q1. Difference between UART, SPI, and I2C?
-
-    Feature      UART               SPI                      I2C
-    ---------    ----------------   ----------------------   ----------------------
-    Wires        2 (TX, RX)         4 (MOSI,MISO,SCK,CS)     2 (SDA, SCL)
-    Speed        up to ~5 Mbps      up to 50+ Mbps           100k / 400k / 1MHz
-    Topology     Point-to-point     1 master, multi slave    Multi master+slave
-    Addressing   None               Chip Select per slave    7-bit address
-    Synchronous  No (async)         Yes                      Yes
-    Use case     Debug, GPS, BT     Flash, ADC, display      Sensors, EEPROM
+### Q1. Difference between UART, SPI, CAN, I2C?
+Feature          UART               SPI                      I2C                      CAN
+-----------      ----------------   ----------------------   ----------------------   ----------------------
+Wires            2 (TX, RX)         4 (MOSI,MISO,SCK,CS)     2 (SDA, SCL)             2 (CANH, CANL)
+Speed            up to ~5 Mbps      up to 50+ Mbps           100k / 400k / 1MHz       125k / 250k / 500k / 1Mbps
+Topology         Point-to-point     1 master, multi slave    Multi master+slave        Multi master (bus)
+Addressing       None               Chip Select per slave    7-bit address             11-bit / 29-bit ID
+Synchronous      No (async)         Yes                      Yes                      No (async)
+Error handling   None               None                     ACK only                 CRC, ACK, error frames
+Use case         Debug, GPS, BT     Flash, ADC, display      Sensors, EEPROM           Automotive ECUs, OBD
 
 
 ### Q3. What is I2C clock stretching?
@@ -511,7 +567,120 @@ When an embedded system powers on:
  rather than being translated into machine code instructions
  in Linker we have .bss, .data, .txt this are assebler directiver
 
+## Communication Protocol
 
+### i2c Communication
+
+    +-------+----------+---+----------+---+--------+---+---+
+    |   S   | ADDR[7:1]|R/W|  A/NA    |  DATA[7:0] | A |P  |
+    +-------+----------+---+----------+---+--------+---+---+
+
+    Field       Bits    Driven by       Description
+    -------     ----    ----------      ---------------------------
+    S             -     Master          START condition
+    ADDR        [7:1]   Master          7-bit slave address
+    R/W          [0]    Master          0 = Write, 1 = Read
+    A/NA          -     Slave           ACK after address
+    DATA        [7:0]   Master(W)/      8 data bits, MSB first
+                        Slave(R)
+    A/NA          -     Slave(W)/       ACK after data byte
+                        Master(R)
+    P             -     Master          STOP condition
+
+
+#### clock Speed
+
+    Mode            Speed       Notes
+    -----------     --------    ---------------------------
+    Standard        100 kHz     All devices supported
+    Fast            400 kHz     MPU-6050, SSD1306 supported
+    Fast mode+      1 MHz       SSD1306 (some variants)
+    High speed      3.4 MHz     Rare, special hw needed
+
+    Pull-up resistors:
+    100 kHz  ->  4.7 kohm typical
+    400 kHz  ->  2.2 kohm typical
+    1 MHz    ->  1.0 kohm typical
+
+### CAN Communication
+
+Differential signaling on CAN_H and CAN_L lines:
+
+State       CAN_H       CAN_L       Differential (H-L)
+---------   -------     -------     ------------------
+Dominant    3.5 V       1.5 V       +2.0 V  (logic 0)
+Recessive   2.5 V       2.5 V        0.0 V  (logic 1)
+
+Dominant wins on bus (wired-AND): any node sending 0 pulls bus dominant.
+
+---
+Type                Description
+----------------    ----------------------------------------
+Data Frame          Carries actual data (most common)
+Remote Frame        Requests data from another node (RTR=1)
+Error Frame         Signals a detected error on the bus
+Overload Frame      Requests delay between frames
+------
+
++-----+-------------+-----+-----+-----+-----+----------+-----------+-----+-----+
+| SOF |   ID[10:0]  | RTR | IDE | r0  | DLC |   DATA   |  CRC+DEL  | ACK | EOF |
++-----+-------------+-----+-----+-----+-----+----------+-----------+-----+-----+
+  1 b      11 b       1 b   1 b   1 b   4 b   0-64 b      15+1 b    1+1b   7 b
+
+* Data: 0 to 8 bytes (0 to 64 bits)
+
+Field       Bits    Value           Description
+-------     ----    -----           ----------------------------------
+SOF           1     0 (dom)         Start of frame, sync all nodes
+ID         [10:0]   0x000-0x7FF     Message priority + identifier
+RTR           1     0=Data, 1=Rmt  Remote Transmission Request
+IDE           1     0               0 = Standard frame (11-bit ID)
+r0            1     0 (dom)         Reserved, always dominant
+DLC         [3:0]   0-8             Number of data bytes
+DATA        0-64b   payload         Actual data, MSB first
+CRC          15b    calculated      CRC over SOF+ID+ctrl+data
+CRC DEL       1     1 (rec)         CRC delimiter, always recessive
+ACK slot      1     0 (dom)         Receiver pulls dominant = ACK
+ACK DEL       1     1 (rec)         ACK delimiter
+EOF           7     1111111 (rec)   End of frame
+IFS           3     111 (rec)       Intermission (bus idle)
+
+---
+### UART Communication
+
+One UART frame = 1 start bit + data bits + optional parity + stop bit(s)
+
+IDLE  Start   D0   D1   D2   D3   D4   D5   D6   D7   Parity  Stop  IDLE
+----+       +----+----+----+----+----+----+----+----+--------+------+----
+    |       |                                                 |      |
+    +-------+                                                 +------+
+      LOW                   data bits (LSB first)              HIGH
+
++------+------+----+----+----+----+----+----+----+----+--------+------+
+| IDLE | STRT | D0 | D1 | D2 | D3 | D4 | D5 | D6 | D7 |  PAR  | STOP |
++------+------+----+----+----+----+----+----+----+----+--------+------+
+         1 b   <-------- 5 to 9 data bits -------->   0 or 1b  1-2 b
+
+Field       Bits    Value       Description
+-------     ----    -----       ----------------------------------
+IDLE          -     1 (HIGH)    Line idle state
+Start         1     0 (LOW)     Signals start of frame
+Data        5-9     payload     LSB sent first (D0 first)
+Parity      0-1     E/O/N       Even, Odd, or None
+Stop        1-2     1 (HIGH)    End of frame, line returns HIGH
+
+---
+
+### SPI communication
+    Master                          Slave
+    ------                          -----
+    SCLK  -----------------------------> SCLK
+    MOSI  -----------------------------> MOSI
+    MISO  <----------------------------- MISO
+    CS    -----------------------------> CS
+    GND   ------------------------------ GND
+
+    CS pulled LOW by master to select slave.
 
 
 
