@@ -1,21 +1,113 @@
-# vscpde_c_practice
-all programs available
-## C Question
+### intreview structure
+        basic c qurstion
+        programminng
+            bit manipulation
+            dsa or array
+        prohetc explanation
+        problem you have faced
 
+<<<<<<< HEAD
 ## Pre-prcoessor direcive
 #include <stdio.h>       // include system header
 #define PI 3.14          // object-like macro
+=======
+### MISRA C
+    Example:
+        char a, b, c;
+        c=a+b // here ans will overf flow and c should be int
+
+    dynmica allocation not allowed
+
+    recursion not allowed
+
+### Pre processor directives
+#include <stdio.h>       // include system header
+
+#define PI 3.14          // object-like macro
+#undef PI                // undefine macro
+>>>>>>> a9a126bfe5d997f7e7826366c35b9ae29cd57b70
 
 #ifdef DEBUG             // if macro defined
 #endif
 
+<<<<<<< HEAD
 #undefine PI 3.24
+=======
+#ifndef HEADER_H         // if macro NOT defined (include guard)
+#define HEADER_H
+#endif
+
+>>>>>>> a9a126bfe5d997f7e7826366c35b9ae29cd57b70
 #pragma pack(1)          // struct alignment
 
 #error "message"         // force compile error
 #warning "message"       // compile warning (GCC extension)
 
+<<<<<<< HEAD
 # what is rentrant fucntion
+=======
+### inline vs MACRO
+### Q3. Inline Function vs Macro
+
+    Feature           Macro (#define)                     Inline Function
+    -----------       ------------------------------      ------------------------------
+    Expansion         Preprocessor (text substitution)    Compiler (code inlining hint)
+    Type checking     None                                Yes — full C type checking
+    Debugging         Hard — no symbol in debugger        Easy — shows in stack trace
+    Scope             Global (no scope rules)             Follows C scoping rules
+    Side effects      Dangerous — args evaluated twice    Safe — args evaluated once
+    Return value      No (expression only)                Yes — has a return type
+    Recursion         Not possible                        Possible (compiler may not inline)
+    Header needed     No                                  Defined in header (static inline)
+
+    Side effect trap (Macro):
+
+        #define SQ(x)  ((x) * (x))
+
+        int a = 3;
+        int r = SQ(a++);   // expands to ((a++) * (a++)) — UB, a incremented twice
+
+    Safe with inline:
+
+        static inline int sq(int x) { return x * x; }
+
+        int a = 3;
+        int r = sq(a++);   // a++ evaluated once, safe — r = 9, a = 4
+
+    When to use which:
+
+        Use Macro    ->  Simple constants (#define MAX 100)
+                         Conditional compilation (#ifdef DEBUG)
+                         Stringification / token pasting (# and ##)
+
+        Use Inline   ->  Any computation involving arguments
+                         When type safety matters
+                         When you need to step through in debugger
+
+### Structure vs Union
+
+    Feature           struct                              union
+    -----------       ------------------------------      ------------------------------
+    Memory            Sum of all member sizes             Size of largest member only
+    Storage           Each member has its own memory      All members share same memory
+    Access            All members accessible anytime      Only last-written member valid
+    Use case          Group related data fields            Memory-efficient variant types
+    Padding           Yes — compiler may add padding      Yes — based on largest member
+
+### Q7. typedef vs #define
+
+    Feature           typedef                             #define
+    -----------       ------------------------------      ------------------------------
+    Processed by      Compiler                            Preprocessor (before compile)
+    Type checking     Yes — real type alias               No — pure text substitution
+    Scope             Follows C scoping rules             Global from point of definition
+    Pointer types     Correct and safe                    Dangerous — see trap below
+    Debugger          Shows type name                     Expanded text, no type name
+    Arrays / complex  Works cleanly                       Breaks easily
+
+       
+### what is rentrant fucntion
+>>>>>>> a9a126bfe5d997f7e7826366c35b9ae29cd57b70
     If you call a function once, pause the execution while it's in the middle of running,
     then call it a second time, the function is now running in two "contexts."
     The point is that the function can be running multiple times simultaneously, which usually means in multiple threads.
@@ -27,23 +119,38 @@ all programs available
     what is the use?
       That’s why you can call add(2,3) and add(5,7) at the same time FROM DIFFRENT THREAD— each call has its own c.
 
-# Polymorphism in C++
+### Polymorphism in C++
     Polymorphism means **one interface, multiple behaviors**.
     Two types: Compile time and Runtime.
 
-# Function Overloading — Compile Time Polymorphism
+### Function Overloading — Compile Time Polymorphism
     Same function name, different parameter types or count.
     Compiler decides which function to call at **compile time**.
 
     int add(int a, int b)         { return a + b; }
     float add(float a, float b)   { return a + b; }
 
-# Function Overriding — Runtime Polymorphism
+### Function Overriding — Runtime Polymorphism
 
     Child class redefines a parent class function.
     Decision is made at **runtime** using virtual table (vtable).
 
-##  array vs pointer
+### Trap C questions
+    --
+    unsigned char x= 0xff;
+
+    if(~x)
+        printf("hello");
+    else
+        printf("world")
+    
+    Result: it will print hello,
+    x is promoted to integer from char in bit mainpualtion before ~
+    --
+
+    (*fnptr)++; //this will incremnet  the value
+
+####  array vs pointer
 
 int main() {
     int a[] = {1, 2, 3};
@@ -54,7 +161,7 @@ int main() {
 
 result : 03
 -------------------------------------------------------------------------------
-## 1. ASCII & Characters
+# 1. ASCII & Characters
 -------------------------------------------------------------------------------
 
     '0' = 0x30 = 48
@@ -65,7 +172,7 @@ result : 03
     Lowercase to Uppercase:   str[i] = str[i] - 32
     Uppercase to Lowercase:   str[i] = str[i] + 32
 
-# prmitive data types
+### prmitive data types
 
     Type       Size      Range (signed)
     -------    ------    ----------------------------
@@ -74,7 +181,7 @@ result : 03
     float      4 bytes   ~6-7 decimal digits
     double     8 bytes   ~15-16 decimal digits
 
-# Storage classes:
+### Storage classes:
     Keyword     Lifetime     Scope          Stored In
     ---------   ----------   ------------   -----------
     auto        Block        Local          Stack
@@ -82,7 +189,7 @@ result : 03
     extern      Program      Global         .data
     register    Block        Local          CPU Register (hint only)
 
-# Volatile Keyword in C
+### Volatile Keyword in C
 
     volatile uint32_t *TIMER_REG = (uint32_t *)0x40000000;
 
@@ -92,7 +199,7 @@ result : 03
         // With volatile:    reads from HW register every iteration (correct)
     }
 
-# What is const volatile — does it make sense?
+### What is const volatile — does it make sense?
 
     const volatile uint32_t *STATUS_REG = (uint32_t *)0x40000010;
 
@@ -102,7 +209,7 @@ result : 03
 
 
 
-# qualifiers :are keywords that modify the behavior of variables and data types
+### qualifiers :are keywords that modify the behavior of variables and data types
     const    --> value cannot change, compiler enforces read-only
     volatile --> value can change outside compiler's knowledge,
                  prevents compiler optimization
@@ -118,7 +225,7 @@ result : 03
 
 
 -------------------------------------------------------------------------------
-## 5. Pointers
+###### 5. Pointers
 -------------------------------------------------------------------------------
 
     int  x   = 10;
@@ -126,7 +233,7 @@ result : 03
     *ptr = 20;        // dereference: changes x to 20
     ptr++;            // moves to next int (4 bytes ahead on 32-bit)
 
-# Difference between *ptr++, (*ptr)++, and *++ptr?
+### Difference between *ptr++, (*ptr)++, and *++ptr?
 
     int arr[] = {10, 20, 30};
     int *ptr = arr;
@@ -139,13 +246,13 @@ result : 03
     if + is near to p adress will increment  *++p or *p++
     if + is near to * data will increment (*ptr)++, ++*p, 
 
-# Difference between const int *ptr and int * const ptr?
+### Difference between const int *ptr and int * const ptr?
 
     const int *ptr        --> can change ptr, cannot change *ptr
     int * const ptr       --> can change *ptr, cannot change ptr
     const int * const ptr --> cannot change either
 
-# What is a function pointer? Embedded use case?
+### What is a function pointer? Embedded use case?
 
     int add(int a, int b)
     {
@@ -164,6 +271,7 @@ result : 03
 
     Used for: interrupt vector tables, state machines, callbacks.
 
+<<<<<<< HEAD
 ### Static variable inside header file
     In C, the static keyword at the file level (outside of functions) means Internal Linkage.
     It limits the visibility of the variable to the specific translation unit (the .c file) it is compiled in.
@@ -177,6 +285,9 @@ result : 03
     This wastes memory and leads to confusing bugs where "global" data seems to reset or behave inconsistently.
 
 # Pointer Types
+=======
+### Pointer Types
+>>>>>>> a9a126bfe5d997f7e7826366c35b9ae29cd57b70
 
     NULL Pointer:A pointer that is explicitly assigned NULL.It does not point to any valid memory address.
     int *p = NULL;
@@ -212,16 +323,16 @@ result : 03
     printf("%d", *(int*)p);    // type cast required to dereference
     Used in: malloc(), memcpy(), generic functions like qsort().
 
-# how to type case pointer adress
+### how to type case pointer adress
     (void *) ptr
     (char *)ptr
 
-# Identifier: identifier is simply the name used to identify variables, functions, arrays, structures, or any other user-defined element in a program. It’s how you give a meaningful label to entities in your code.
+### Identifier: identifier is simply the name used to identify variables, functions, arrays, structures, or any other user-defined element in a program. It’s how you give a meaningful label to entities in your code.
     int a;
     void add()
 
 -------------------------------------------------------------------------------
-## 6. Memory Layout
+###### 6. Memory Layout
 -------------------------------------------------------------------------------
 
     High Address
@@ -241,19 +352,19 @@ result : 03
     Low Address
 
 -------------------------------------------------------------------------------
-## 7. Compilation Stages
+###### 7. Compilation Stages
 -------------------------------------------------------------------------------
 
     .c --> [Preprocessor] --> .i --> [Compiler] --> .s --> [Assembler] --> .o --> [Linker] --> .elf/.bin/.hex
 
     Stage          Input    Output   Job
     -----------    -----    ------   -------------------------------------------
-    Preprocessor   .c       .i       Expand macros, #include, #ifdef, remove comments
+    Preprocessor   .c       .i       Expand macros, ###include, ###ifdef, remove comments
     Compiler       .i       .s       Generate assembly (syntax + semantic check)
     Assembler      .s       .o       Generate machine code object file
     Linker         .o       .elf     Resolve symbols, link libs, apply memory map
 
-# Difference between .bin, .hex, and .elf?
+### Difference between .bin, .hex, and .elf?
 
     Format   Description                          Used For
     ------   ----------------------------------   --------------------
@@ -262,7 +373,7 @@ result : 03
     .elf     With debug symbols                   GDB debugging
     .mot     Motorola S-Record                    Automotive tools
 
-# Bootup sequence
+### Bootup sequence
     Power ON / Reset
         │
         ▼
@@ -281,14 +392,14 @@ result : 03
     main()  ──► Application entry point
                 ⚠️  Must NEVER return in embedded systems!
 
-###  What is a Reset Vector?
+#########  What is a Reset Vector?
 
     Fixed memory address the CPU fetches and jumps to after reset.
     On ARM Cortex-M:
         0x00000000 = initial Stack Pointer value
         0x00000004 = Reset Handler address (start of startup code)
 
-# Embedded System Startup Flow or reset to main or power on
+### Embedded System Startup Flow or reset to main or power on
 
 When an embedded system powers on:
 
@@ -303,7 +414,7 @@ When an embedded system powers on:
 
 
 -------------------------------------------------------------------------------
-## 9. Dynamic Memory Allocation
+###### 9. Dynamic Memory Allocation
 -------------------------------------------------------------------------------
 
     malloc(size)        allocate, memory is UNINITIALIZED (garbage)
@@ -311,7 +422,7 @@ When an embedded system powers on:
     realloc(ptr, size)  resize existing allocation (may move memory)
     free(ptr)           release -- always set ptr = NULL after!
 
-   # google interview
+   ### google interview
     how to create our own malloc, my malloc?
         simply create statci int char[500] --> this will exceeds data segment and cross heap section
 
@@ -479,6 +590,7 @@ When an embedded system powers on:
     Detects software hangs and crashes.
     Essential for unattended and safety-critical systems.
 
+<<<<<<< HEAD
 Feature          UART                   SPI                        I2C                        CAN
 --------         ----------------       ----------------------     ----------------------     ----------------------
 Wires            2 (TX, RX)             4 (MOSI, MISO, SCK, CS)    2 (SDA, SCL)               2 (CANH, CANL)
@@ -489,6 +601,18 @@ Synchronous      No (async)             Yes                        Yes          
 Duplex           Full                   Full                       Half                       Half
 Error handling   None                   None                       ACK/NACK                   CRC, ACK, error frames
 Use case         Debug, GPS, BT         Flash, ADC, display        Sensors, EEPROM, RTC       Automotive, industrial
+=======
+### Q1. Difference between UART, SPI, CAN, I2C?
+Feature          UART               SPI                      I2C                      CAN
+-----------      ----------------   ----------------------   ----------------------   ----------------------
+Wires            2 (TX, RX)         4 (MOSI,MISO,SCK,CS)     2 (SDA, SCL)             2 (CANH, CANL)
+Speed            up to ~5 Mbps      up to 50+ Mbps           100k / 400k / 1MHz       125k / 250k / 500k / 1Mbps
+Topology         Point-to-point     1 master, multi slave    Multi master+slave        Multi master (bus)
+Addressing       None               Chip Select per slave    7-bit address             11-bit / 29-bit ID
+Synchronous      No (async)         Yes                      Yes                      No (async)
+Error handling   None               None                     ACK only                 CRC, ACK, error frames
+Use case         Debug, GPS, BT     Flash, ADC, display      Sensors, EEPROM           Automotive ECUs, OBD
+>>>>>>> a9a126bfe5d997f7e7826366c35b9ae29cd57b70
 
 
 ### Q3. What is I2C clock stretching?
@@ -517,6 +641,7 @@ Use case         Debug, GPS, BT         Flash, ADC, display        Sensors, EEPR
  rather than being translated into machine code instructions
  in Linker we have .bss, .data, .txt this are assebler directiver
 
+<<<<<<< HEAD
  ----
  ### RTOS
  Process vs Thread
@@ -530,6 +655,122 @@ Context switch    Slow                           Fast
 Example           Chrome tabs (each tab)         Chrome renderer threads inside a tab
 
 
+=======
+## Communication Protocol
+
+### i2c Communication
+
+    +-------+----------+---+----------+---+--------+---+---+
+    |   S   | ADDR[7:1]|R/W|  A/NA    |  DATA[7:0] | A |P  |
+    +-------+----------+---+----------+---+--------+---+---+
+
+    Field       Bits    Driven by       Description
+    -------     ----    ----------      ---------------------------
+    S             -     Master          START condition
+    ADDR        [7:1]   Master          7-bit slave address
+    R/W          [0]    Master          0 = Write, 1 = Read
+    A/NA          -     Slave           ACK after address
+    DATA        [7:0]   Master(W)/      8 data bits, MSB first
+                        Slave(R)
+    A/NA          -     Slave(W)/       ACK after data byte
+                        Master(R)
+    P             -     Master          STOP condition
+
+
+#### clock Speed
+
+    Mode            Speed       Notes
+    -----------     --------    ---------------------------
+    Standard        100 kHz     All devices supported
+    Fast            400 kHz     MPU-6050, SSD1306 supported
+    Fast mode+      1 MHz       SSD1306 (some variants)
+    High speed      3.4 MHz     Rare, special hw needed
+
+    Pull-up resistors:
+    100 kHz  ->  4.7 kohm typical
+    400 kHz  ->  2.2 kohm typical
+    1 MHz    ->  1.0 kohm typical
+
+### CAN Communication
+
+Differential signaling on CAN_H and CAN_L lines:
+
+State       CAN_H       CAN_L       Differential (H-L)
+---------   -------     -------     ------------------
+Dominant    3.5 V       1.5 V       +2.0 V  (logic 0)
+Recessive   2.5 V       2.5 V        0.0 V  (logic 1)
+
+Dominant wins on bus (wired-AND): any node sending 0 pulls bus dominant.
+
+---
+Type                Description
+----------------    ----------------------------------------
+Data Frame          Carries actual data (most common)
+Remote Frame        Requests data from another node (RTR=1)
+Error Frame         Signals a detected error on the bus
+Overload Frame      Requests delay between frames
+------
+
++-----+-------------+-----+-----+-----+-----+----------+-----------+-----+-----+
+| SOF |   ID[10:0]  | RTR | IDE | r0  | DLC |   DATA   |  CRC+DEL  | ACK | EOF |
++-----+-------------+-----+-----+-----+-----+----------+-----------+-----+-----+
+  1 b      11 b       1 b   1 b   1 b   4 b   0-64 b      15+1 b    1+1b   7 b
+
+* Data: 0 to 8 bytes (0 to 64 bits)
+
+Field       Bits    Value           Description
+-------     ----    -----           ----------------------------------
+SOF           1     0 (dom)         Start of frame, sync all nodes
+ID         [10:0]   0x000-0x7FF     Message priority + identifier
+RTR           1     0=Data, 1=Rmt  Remote Transmission Request
+IDE           1     0               0 = Standard frame (11-bit ID)
+r0            1     0 (dom)         Reserved, always dominant
+DLC         [3:0]   0-8             Number of data bytes
+DATA        0-64b   payload         Actual data, MSB first
+CRC          15b    calculated      CRC over SOF+ID+ctrl+data
+CRC DEL       1     1 (rec)         CRC delimiter, always recessive
+ACK slot      1     0 (dom)         Receiver pulls dominant = ACK
+ACK DEL       1     1 (rec)         ACK delimiter
+EOF           7     1111111 (rec)   End of frame
+IFS           3     111 (rec)       Intermission (bus idle)
+
+---
+### UART Communication
+
+One UART frame = 1 start bit + data bits + optional parity + stop bit(s)
+
+IDLE  Start   D0   D1   D2   D3   D4   D5   D6   D7   Parity  Stop  IDLE
+----+       +----+----+----+----+----+----+----+----+--------+------+----
+    |       |                                                 |      |
+    +-------+                                                 +------+
+      LOW                   data bits (LSB first)              HIGH
+
++------+------+----+----+----+----+----+----+----+----+--------+------+
+| IDLE | STRT | D0 | D1 | D2 | D3 | D4 | D5 | D6 | D7 |  PAR  | STOP |
++------+------+----+----+----+----+----+----+----+----+--------+------+
+         1 b   <-------- 5 to 9 data bits -------->   0 or 1b  1-2 b
+
+Field       Bits    Value       Description
+-------     ----    -----       ----------------------------------
+IDLE          -     1 (HIGH)    Line idle state
+Start         1     0 (LOW)     Signals start of frame
+Data        5-9     payload     LSB sent first (D0 first)
+Parity      0-1     E/O/N       Even, Odd, or None
+Stop        1-2     1 (HIGH)    End of frame, line returns HIGH
+
+---
+
+### SPI communication
+    Master                          Slave
+    ------                          -----
+    SCLK  -----------------------------> SCLK
+    MOSI  -----------------------------> MOSI
+    MISO  <----------------------------- MISO
+    CS    -----------------------------> CS
+    GND   ------------------------------ GND
+
+    CS pulled LOW by master to select slave.
+>>>>>>> a9a126bfe5d997f7e7826366c35b9ae29cd57b70
 
 
 

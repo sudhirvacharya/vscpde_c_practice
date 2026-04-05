@@ -8,6 +8,8 @@
                   ^           ^
                   L           R
 */
+
+//left of array always zero expect irt iteration
 void moveZerotoEnd(int *arr, int n)
 {
     int left=0;
