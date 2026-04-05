@@ -6,11 +6,9 @@
         prohetc explanation
         problem you have faced
 
-<<<<<<< HEAD
 ## Pre-prcoessor direcive
 #include <stdio.h>       // include system header
 #define PI 3.14          // object-like macro
-=======
 ### MISRA C
     Example:
         char a, b, c;
@@ -25,27 +23,21 @@
 
 #define PI 3.14          // object-like macro
 #undef PI                // undefine macro
->>>>>>> a9a126bfe5d997f7e7826366c35b9ae29cd57b70
 
 #ifdef DEBUG             // if macro defined
 #endif
 
-<<<<<<< HEAD
 #undefine PI 3.24
-=======
 #ifndef HEADER_H         // if macro NOT defined (include guard)
 #define HEADER_H
 #endif
 
->>>>>>> a9a126bfe5d997f7e7826366c35b9ae29cd57b70
 #pragma pack(1)          // struct alignment
 
 #error "message"         // force compile error
 #warning "message"       // compile warning (GCC extension)
 
-<<<<<<< HEAD
 # what is rentrant fucntion
-=======
 ### inline vs MACRO
 ### Q3. Inline Function vs Macro
 
@@ -107,7 +99,6 @@
 
        
 ### what is rentrant fucntion
->>>>>>> a9a126bfe5d997f7e7826366c35b9ae29cd57b70
     If you call a function once, pause the execution while it's in the middle of running,
     then call it a second time, the function is now running in two "contexts."
     The point is that the function can be running multiple times simultaneously, which usually means in multiple threads.
@@ -271,23 +262,7 @@ result : 03
 
     Used for: interrupt vector tables, state machines, callbacks.
 
-<<<<<<< HEAD
-### Static variable inside header file
-    In C, the static keyword at the file level (outside of functions) means Internal Linkage.
-    It limits the visibility of the variable to the specific translation unit (the .c file) it is compiled in.
-
-    If you define static int x = 10; in a header file:
-
-    Every .c file that #includes that header gets its own private copy of the variable.
-
-    These copies are completely independent. Changing x in file_a.c will not change x in file_b.c.
-
-    This wastes memory and leads to confusing bugs where "global" data seems to reset or behave inconsistently.
-
-# Pointer Types
-=======
 ### Pointer Types
->>>>>>> a9a126bfe5d997f7e7826366c35b9ae29cd57b70
 
     NULL Pointer:A pointer that is explicitly assigned NULL.It does not point to any valid memory address.
     int *p = NULL;
@@ -590,18 +565,6 @@ When an embedded system powers on:
     Detects software hangs and crashes.
     Essential for unattended and safety-critical systems.
 
-<<<<<<< HEAD
-Feature          UART                   SPI                        I2C                        CAN
---------         ----------------       ----------------------     ----------------------     ----------------------
-Wires            2 (TX, RX)             4 (MOSI, MISO, SCK, CS)    2 (SDA, SCL)               2 (CANH, CANL)
-Speed            up to ~5 Mbps          up to 50+ Mbps             100k / 400k / 1 MHz        up to 1 Mbps (FD: 8 Mbps)
-Topology         Point-to-point         1 master, multi slave      Multi master + slave       Multi master, bus
-Addressing       None                   Chip Select per slave      7-bit address              11-bit / 29-bit msg ID
-Synchronous      No (async)             Yes                        Yes                        Yes
-Duplex           Full                   Full                       Half                       Half
-Error handling   None                   None                       ACK/NACK                   CRC, ACK, error frames
-Use case         Debug, GPS, BT         Flash, ADC, display        Sensors, EEPROM, RTC       Automotive, industrial
-=======
 ### Q1. Difference between UART, SPI, CAN, I2C?
 Feature          UART               SPI                      I2C                      CAN
 -----------      ----------------   ----------------------   ----------------------   ----------------------
@@ -612,7 +575,6 @@ Addressing       None               Chip Select per slave    7-bit address      
 Synchronous      No (async)         Yes                      Yes                      No (async)
 Error handling   None               None                     ACK only                 CRC, ACK, error frames
 Use case         Debug, GPS, BT     Flash, ADC, display      Sensors, EEPROM           Automotive ECUs, OBD
->>>>>>> a9a126bfe5d997f7e7826366c35b9ae29cd57b70
 
 
 ### Q3. What is I2C clock stretching?
@@ -641,21 +603,6 @@ Use case         Debug, GPS, BT     Flash, ADC, display      Sensors, EEPROM    
  rather than being translated into machine code instructions
  in Linker we have .bss, .data, .txt this are assebler directiver
 
-<<<<<<< HEAD
- ----
- ### RTOS
- Process vs Thread
- Property          Process                        Thread
---------          -------                        ------
-Memory            Separate address space         Shared address space
-Creation cost     High                           Low
-Communication     IPC (pipes, sockets)           Shared memory
-Crash impact      Isolated                       Affects whole process
-Context switch    Slow                           Fast
-Example           Chrome tabs (each tab)         Chrome renderer threads inside a tab
-
-
-=======
 ## Communication Protocol
 
 ### i2c Communication
@@ -770,7 +717,6 @@ Stop        1-2     1 (HIGH)    End of frame, line returns HIGH
     GND   ------------------------------ GND
 
     CS pulled LOW by master to select slave.
->>>>>>> a9a126bfe5d997f7e7826366c35b9ae29cd57b70
 
 
 
