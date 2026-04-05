@@ -2,6 +2,19 @@
 all programs available
 ## C Question
 
+## Pre-prcoessor direcive
+#include <stdio.h>       // include system header
+#define PI 3.14          // object-like macro
+
+#ifdef DEBUG             // if macro defined
+#endif
+
+#undefine PI 3.24
+#pragma pack(1)          // struct alignment
+
+#error "message"         // force compile error
+#warning "message"       // compile warning (GCC extension)
+
 # what is rentrant fucntion
     If you call a function once, pause the execution while it's in the middle of running,
     then call it a second time, the function is now running in two "contexts."
@@ -150,6 +163,18 @@ result : 03
     }
 
     Used for: interrupt vector tables, state machines, callbacks.
+
+### Static variable inside header file
+    In C, the static keyword at the file level (outside of functions) means Internal Linkage.
+    It limits the visibility of the variable to the specific translation unit (the .c file) it is compiled in.
+
+    If you define static int x = 10; in a header file:
+
+    Every .c file that #includes that header gets its own private copy of the variable.
+
+    These copies are completely independent. Changing x in file_a.c will not change x in file_b.c.
+
+    This wastes memory and leads to confusing bugs where "global" data seems to reset or behave inconsistently.
 
 # Pointer Types
 
@@ -454,16 +479,16 @@ When an embedded system powers on:
     Detects software hangs and crashes.
     Essential for unattended and safety-critical systems.
 
-### Q1. Difference between UART, SPI, and I2C?
-
-    Feature      UART               SPI                      I2C
-    ---------    ----------------   ----------------------   ----------------------
-    Wires        2 (TX, RX)         4 (MOSI,MISO,SCK,CS)     2 (SDA, SCL)
-    Speed        up to ~5 Mbps      up to 50+ Mbps           100k / 400k / 1MHz
-    Topology     Point-to-point     1 master, multi slave    Multi master+slave
-    Addressing   None               Chip Select per slave    7-bit address
-    Synchronous  No (async)         Yes                      Yes
-    Use case     Debug, GPS, BT     Flash, ADC, display      Sensors, EEPROM
+Feature          UART                   SPI                        I2C                        CAN
+--------         ----------------       ----------------------     ----------------------     ----------------------
+Wires            2 (TX, RX)             4 (MOSI, MISO, SCK, CS)    2 (SDA, SCL)               2 (CANH, CANL)
+Speed            up to ~5 Mbps          up to 50+ Mbps             100k / 400k / 1 MHz        up to 1 Mbps (FD: 8 Mbps)
+Topology         Point-to-point         1 master, multi slave      Multi master + slave       Multi master, bus
+Addressing       None                   Chip Select per slave      7-bit address              11-bit / 29-bit msg ID
+Synchronous      No (async)             Yes                        Yes                        Yes
+Duplex           Full                   Full                       Half                       Half
+Error handling   None                   None                       ACK/NACK                   CRC, ACK, error frames
+Use case         Debug, GPS, BT         Flash, ADC, display        Sensors, EEPROM, RTC       Automotive, industrial
 
 
 ### Q3. What is I2C clock stretching?
@@ -491,6 +516,18 @@ When an embedded system powers on:
  commands in assembly language source code that instruct the assembler software how to process the program,
  rather than being translated into machine code instructions
  in Linker we have .bss, .data, .txt this are assebler directiver
+
+ ----
+ ### RTOS
+ Process vs Thread
+ Property          Process                        Thread
+--------          -------                        ------
+Memory            Separate address space         Shared address space
+Creation cost     High                           Low
+Communication     IPC (pipes, sockets)           Shared memory
+Crash impact      Isolated                       Affects whole process
+Context switch    Slow                           Fast
+Example           Chrome tabs (each tab)         Chrome renderer threads inside a tab
 
 
 
