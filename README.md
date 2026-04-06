@@ -224,6 +224,17 @@ result : 03
     *ptr = 20;        // dereference: changes x to 20
     ptr++;            // moves to next int (4 bytes ahead on 32-bit)
 
+    +-----------------------+------------------------------------------+
+    | Declaration           | Meaning                                  |
+    +-----------------------+------------------------------------------+
+    | int *ptr              | pointer to int                           |
+    | int **ptr             | pointer to pointer to int                |
+    | int (*ptr)[5]         | pointer to array of 5 ints               |
+    | void (*ptr)(void)     | pointer to function, no args, void return|
+    | int (*ptr)(int, int)  | pointer to function, 2 int args, int ret |
+    | int *ptr[3]           | array of 3 pointers to int               |
+    +-----------------------+------------------------------------------+
+
 ### Difference between *ptr++, (*ptr)++, and *++ptr?
 
     int arr[] = {10, 20, 30};
