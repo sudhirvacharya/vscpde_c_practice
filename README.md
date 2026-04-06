@@ -224,16 +224,30 @@ result : 03
     *ptr = 20;        // dereference: changes x to 20
     ptr++;            // moves to next int (4 bytes ahead on 32-bit)
 
-    +-----------------------+------------------------------------------+
-    | Declaration           | Meaning                                  |
-    +-----------------------+------------------------------------------+
-    | int *ptr              | pointer to int                           |
-    | int **ptr             | pointer to pointer to int                |
-    | int (*ptr)[5]         | pointer to array of 5 ints               |
-    | void (*ptr)(void)     | pointer to function, no args, void return|
-    | int (*ptr)(int, int)  | pointer to function, 2 int args, int ret |
-    | int *ptr[3]           | array of 3 pointers to int               |
-    +-----------------------+------------------------------------------+
+int array[6] = {4, 3, 5, 6, 3, 8};
+
++-----------------------+----------------------------------------------------------------------+
+| Declaration           | Meaning and Example                                                  |
++-----------------------+----------------------------------------------------------------------+
+| int *ptr              | pointer to int                                                       |
+|                       | int *ptr = &array[0];                                                |
++-----------------------+----------------------------------------------------------------------+
+| int **ptr             | pointer to pointer to int                                            |
+|                       | int *p = &array[0];  int **ptr = &p;                                 |
++-----------------------+----------------------------------------------------------------------+
+| int (*ptr)[6]         | pointer to entire array of 6 ints                                    |
+|                       | int (*ptr)[6] = &array;                                              |
++-----------------------+----------------------------------------------------------------------+
+| void (*ptr)(void)     | pointer to function, no args, void return                            |
+|                       | void foo(void);  void (*ptr)(void) = foo;                            |
++-----------------------+----------------------------------------------------------------------+
+| int (*ptr)(int, int)  | pointer to function, 2 int args, int return                          |
+|                       | int add(int,int);  int (*ptr)(int,int) = add;                        |
++-----------------------+----------------------------------------------------------------------+
+| int *ptr[6]           | array of 6 pointers to int                                           |
+|                       | int *ptr[6] = {&array[0], &array[1], &array[2],                      |
+|                       |                &array[3], &array[4], &array[5]};                     |
++-----------------------+----------------------------------------------------------------------+
 
 ### Difference between *ptr++, (*ptr)++, and *++ptr?
 
