@@ -5,7 +5,30 @@
             dsa or array
         prohetc explanation
         problem you have faced
+
+---
+### ADC Formula
+Resoultion:
+
+Resoultion = vref / 2^n
+
+12 bit adc
+          1.22 mV  = 5V/ 4096  
+
+
+Vout:
+
+    vout = (adc value )  X Vref  / resolution
+
+            adc value = adc out put 0 -4095
+
+            = 4095 * 5 / 4095    ---->maximux voltage 5v
+
+            =    2048  x 5 /4095 -----> 2v
+
+---
 --- 
+
 ### ADC w.r.t AUTOSAR
 
     1. ADC Groups
