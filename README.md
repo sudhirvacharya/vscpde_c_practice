@@ -5,39 +5,189 @@
             dsa or array
         prohetc explanation
         problem you have faced
+--- 
+### ADC w.r.t AUTOSAR
+
+    1. ADC Groups
+    AUTOSAR organizes ADC channels into Groups — a group is a collection of one or more channels that are converted together.
+
+    Each group has a trigger source (SW or HW)
+    Each group has a conversion mode (one-shot or continuous)
+    Each group has a result buffer (linear or circular)
+
+    2. Conversion Modes
+    Mode          Description
+    One-shot       Single conversion per trigger, then stops
+    Continuous     Keeps converting in a loop until explicitly stopped
+    Scan           Converts all channels in the group sequentially
+
+    3. Trigger Sources
+    Trigger Source        Macro / Config Value      Description
+    Software trigger      ADC_TRIGG_SRC_SW          Trigger via Adc_StartGroupConversion()
+    Hardware trigger       ADC_TRIGG_SRC_HW         Timer, PWM event, or external pin
+
+    4. Notification (Callback)
+    Each group can have a notification function (callback) registered in configuration.
+    It is called at end-of-conversion (similar to an ISR-driven callback).
+    /* Example notification function prototype */
+    void AdcGroup0_ConversionComplete(void);
+
+    #### ADC API Reference
+        void Adc_Init(const Adc_ConfigType* ConfigPtr);
+            Initializes the ADC hardware unit and driver internals.
+            ConfigPtr points to the generated configuration structure (Adc_Config).
+            Called once during ECU startup (typically from EcuM).
+    
+    Buffer Setup (Required for Streaming Mode)
+
+    Std_ReturnType Adc_SetupResultBuffer(
+    Adc_GroupType        Group,
+    Adc_ValueGroupType*  DataBufferPtr
+     );
+
+
+    SW TRIGGERED FLOW
+    Adc_Init(&AdcConfig)
+        |
+        v
+Adc_SetupResultBuffer(Group0, resultBuffer)
+        |
+        v
+Adc_EnableGroupNotification(Group0)
+        |
+        v
+Adc_StartGroupConversion(Group0)
+        |
+        v
+    [HW converts all channels in Group0]
+        |
+        v
+    [Notification callback fires]
+        |
+        v
+Adc_ReadGroup(Group0, resultBuffer)
+        |
+        v
+    Use result in application logic
+
+---
+
+### SPI w.r.t AUOTSAR
+ConceptDescriptionChannelBasic data unit. Holds a buffer of data elements to be transferred.JobA sequence of one or more Channels sharing the same CS (Chip Select).SequenceA group of one or more Jobs. Unit of transmission triggered by SW.EB BufferExternal Buffer - pointer to user-provided RAM buffer (dynamic).IB BufferInternal Buffer - statically allocated inside the SPI driver.Hw UnitPhysical SPI peripheral (e.g., QSPI0, QSPI2 on AURIX TriCore).
+
+3. SPI Channel Types
+TypeBuffer TypeBuffer LocationUse CaseIBInternalInside driverFixed-size, known at config timeEBExternalUser RAMVariable-size, pointer set at runtime
+
+4. SPI Transmission Modes
+ModeAPI FunctionBlockingCallbackUse CaseSynchronousSpi_SyncTransmit()YesNoSimple, deterministic transfersAsynchronousSpi_AsyncTransmit()NoYesNon-blocking, ISR/DMA driven
+
+5. SPI Driver States
+SPI_UNINIT
+    |
+    | Spi_Init()
+    v
+SPI_IDLE
+    |
+    | Spi_AsyncTransmit() / Spi_SyncTransmit()
+    v
+SPI_BUSY
+    |
+    | Transfer Complete
+    v
+SPI_IDLE
+    |
+    | Spi_DeInit()
+    v
+SPI_UNINIT
+
+6SPI APIS
+7.1 Mandatory APIs
+APIDescriptionSpi_Init()Initializes the SPI driver using config pointerSpi_DeInit()De-initializes the SPI driverSpi_WriteIB()Writes data to Internal Buffer of a ChannelSpi_ReadIB()Reads data from Internal Buffer of a ChannelSpi_SetupEB()Sets up External Buffer pointer for a ChannelSpi_SyncTransmit()Triggers synchronous transmission of a SequenceSpi_AsyncTransmit()Triggers asynchronous transmission of a SequenceSpi_GetStatus()Returns current driver status (IDLE/BUSY/UNINIT)Spi_GetJobResult()Returns result of a given Job
+
+7 APIS
+/* Initialize SPI driver */
+void Spi_Init(const Spi_ConfigType *ConfigPtr);
+
+/* De-Initialize SPI driver */
+Std_ReturnType Spi_DeInit(void);
+
+/* Write to Internal Buffer */
+Std_ReturnType Spi_WriteIB(
+    Spi_ChannelType Channel,
+    const Spi_DataBufferType *DataBufferPtr
+);
+
+/* Read from Internal Buffer */
+Std_ReturnType Spi_ReadIB(
+    Spi_ChannelType Channel,
+    Spi_DataBufferType *DataBufferPtr
+);
+
+/* Setup External Buffer */
+Std_ReturnType Spi_SetupEB(
+    Spi_ChannelType Channel,
+    const Spi_DataBufferType *SrcDataBufferPtr,
+    Spi_DataBufferType *DesDataBufferPtr,
+    Spi_NumberOfDataType Length
+);
+
+/* Synchronous transmit */
+Std_ReturnType Spi_SyncTransmit(Spi_SequenceType Sequence);
+
+/* Asynchronous transmit */
+Std_ReturnType Spi_AsyncTransmit(Spi_SequenceType Sequence);
+
+/* Get driver status */
+Spi_StatusType Spi_GetStatus(void);
+
+/* Get Job result */
+Spi_JobResultType Spi_GetJobResult(Spi_JobType Job);
+
+/* Get Sequence result */
+Spi_SeqResultType Spi_GetSequenceResult(Spi_SequenceType Sequence);
+
+/* Cancel a Sequence */
+void Spi_Cancel(Spi_SequenceType Sequence);
+
+/* Set Async Mode */
+Std_ReturnType Spi_SetAsyncMode(Spi_AsyncModeType Mode);
+---
+
+
+
 
 ## Pre-prcoessor direcive
-#include <stdio.h>       // include system header
-#define PI 3.14          // object-like macro
-### MISRA C
-    Example:
-        char a, b, c;
-        c=a+b // here ans will overf flow and c should be int
+    #include <stdio.h>       // include system header
+    #define PI 3.14          // object-like macro
+    ### MISRA C
+        Example:
+            char a, b, c;
+            c=a+b // here ans will overf flow and c should be int
 
-    dynmica allocation not allowed
+        dynmica allocation not allowed
 
-    recursion not allowed
+        recursion not allowed
 
-### Pre processor directives
-#include <stdio.h>       // include system header
+    ### Pre processor directives
+    #include <stdio.h>       // include system header
 
-#define PI 3.14          // object-like macro
-#undef PI                // undefine macro
+    #define PI 3.14          // object-like macro
+    #undef PI                // undefine macro
 
-#ifdef DEBUG             // if macro defined
-#endif
+    #ifdef DEBUG             // if macro defined
+    #endif
 
-#undefine PI 3.24
-#ifndef HEADER_H         // if macro NOT defined (include guard)
-#define HEADER_H
-#endif
+    #undefine PI 3.24
+    #ifndef HEADER_H         // if macro NOT defined (include guard)
+    #define HEADER_H
+    #endif
 
-#pragma pack(1)          // struct alignment
+    #pragma pack(1)          // struct alignment
 
-#error "message"         // force compile error
-#warning "message"       // compile warning (GCC extension)
+    #error "message"         // force compile error
+    #warning "message"       // compile warning (GCC extension)
 
-# what is rentrant fucntion
+### what is rentrant fucntion
 ### inline vs MACRO
 ### Q3. Inline Function vs Macro
 
