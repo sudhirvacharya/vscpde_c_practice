@@ -14,3 +14,9 @@ for f in *.md *.c; do
     cat "$f" >> all_code.txt
 done
 
+
+### Lesson Learnt
+ 1. bracket missed
+ 2.simple logice not able to answer
+ 3. if condition coudl have used
+
