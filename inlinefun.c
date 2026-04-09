@@ -1,18 +1,19 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+// Benefits: Reduces function call overhead (no pushing arguments/return addresses to the stack).
+// Drawbacks: Excessive inlining can cause "code bloat" (larger binary size) and may increase cache misses.
 
-//Benefits: Reduces overhead (pushing arguments/return addresses to the stack).
-//Drawbacks: Excessive inlining can cause "code bloat" (larger binary size) and increase cache misses
-	//observer rbp and rsp by commentiong inlin_add funtion
-	//main stack fram will increase if we add fucntion
-	//only thin is no fucntion over head push or pop
-	//in asm also you can verigy there is no push pop operation
+// If you comment out the inline function and use a normal function call,
+// you can observe changes in RBP and RSP (stack frame setup).
+// With a normal function, the compiler generates prologue/epilogue code (push/pop).
+// With inline, there is no function call overhead — the code is expanded directly.
 
+// In Visual Studio, you may not see a difference because the compiler optimizes differently.
+// In Eclipse/GCC, you can see the difference at compile time by commenting/uncommenting the inline function.
+// In assembly, without inline you will see push/pop instructions for the function call.
+// With inline, those push/pop operations disappear since the function body is inserted directly.
 
-//in vs studio i am not seeing diffrence, but in eclispse ican see,
-// you can see it in compile time only.by commneting and adding fcuntion
-// in asmu can see without inline there is push pop ocde, with inline u can see with puh pop operation
 inline int add(int a, int b) __attribute__((always_inline));
 
 
