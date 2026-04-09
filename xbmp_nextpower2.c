@@ -37,13 +37,7 @@ n + 1    → 8       = 0000 1000  ✓
 //0  0 1 0 0
 //0  1 0 0 0
 //1  0 0 0 0
-uint32_t next_pow2_loop(uint32_t n) {
-    uint32_t p = 1;
-    while (p < n)
-     p <<= 1;
-     
-    return p;
-}
+
 
 int main()
 {
