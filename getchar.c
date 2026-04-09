@@ -1,27 +1,23 @@
 #include <stdio.h>
-#include <stdlib.h>
-   int tmp, num;
+#include <stdint.h>
+
 int getnum()
 {
-     do
-    {
-        num= getchar();   // waits for a character input
-        if(num >= '0' && num <= '9')
-        {
-            //converting ascii to decimal
-            // *10 will left shift decimal digit, 
-            tmp=(tmp*10) + (num - 0x30);
-        }
-    
-    }
-    while (num != '\n' && num != EOF);  // stop at newline or EOF
+    int num;
+    int value = 0;
 
-    return tmp;
+    do {
+        num = getchar();
+        if (num >= '0' && num <= '9') {
+            value = value * 10 + (num - '0');
+        }
+    } while (num != '\n' && num != EOF);
+
+    return value;
 }
 
 int main()
 {
-    printf("dob is: %d \n", getnum());
-
+    printf("dob %d\n", getnum());
     return 0;
 }
