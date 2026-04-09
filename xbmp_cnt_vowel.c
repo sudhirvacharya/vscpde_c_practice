@@ -12,7 +12,7 @@ int main()
     for(i = 0; str[i]; i++)  // loops until the null terminator ('\0') is reached.
     {
         //Counting the vowels.
-        //a, e, o, u
+        //a, e, i, o, u
         if(str[i]=='a'|| str[i]=='e'||str[i]=='i'||
            str[i]=='o'|| str[i]=='u'||str[i]=='A'||
            str[i]=='E'||str[i]=='I'||str[i]=='O' ||str[i]=='U')
