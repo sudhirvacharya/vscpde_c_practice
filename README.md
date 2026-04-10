@@ -177,7 +177,9 @@ Std_ReturnType Spi_SetAsyncMode(Spi_AsyncModeType Mode);
 ---
 
 
-
+### linker error
+    example:
+        variable defined as staic in one file and anothe ruse it as extern
 
 ## Pre-prcoessor direcive
     #include <stdio.h>       // include system header
@@ -210,8 +212,6 @@ Std_ReturnType Spi_SetAsyncMode(Spi_AsyncModeType Mode);
     #error "message"         // force compile error
     #warning "message"       // compile warning (GCC extension)
 
-### what is rentrant fucntion
-### inline vs MACRO
 ### Q3. Inline Function vs Macro
 
     Feature           Macro (#define)                     Inline Function
@@ -496,6 +496,42 @@ int array[6] = {4, 3, 5, 6, 3, 8};
     p = &a;                    // valid — no cast needed
     printf("%d", *(int*)p);    // type cast required to dereference
     Used in: malloc(), memcpy(), generic functions like qsort().
+
+### diffrence between artay pointer vs fucntion pointer.
+# Array Pointer vs Function Pointer
+
+## Comparison Table
+
+# Array Pointer vs Function Pointer
+
+    | Aspect      | Array Pointer          | Function Pointer         |
+    |-------------|------------------------|--------------------------|
+    | Points to   | Data (RAM)             | Code (Flash / .text seg) |
+    | Memory seg  | Stack / Heap / BSS     | .text segment            |
+    | Operation   | Read / write the value | Call / execute only      |
+    | Arithmetic  | Valid                  | Not meaningful           |
+
+### what is the diffrence *a[10] vs (*a)[10]
+    *a[10]   -> [] first, array of pointers
+    (*a)[10] -> *  first, pointer to an array
+
+    /* array of pointers */
+    int x = 1, y = 2, z = 3;
+    int *a[3] = {&x, &y, &z};
+    printf("%d\n", *a[1]);       /* 2 */
+
+    /* pointer to array */
+    int arr[10] = {0};
+    int (*p)[10] = &arr;
+    printf("%d\n", (*p)[3]);     /* 0 */
+
+### pragma in C
+What is it
+#pragma is a compiler-specific directive.
+It gives special instructions to the compiler that are not part of standard C syntax.
+
+#pragma pack(n)Set structure member alignment to n bytes
+
 
 ### how to type case pointer adress
     (void *) ptr
