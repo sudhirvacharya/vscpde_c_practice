@@ -719,6 +719,16 @@ When an embedded system powers on:
         NVIC_SetPriority(UART1_IRQn, 1);   // high priority
         NVIC_SetPriority(TIM2_IRQn,  5);   // lower priority
 
+    ## NVIC 
+    WHY IOTS CALLED NESTED ?
+        BECUASE HIGH PRIORITY INTERRUPT A LOW PRIOIRTY ISR
+    | Letter | Full Word  | What It Does                                           |
+    |--------|------------|--------------------------------------------------------|
+    | N      | Nested     | Higher priority IRQ can interrupt a lower priority ISR |
+    | V      | Vectored   | Each interrupt has a fixed address in the vector table |
+    | I      | Interrupt  | Handles hardware interrupt signals from peripherals    |
+    | C      | Controller | Hardware block that manages priorities, enabling, pending |
+
 -------------------------------------------------------------------------------
 ## 12. RTOS Concepts
 -------------------------------------------------------------------------------
