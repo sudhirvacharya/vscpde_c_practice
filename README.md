@@ -8,25 +8,36 @@
 
 ---
 ### ADC Formula
-Resoultion:
-
-Resoultion = vref / 2^n
-
-12 bit adc
-          1.22 mV  = 5V/ 4096  
-
-
-Vout:
-
-    Vin = (ADC_value / (2^n - 1)) × Vref
-
-            adc value = adc out put 0 -4095
-
-            = 4095 * 5 / 4095    ---->maximux voltage 5v
-
-            =    2048  x 5 /4095 -----> 2v
-
 ---
+
+## 1. Resolution
+
+
+Resolution = Vref / 2^n
+
+Example — 12-bit ADC:
+
+Resolution = 5V / 4096 = 1.22 mV
+
+
+## 2. Output Voltage (Vout)
+
+
+Vout = (ADC_value / (2^n - 1)) x Vref
+```
+
+- `ADC_value` — raw ADC output (0 to 4095 for 12-bit)
+- `2^n - 1` — max count = 4095
+- `Vref` — reference voltage = 5V
+
+**Examples:**
+
+| ADC Value | Calculation         | Result      |
+|-----------|---------------------|-------------|
+| 4095      | 4095 x 5 / 4095     | 5.00 V (max)|
+| 2048      | 2048 x 5 / 4095     | ~2.50 V     |
+| 0         | 0 x 5 / 4095        | 0.00 V (min)|
+
 --- 
 
 ### ADC w.r.t AUTOSAR
