@@ -18,7 +18,7 @@ Resoultion = vref / 2^n
 
 Vout:
 
-    vout = (adc value )  X Vref  / resolution
+    Vin = (ADC_value / (2^n - 1)) × Vref
 
             adc value = adc out put 0 -4095
 
