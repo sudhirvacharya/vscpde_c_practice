@@ -96,7 +96,14 @@ Adc_ReadGroup(Group0, resultBuffer)
 ---
 
 ### SPI w.r.t AUOTSAR
-ConceptDescriptionChannelBasic data unit. Holds a buffer of data elements to be transferred.JobA sequence of one or more Channels sharing the same CS (Chip Select).SequenceA group of one or more Jobs. Unit of transmission triggered by SW.EB BufferExternal Buffer - pointer to user-provided RAM buffer (dynamic).IB BufferInternal Buffer - statically allocated inside the SPI driver.Hw UnitPhysical SPI peripheral (e.g., QSPI0, QSPI2 on AURIX TriCore).
+## AUTOSAR SPI Key Concepts
+
+- **Channel** — Basic data unit. Holds a buffer of data elements to be transferred.
+- **Job** — A sequence of one or more Channels sharing the same CS (Chip Select).
+- **Sequence** — A group of one or more Jobs. Unit of transmission triggered by SW.
+- **EB Buffer** — External Buffer; pointer to user-provided RAM buffer (dynamic).
+- **IB Buffer** — Internal Buffer; statically allocated inside the SPI driver.
+- **Hw Unit** — Physical SPI peripheral (e.g., QSPI0, QSPI2 on AURIX TriCore).
 
 
 SPI MODES 
