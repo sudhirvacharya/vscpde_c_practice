@@ -60,6 +60,13 @@
 
     int volatile *const ptr → constant pointer to a volatile int (can modify the value, but pointer cannot change)
 
+### Userdefined data types 
+
+    Structure
+    Union
+    Enum
+    Typedef
+
 ### Identifier: identifier is simply the name used to identify variables, functions, arrays, structures, or any other user-defined element in a program. It’s how you give a meaningful label to entities in your code.
     int a;
     void add()
@@ -982,11 +989,5 @@ WHATIS VITUAL FUCNTION
 Diffrenc ebetween timer and counter
 Timer   = counts internal clock pulses  (measures TIME)
 Counter = counts external event pulses  (measures EVENTS)
-
-
-
-
-
-
 
 
