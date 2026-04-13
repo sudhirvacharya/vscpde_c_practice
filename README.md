@@ -6,12 +6,115 @@
         prohetc explanation
         problem you have faced
 
----
+### prmitive data types
+
+    Type       Size      Range (signed)
+    -------    ------    ----------------------------
+    char       1 byte    -128 to 127
+    int        4 bytes   -2,147,483,648 to 2,147,483,647
+    float      4 bytes   ~6-7 decimal digits
+    double     8 bytes   ~15-16 decimal digits
+
+### Storage classes:
+    Keyword     Lifetime     Scope          Stored In
+    ---------   ----------   ------------   -----------
+    auto        Block        Local          Stack
+    static      Program      Local/File     .data / .bss
+    extern      Program      Global         .data
+    register    Block        Local          CPU Register (hint only)
+
+### Volatile Keyword in C
+
+    Volatile is a qualifier that is applied to a variable when it is declared.
+    It tells the compiler that the value of the variable may change at any time-without any action being taken by the code the compiler finds nearby.
+
+    volatile uint32_t *TIMER_REG = (uint32_t *)0x40000000;
+
+    while (*TIMER_REG == 0) {
+        // Without volatile: compiler reads once, caches value
+        //                   --> loop never exits (wrong!)
+        // With volatile:    reads from HW register every iteration (correct)
+    }
+
+    ### What is const volatile — does it make sense?
+
+    const volatile uint32_t *STATUS_REG = (uint32_t *)0x40000010;
+
+    YES — makes perfect sense for read-only hardware status registers:
+      const    --> your code cannot write to it
+      volatile --> compiler must re-read it every time (hardware changes it)
+
+
+
+### qualifiers :are keywords that modify the behavior of variables and data types
+    const    --> value cannot change, compiler enforces read-only
+    volatile --> value can change outside compiler's knowledge,
+                 prevents compiler optimization
+    
+    example:
+    const int var
+    vaoltile int var
+    const volatile int  var
+
+    const volatile int *ptr → pointer to read-only volatile int (cannot modify the value, but pointer can change).
+
+    int volatile *const ptr → constant pointer to a volatile int (can modify the value, but pointer cannot change)
+
+### Identifier: identifier is simply the name used to identify variables, functions, arrays, structures, or any other user-defined element in a program. It’s how you give a meaningful label to entities in your code.
+    int a;
+    void add()
+
+## directrives in C
+    pre-prcoessor directive
+    assembler Directive
+    Compiler directive
+
+## Pre-prcoessor direcive
+    #include <stdio.h>       // include system header
+    #define PI 3.14          // object-like macro
+    ### MISRA C
+        Example:
+            char a, b, c;
+            c=a+b // here ans will overf flow and c should be int
+
+        dynmica allocation not allowed
+
+        recursion not allowed
+
+    ### Pre processor directives
+    #include <stdio.h>       // include system header
+
+    #define PI 3.14          // object-like macro
+    #undef PI                // undefine macro
+
+    #ifdef DEBUG             // if macro defined
+    #endif
+
+    #undefine PI 3.24
+    #ifndef HEADER_H         // if macro NOT defined (include guard)
+    #define HEADER_H
+    #endif
+
+    #pragma pack(1)          // struct alignment
+
+    #error "message"         // force compile error
+    #warning "message"       // compile warning (GCC extension)
+
+## assembler directive
+ commands in assembly language source code that instruct the assembler software how to process the program,
+ rather than being translated into machine code instructions
+ in Linker we have .bss, .data, .txt this are assebler directiver
+
+### pragma in C
+What is it
+#pragma is a compiler-specific directive.
+It gives special instructions to the compiler that are not part of standard C syntax.
+
+#pragma pack(n)Set structure member alignment to n bytes
+
 ### ADC Formula
----
 
-## 1. Resolution
-
+Resolution:
 
 Resolution = Vref / 2^n
 
@@ -20,7 +123,7 @@ Example — 12-bit ADC:
 Resolution = 5V / 4096 = 1.22 mV
 
 
-## 2. Output Voltage (Vout)
+Output Voltage (Vout):
 
 
 Vout = (ADC_value / (2^n - 1)) x Vref
@@ -212,38 +315,7 @@ Std_ReturnType Spi_SetAsyncMode(Spi_AsyncModeType Mode);
     example:
         variable defined as staic in one file and anothe ruse it as extern
 
-## Pre-prcoessor direcive
-    #include <stdio.h>       // include system header
-    #define PI 3.14          // object-like macro
-    ### MISRA C
-        Example:
-            char a, b, c;
-            c=a+b // here ans will overf flow and c should be int
-
-        dynmica allocation not allowed
-
-        recursion not allowed
-
-    ### Pre processor directives
-    #include <stdio.h>       // include system header
-
-    #define PI 3.14          // object-like macro
-    #undef PI                // undefine macro
-
-    #ifdef DEBUG             // if macro defined
-    #endif
-
-    #undefine PI 3.24
-    #ifndef HEADER_H         // if macro NOT defined (include guard)
-    #define HEADER_H
-    #endif
-
-    #pragma pack(1)          // struct alignment
-
-    #error "message"         // force compile error
-    #warning "message"       // compile warning (GCC extension)
-
-### Q3. Inline Function vs Macro
+### Inline Function vs Macro
 
     Feature           Macro (#define)                     Inline Function
     -----------       ------------------------------      ------------------------------
@@ -290,7 +362,7 @@ Std_ReturnType Spi_SetAsyncMode(Spi_AsyncModeType Mode);
     Use case          Group related data fields            Memory-efficient variant types
     Padding           Yes — compiler may add padding      Yes — based on largest member
 
-### Q7. typedef vs #define
+### typedef vs #define
 
     Feature           typedef                             #define
     -----------       ------------------------------      ------------------------------
@@ -315,20 +387,20 @@ Std_ReturnType Spi_SetAsyncMode(Spi_AsyncModeType Mode);
       That’s why you can call add(2,3) and add(5,7) at the same time FROM DIFFRENT THREAD— each call has its own c.
 
 ### Polymorphism in C++
-    Polymorphism means **one interface, multiple behaviors**.
-    Two types: Compile time and Runtime.
+        Polymorphism means **one interface, multiple behaviors**.
+        Two types: Compile time and Runtime.
 
-### Function Overloading — Compile Time Polymorphism
-    Same function name, different parameter types or count.
-    Compiler decides which function to call at **compile time**.
+    #### Function Overloading — Compile Time Polymorphism
+        Same function name, different parameter types or count.
+        Compiler decides which function to call at **compile time**.
 
-    int add(int a, int b)         { return a + b; }
-    float add(float a, float b)   { return a + b; }
+        int add(int a, int b)         { return a + b; }
+        float add(float a, float b)   { return a + b; }
 
-### Function Overriding — Runtime Polymorphism
+    #### Function Overriding — Runtime Polymorphism
 
-    Child class redefines a parent class function.
-    Decision is made at **runtime** using virtual table (vtable).
+        Child class redefines a parent class function.
+        Decision is made at **runtime** using virtual table (vtable).
 
 ### Trap C questions
     --
@@ -347,17 +419,16 @@ Std_ReturnType Spi_SetAsyncMode(Spi_AsyncModeType Mode);
 
 ####  array vs pointer
 
-int main() {
-    int a[] = {1, 2, 3};
-    int *p = a;
-    printf("%d", *(p + 2));
-    return 0;
-}
+    int main() {
+        int a[] = {1, 2, 3};
+        int *p = a;
+        printf("%d", *(p + 2));
+        return 0;
+    }
 
-result : 03
--------------------------------------------------------------------------------
-# 1. ASCII & Characters
--------------------------------------------------------------------------------
+    result : 03
+
+### ASCII & Characters
 
     '0' = 0x30 = 48
     'A' = 0x41 = 65
@@ -367,60 +438,8 @@ result : 03
     Lowercase to Uppercase:   str[i] = str[i] - 32
     Uppercase to Lowercase:   str[i] = str[i] + 32
 
-### prmitive data types
-
-    Type       Size      Range (signed)
-    -------    ------    ----------------------------
-    char       1 byte    -128 to 127
-    int        4 bytes   -2,147,483,648 to 2,147,483,647
-    float      4 bytes   ~6-7 decimal digits
-    double     8 bytes   ~15-16 decimal digits
-
-### Storage classes:
-    Keyword     Lifetime     Scope          Stored In
-    ---------   ----------   ------------   -----------
-    auto        Block        Local          Stack
-    static      Program      Local/File     .data / .bss
-    extern      Program      Global         .data
-    register    Block        Local          CPU Register (hint only)
-
-### Volatile Keyword in C
-
-    volatile uint32_t *TIMER_REG = (uint32_t *)0x40000000;
-
-    while (*TIMER_REG == 0) {
-        // Without volatile: compiler reads once, caches value
-        //                   --> loop never exits (wrong!)
-        // With volatile:    reads from HW register every iteration (correct)
-    }
-
-### What is const volatile — does it make sense?
-
-    const volatile uint32_t *STATUS_REG = (uint32_t *)0x40000010;
-
-    YES — makes perfect sense for read-only hardware status registers:
-      const    --> your code cannot write to it
-      volatile --> compiler must re-read it every time (hardware changes it)
-
-
-
-### qualifiers :are keywords that modify the behavior of variables and data types
-    const    --> value cannot change, compiler enforces read-only
-    volatile --> value can change outside compiler's knowledge,
-                 prevents compiler optimization
-    
-    example:
-    const int var
-    vaoltile int var
-    const volatile int  var
-
-    const volatile int *ptr → pointer to read-only volatile int (cannot modify the value, but pointer can change).
-
-    int volatile *const ptr → constant pointer to a volatile int (can modify the value, but pointer cannot change)
-
-
 -------------------------------------------------------------------------------
-###### 5. Pointers
+###### Pointers
 -------------------------------------------------------------------------------
 
     int  x   = 10;
@@ -528,10 +547,7 @@ int array[6] = {4, 3, 5, 6, 3, 8};
     printf("%d", *(int*)p);    // type cast required to dereference
     Used in: malloc(), memcpy(), generic functions like qsort().
 
-### diffrence between artay pointer vs fucntion pointer.
-# Array Pointer vs Function Pointer
-
-## Comparison Table
+### diffrence between array pointer vs fucntion pointer.
 
 # Array Pointer vs Function Pointer
 
@@ -556,25 +572,11 @@ int array[6] = {4, 3, 5, 6, 3, 8};
     int (*p)[10] = &arr;
     printf("%d\n", (*p)[3]);     /* 0 */
 
-### pragma in C
-What is it
-#pragma is a compiler-specific directive.
-It gives special instructions to the compiler that are not part of standard C syntax.
-
-#pragma pack(n)Set structure member alignment to n bytes
-
-
-### how to type case pointer adress
+### how to type caste pointer adress
     (void *) ptr
     (char *)ptr
 
-### Identifier: identifier is simply the name used to identify variables, functions, arrays, structures, or any other user-defined element in a program. It’s how you give a meaningful label to entities in your code.
-    int a;
-    void add()
-
--------------------------------------------------------------------------------
-###### 6. Memory Layout
--------------------------------------------------------------------------------
+### Memory Layout
 
     High Address
     +---------------------+
@@ -592,9 +594,9 @@ It gives special instructions to the compiler that are not part of standard C sy
     +---------------------+
     Low Address
 
--------------------------------------------------------------------------------
-###### 7. Compilation Stages
--------------------------------------------------------------------------------
+
+#### Compilation Stages
+
 
     .c --> [Preprocessor] --> .i --> [Compiler] --> .s --> [Assembler] --> .o --> [Linker] --> .elf/.bin/.hex
 
@@ -633,7 +635,7 @@ It gives special instructions to the compiler that are not part of standard C sy
     main()  ──► Application entry point
                 ⚠️  Must NEVER return in embedded systems!
 
-#########  What is a Reset Vector?
+### What is a Reset Vector?
 
     Fixed memory address the CPU fetches and jumps to after reset.
     On ARM Cortex-M:
@@ -653,10 +655,7 @@ When an embedded system powers on:
 - **main()**: Application entry point.  
   - In embedded systems, `main()` should **never return**.
 
-
--------------------------------------------------------------------------------
-###### 9. Dynamic Memory Allocation
--------------------------------------------------------------------------------
+### Dynamic Memory Allocation
 
     malloc(size)        allocate, memory is UNINITIALIZED (garbage)
     calloc(n, size)     allocate n items, memory is ZERO-INITIALIZED
@@ -669,9 +668,7 @@ When an embedded system powers on:
 
         we cant use pointer like assigning heap adress to ptr, next moment if we use malloca this adress wil be occupied
 
-
-
-### Q2. What is a memory leak? How to detect?
+### What is a memory leak? How to detect?
 
     void leak(void) {
         int *ptr = malloc(100);
@@ -687,7 +684,7 @@ When an embedded system powers on:
 
     Detection tools: Valgrind (Linux), heap usage hooks, custom malloc wrappers.
 
-### Q3. Why is malloc avoided in safety-critical embedded?
+### Why is malloc avoided in safety-critical embedded?
 
     - Non-deterministic timing (MISRA C rule violation)
     - Heap fragmentation over time
@@ -711,15 +708,13 @@ When an embedded system powers on:
         }
 
 
-### Q2. What is interrupt latency?
+### What is interrupt latency?
 
     Time from interrupt signal assertion to first ISR instruction executing.
     Factors: CPU pipeline flush, saving context (stacking registers), priority.
     ARM Cortex-M3: typically 12 clock cycles minimum latency.
 
-
-
-### Q3. What is a race condition between ISR and main? How to fix?
+### What is a race condition between ISR and main? How to fix?
 
     Problem:
         volatile uint32_t counter = 0;
@@ -741,7 +736,7 @@ When an embedded system powers on:
         __enable_irq();
 
 
-### Q5. What is interrupt priority and nesting?
+### What is interrupt priority and nesting?
 
     Higher priority interrupts can preempt lower priority ISRs.
     ARM Cortex-M: lower number = higher priority (0 = highest).
@@ -760,15 +755,14 @@ When an embedded system powers on:
     | I      | Interrupt  | Handles hardware interrupt signals from peripherals    |
     | C      | Controller | Hardware block that manages priorities, enabling, pending |
 
--------------------------------------------------------------------------------
-## 12. RTOS Concepts
--------------------------------------------------------------------------------
+
+## RTOS Concepts
 
     RTOS = Real-Time Operating System
     Schedules multiple tasks with deterministic timing.
     Guarantees response within a deadline.
 
-### Q1. Difference between a task and a thread?
+### Difference between a task and a thread?
 
     Process (one program running)
     │
@@ -778,7 +772,7 @@ When an embedded system powers on:
     ├── Thread 2 → own stack, PC, registers
     └── Thread 3 → own stack, PC, registers
 
-### Q2. What is a semaphore? Give an embedded example.
+### What is a semaphore? Give an embedded example.
 
     Binary semaphore -- like a signal flag between ISR and task.
 
@@ -796,7 +790,7 @@ When an embedded system powers on:
         }
 
 
-### Q3. Difference between mutex and semaphore?
+### Difference between mutex and semaphore?
 
     Feature              Mutex                         Semaphore
     ----------------     --------------------------    ----------------------
@@ -808,8 +802,7 @@ When an embedded system powers on:
         sharedBuffer[0] = 42;   // critical section
         xSemaphoreGive(mutex);
 
-
-### Q4. What is priority inversion? How is it solved?
+### What is priority inversion? How is it solved?
 
     Scenario:
     - Low-priority task holds mutex
@@ -822,7 +815,7 @@ When an embedded system powers on:
     - FreeRTOS mutexes support this automatically
 
 
-### Q5. What is a deadlock? How to avoid it?
+###  What is a deadlock? How to avoid it?
 
     Task A holds Mutex1, waits for Mutex2.
     Task B holds Mutex2, waits for Mutex1.
@@ -833,51 +826,33 @@ When an embedded system powers on:
     - Use timeouts instead of blocking forever
     - Minimize number of mutexes held at the same time
 
--------------------------------------------------------------------------------
-## 13. Watchdog Timer
--------------------------------------------------------------------------------
+##  Watchdog Timer
 
     Hardware timer that resets the MCU if not kicked within a timeout.
     Detects software hangs and crashes.
     Essential for unattended and safety-critical systems.
 
-### Q1. Difference between UART, SPI, CAN, I2C?
-Feature          UART               SPI                      I2C                      CAN
------------      ----------------   ----------------------   ----------------------   ----------------------
-Wires            2 (TX, RX)         4 (MOSI,MISO,SCK,CS)     2 (SDA, SCL)             2 (CANH, CANL)
-Speed            up to ~5 Mbps      up to 50+ Mbps           100k / 400k / 1MHz       125k / 250k / 500k / 1Mbps
-Topology         Point-to-point     1 master, multi slave    Multi master+slave        Multi master (bus)
-Addressing       None               Chip Select per slave    7-bit address             11-bit / 29-bit ID
-Synchronous      No (async)         Yes                      Yes                      No (async)
-Error handling   None               None                     ACK only                 CRC, ACK, error frames
-Use case         Debug, GPS, BT     Flash, ADC, display      Sensors, EEPROM           Automotive ECUs, OBD
+### Difference between UART, SPI, CAN, I2C?
+    Feature          UART               SPI                      I2C                      CAN
+    -----------      ----------------   ----------------------   ----------------------   ----------------------
+    Wires            2 (TX, RX)         4 (MOSI,MISO,SCK,CS)     2 (SDA, SCL)             2 (CANH, CANL)
+    Speed            up to ~5 Mbps      up to 100mhz            100k / 400k / 1MHz/3mhz       125k / 250k / 500k / 1Mbps
+    Topology         Point-to-point     1 master, multi slave    Multi master+slave        Multi master (bus)
+    Addressing       None               Chip Select per slave    7-bit address             11-bit / 29-bit ID
+    Synchronous      No (async)         Yes                      Yes                      No (async)
+    Error handling   None               None                     ACK only                 CRC, ACK, error frames
+    Use case         Debug, GPS, BT     Flash, ADC, display      Sensors, EEPROM           Automotive ECUs, OBD
 
 
-### Q3. What is I2C clock stretching?
+### What is I2C clock stretching?
 
     Slave holds SCL line LOW to pause the master while preparing data.
     Master must wait until slave releases SCL.
     Some I2C masters do not support clock stretching -- check datasheet!
 
 
-### Q4. What is SPI mode (CPOL and CPHA)?
-
-    Mode   CPOL   CPHA   Clock idle   Data sampled
-    ----   ----   ----   ----------   ------------
-    0      0      0      LOW          Rising edge
-    1      0      1      LOW          Falling edge
-    2      1      0      HIGH         Falling edge
-    3      1      1      HIGH         Rising edge
-
-
-
 ---
-## asm
 
-# assembler directive
- commands in assembly language source code that instruct the assembler software how to process the program,
- rather than being translated into machine code instructions
- in Linker we have .bss, .data, .txt this are assebler directiver
 
 ## Communication Protocol
 
@@ -996,7 +971,6 @@ Stop        1-2     1 (HIGH)    End of frame, line returns HIGH
 
 
 
-
 ## CPP
 Inheritance   = child gets parent's properties and methods
 Polymorphism  = same function name behaves differently based on object type
@@ -1009,8 +983,6 @@ Diffrenc ebetween timer and counter
 Timer   = counts internal clock pulses  (measures TIME)
 Counter = counts external event pulses  (measures EVENTS)
 
-wdt
-It is a hardware timer that resets the MCU automatically if the firmware gets stuck, crashes, or enters an infinite loop.
 
 
 
