@@ -966,6 +966,13 @@ Stop        1-2     1 (HIGH)    End of frame, line returns HIGH
 
 
 
+## CPP
+Inheritance   = child gets parent's properties and methods
+Polymorphism  = same function name behaves differently based on object type
+
+
+
+
 
 
 
