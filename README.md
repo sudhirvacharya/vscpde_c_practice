@@ -98,6 +98,19 @@ Adc_ReadGroup(Group0, resultBuffer)
 ### SPI w.r.t AUOTSAR
 ConceptDescriptionChannelBasic data unit. Holds a buffer of data elements to be transferred.JobA sequence of one or more Channels sharing the same CS (Chip Select).SequenceA group of one or more Jobs. Unit of transmission triggered by SW.EB BufferExternal Buffer - pointer to user-provided RAM buffer (dynamic).IB BufferInternal Buffer - statically allocated inside the SPI driver.Hw UnitPhysical SPI peripheral (e.g., QSPI0, QSPI2 on AURIX TriCore).
 
+
+SPI MODES 
+
+SPI Modes (CPOL + CPHA)
+```
+| Mode | CPOL | CPHA | Clock Idle | Sample On    |
+|------|------|------|------------|--------------|
+|  0   |  0   |  0   |    LOW     | Rising edge  |
+|  1   |  0   |  1   |    LOW     | Falling edge |
+|  2   |  1   |  0   |    HIGH    | Falling edge |
+|  3   |  1   |  1   |    HIGH    | Rising edge  |
+```
+
 3. SPI Channel Types
 TypeBuffer TypeBuffer LocationUse CaseIBInternalInside driverFixed-size, known at config timeEBExternalUser RAMVariable-size, pointer set at runtime
 
