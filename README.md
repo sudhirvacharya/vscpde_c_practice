@@ -1,5 +1,5 @@
 ### intreview structure
-        basic c qurstion
+        basic c question
         programminng
             bit manipulation
             dsa or array
@@ -7,7 +7,6 @@
         problem you have faced
 
 ### prmitive data types
-
     Type       Size      Range (signed)
     -------    ------    ----------------------------
     char       1 byte    -128 to 127
@@ -18,12 +17,16 @@
 ### Storage classes:
     Keyword     Lifetime     Scope          Stored In
     ---------   ----------   ------------   -----------
-    auto        Block        Local          Stack
-    static      Program      Local/File     .data / .bss
-    extern      Program      Global         .data
-    register    Block        Local          CPU Register (hint only)
+    1.auto        Block        Local          Stack
+    2.static      Program      Local/File     .data / .bss
+    3.extern      Program      Global         .data
+    4.register    Block        Local          CPU Register (hint only)
 
-### Volatile Keyword in C
+### qualifiers : qualifiers are keywords that modify the behavior of variables and data types
+    volatile
+    const
+
+  ### Volatile Keyword in C
 
     Volatile is a qualifier that is applied to a variable when it is declared.
     It tells the compiler that the value of the variable may change at any time-without any action being taken by the code the compiler finds nearby.
@@ -46,7 +49,6 @@
 
 
 
-### qualifiers :are keywords that modify the behavior of variables and data types
     const    --> value cannot change, compiler enforces read-only
     volatile --> value can change outside compiler's knowledge,
                  prevents compiler optimization
@@ -59,6 +61,12 @@
     const volatile int *ptr → pointer to read-only volatile int (cannot modify the value, but pointer can change).
 
     int volatile *const ptr → constant pointer to a volatile int (can modify the value, but pointer cannot change)
+## const
+    The const (constant) qualifier is a type qualifier in C and C++ programming languages 
+    used to declare that a variable's value is fixed, read-only, 
+    and cannot be modified after initialization. 
+    It acts as a compiler-enforced constraint to prevent accidental modifications,
+     enhancing code security and allowing optimization. 
 
 ### Userdefined data types 
 
@@ -67,14 +75,16 @@
     Enum
     Typedef
 
-### Identifier: identifier is simply the name used to identify variables, functions, arrays, structures, or any other user-defined element in a program. It’s how you give a meaningful label to entities in your code.
+### Identifier: 
+identifier is simply the name used to identify variables, functions, arrays, structures, 
+or any other user-defined element in a program. It’s how you give a meaningful label to entities in your code.
     int a;
     void add()
 
 ## directrives in C
-    pre-prcoessor directive
-    assembler Directive
-    Compiler directive
+    pre-prcoessor directive: #include, #ifdef
+    assembler Directive: .data , .bss, .section
+    Compiler directive: #pragma pack
 
 ## Pre-prcoessor direcive
     #include <stdio.h>       // include system header
@@ -112,43 +122,39 @@
  rather than being translated into machine code instructions
  in Linker we have .bss, .data, .txt this are assebler directiver
 
-### pragma in C
-What is it
-#pragma is a compiler-specific directive.
-It gives special instructions to the compiler that are not part of standard C syntax.
+### compiler Directive
+    Instructions to the compiler during compilation. Tells it how to compile, optimize, or handle specific code.
 
-#pragma pack(n)Set structure member alignment to n bytes
+    ### pragma in C
+    What is it
+    #pragma is a compiler-specific directive.
+    It gives special instructions to the compiler that are not part of standard C syntax.
+
+    #pragma pack(n)Set structure member alignment to n bytes
 
 ### ADC Formula
 
-Resolution:
+    Resolution = Vref / 2^n
 
-Resolution = Vref / 2^n
+    Example — 12-bit ADC:
 
-Example — 12-bit ADC:
+    Resolution = 5V / 4096 = 1.22 mV
 
-Resolution = 5V / 4096 = 1.22 mV
+    Vout = (ADC_value / (2^n - 1)) x Vref
+    ```
 
+    - `ADC_value` — raw ADC output (0 to 4095 for 12-bit)
+    - `2^n - 1` — max count = 4095
+    - `Vref` — reference voltage = 5V
 
-Output Voltage (Vout):
+    Examples:
 
+    | ADC Value | Calculation         | Result      |
+    |-----------|---------------------|-------------|
+    | 4095      | 4095 x 5 / 4095     | 5.00 V (max)|
+    | 2048      | 2048 x 5 / 4095     | ~2.50 V     |
+    | 0         | 0 x 5 / 4095        | 0.00 V (min)|
 
-Vout = (ADC_value / (2^n - 1)) x Vref
-```
-
-- `ADC_value` — raw ADC output (0 to 4095 for 12-bit)
-- `2^n - 1` — max count = 4095
-- `Vref` — reference voltage = 5V
-
-**Examples:**
-
-| ADC Value | Calculation         | Result      |
-|-----------|---------------------|-------------|
-| 4095      | 4095 x 5 / 4095     | 5.00 V (max)|
-| 2048      | 2048 x 5 / 4095     | ~2.50 V     |
-| 0         | 0 x 5 / 4095        | 0.00 V (min)|
-
---- 
 
 ### ADC w.r.t AUTOSAR
 
@@ -318,9 +324,18 @@ Std_ReturnType Spi_SetAsyncMode(Spi_AsyncModeType Mode);
 ---
 
 
-### linker error
-    example:
-        variable defined as staic in one file and anothe ruse it as extern
+###  Error in embedded C
+
+---
+| Error Type        | When Detected      | Tool                  | Output                       |
+|-------------------|--------------------|-----------------------|------------------------------|
+| Compiler Error    | Compile time       | GCC / armcc           | No .o file generated         |
+| Linker Error      | Link time          | LD / armlink          | No .elf / .hex generated     |
+| Runtime Error     | Execution on target| Debugger / TRACE32    | HardFault / wrong behavior   |
+| Warning           | Compile time       | GCC                   | Binary generated (risky)     |
+| Logical Error     | Testing/Validation | Logic analyser / CANoe| Wrong output                 |
+| Preprocessor Error| Pre-compile        | CPP                   | No .o file generated         |
+---
 
 ### Inline Function vs Macro
 
@@ -445,9 +460,8 @@ Std_ReturnType Spi_SetAsyncMode(Spi_AsyncModeType Mode);
     Lowercase to Uppercase:   str[i] = str[i] - 32
     Uppercase to Lowercase:   str[i] = str[i] + 32
 
--------------------------------------------------------------------------------
-###### Pointers
--------------------------------------------------------------------------------
+
+### Pointers
 
     int  x   = 10;
     int *ptr = &x;    // ptr holds address of x
@@ -554,9 +568,7 @@ int array[6] = {4, 3, 5, 6, 3, 8};
     printf("%d", *(int*)p);    // type cast required to dereference
     Used in: malloc(), memcpy(), generic functions like qsort().
 
-### diffrence between array pointer vs fucntion pointer.
-
-# Array Pointer vs Function Pointer
+### Array Pointer vs Function Pointer
 
     | Aspect      | Array Pointer          | Function Pointer         |
     |-------------|------------------------|--------------------------|
@@ -603,8 +615,6 @@ int array[6] = {4, 3, 5, 6, 3, 8};
 
 
 #### Compilation Stages
-
-
     .c --> [Preprocessor] --> .i --> [Compiler] --> .s --> [Assembler] --> .o --> [Linker] --> .elf/.bin/.hex
 
     Stage          Input    Output   Job
