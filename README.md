@@ -616,6 +616,26 @@ int array[6] = {4, 3, 5, 6, 3, 8};
     Low Address
 
 
+    in startup  .ro data copied to .data section
+
+    start up sequence
+    
+    FLASH                              RAM
+                                          
+    +----------------+                +----------------+
+    |   .text        |  (runs here    |                |
+    |   .rodata      |   directly,    |                |
+    |                |   no copy)     |                |
+    +----------------+                +----------------+
+    |   .data image  | ─── copy ───►  |   .data        |
+    |   speed=100    |   at startup   |   speed=100    |
+    +----------------+                +----------------+
+                                      |   .bss         |
+                            zero ──►  |  (zeroed)      |
+                            fill      +----------------+
+                                      |   Heap / Stack |
+                                     +----------------+
+
 #### Compilation Stages
     .c --> [Preprocessor] --> .i --> [Compiler] --> .s --> [Assembler] --> .o --> [Linker] --> .elf/.bin/.hex
 
