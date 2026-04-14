@@ -619,7 +619,7 @@ int array[6] = {4, 3, 5, 6, 3, 8};
     in startup  .ro data copied to .data section
 
     start up sequence
-    
+
     FLASH                              RAM
                                           
     +----------------+                +----------------+
@@ -795,6 +795,7 @@ When an embedded system powers on:
     | C      | Controller | Hardware block that manages priorities, enabling, pending |
 
 ### Dynamic memory allocation
+
     // 1. malloc — allocates raw uninitialized memory
     int *ptr = malloc(sizeof(int));          // contents are garbage
 
