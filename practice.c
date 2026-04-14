@@ -1,46 +1,21 @@
 #include <stdio.h>
-
-void sort(char *array, int n)
-{
-
-    for(int i=0 ; i< n; i++)
-    {
-        for( int  j=i+1 ;j<n ; j++)
-        {
-            if(array[i] > array[j])
-            {
-                char tmp;
-                tmp= array[i];
-                array[i]=array[j];
-                array[j]=tmp;
-
-            }
-
-
-        }
-    }
-
-}
+#include <stdlib.h>
+//odd occcurance
 int main()
 {
-    char str1[]="anagram";
-	char str2[]="ramanag";
-    int n = sizeof(str1)/sizeof(str1[0]);
-    sort(str1 , n-1);
-    sort(str2 , n-1);
-    for(int i=0 ; i<n ; i++)
+    int array[]={2,3,3,4,3,4,2};
+    int tmp=0;
+    for( int i=0 ;i <7; i++)
     {
-         printf("%c",str1[i]);
-
+         tmp ^=array[i];
     }
-    printf("\n");
-    for(int i=0 ; i<n ; i++)
-    {
-        printf("%c",str2[i]);
-    }
-    printf("\n");
+    printf("%d \n", tmp);
 
-  
-   
+
+
+
+    
+    
     return 0;
+
 }
