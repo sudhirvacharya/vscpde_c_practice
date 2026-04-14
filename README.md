@@ -599,17 +599,19 @@ int array[6] = {4, 3, 5, 6, 3, 8};
 
     High Address
     +---------------------+
-    |        Stack        |   Local vars, function frames  (grows downward)
+    |        Stack        |   Local vars, function frames      (grows ↓)
     +---------------------+
     |    (free space)     |
     +---------------------+
-    |        Heap         |   malloc/calloc                 (grows upward)
+    |        Heap         |   malloc / calloc                  (grows ↑)
     +---------------------+
-    |        .BSS         |   Uninitialized globals/statics (zeroed at startup)
+    |        .BSS         |   Uninitialized globals/statics    (zeroed at startup, RAM)
     +---------------------+
-    |        .Data        |   Initialized globals/statics   (copied FLASH->RAM)
+    |        .Data        |   Initialized globals/statics      (FLASH → RAM copy at boot)
     +---------------------+
-    |        .Text        |   Code / machine instructions   (FLASH, read-only)
+    |       .rodata       |   const globals, string literals   (FLASH, read-only)
+    +---------------------+
+    |        .text        |   Machine instructions only        (FLASH, read-only, execute)
     +---------------------+
     Low Address
 
@@ -772,7 +774,21 @@ When an embedded system powers on:
     | I      | Interrupt  | Handles hardware interrupt signals from peripherals    |
     | C      | Controller | Hardware block that manages priorities, enabling, pending |
 
+### Dynamic memory allocation
+    // 1. malloc — allocates raw uninitialized memory
+    int *ptr = malloc(sizeof(int));          // contents are garbage
 
+    // 2. calloc — allocates AND zero-initializes
+    int *ptr = calloc(100, sizeof(int));     // 100 ints, all set to 0
+
+    // 3. realloc — resize an existing allocation
+    ptr = realloc(ptr, 200 * sizeof(int));   // grow/shrink, may move ptr
+
+    // 4. free — release back to heap
+    free(ptr);                               // how does it know the size? ↓
+
+    Note:When you call malloc(100), the allocator doesn't just give you 100 bytes. 
+        It secretly allocates a metadata block just before your pointer:
 ## RTOS Concepts
 
     RTOS = Real-Time Operating System
