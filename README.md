@@ -26,6 +26,9 @@
     volatile
     const
 
+### type modifier in c
+    short, long, signed, unsigned
+
   ### Volatile Keyword in C
 
     Volatile is a qualifier that is applied to a variable when it is declared.
