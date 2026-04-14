@@ -3,7 +3,7 @@
 #include <stdbool.h>
 
 
-void display_bits(unsigned char n)
+void displaybits(unsigned char n)
 {
     for(int i = 7; i >= 0; i--)
     {
