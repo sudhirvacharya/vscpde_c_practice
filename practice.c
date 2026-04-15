@@ -3,38 +3,56 @@
 #include <stdint.h>
 //print binary
 
-void reverse_str(char *a)
+void sot012( int *a, int n)
 {
-    if(*a != '\0')
+
+int start=0;
+int mid =0;
+int end=n-1;
+while(mid <end)
+{
+    int tmp;
+    // int a[]={0,0,1};
+    if(a[mid]==0)
     {
-        reverse_str(a+1);
-        putchar(*a);
-        fflush(stdout);
+        tmp=a[start];
+        a[start]=a[mid];
+        a[mid]=tmp;
+        
+        start++;
+        mid++;
+
+    }else if (a[mid] ==1)
+    {
+        mid++;
     }
+    else //mid ==2
+    {
+        tmp=a[mid];
+        a[mid]=a[end];
+        a[end]=tmp;
+        end--;
+
+    }
+   
 
 }
 
-#define bit 8
+}
 
 int main()
 {
-    /*
 
-    //int a[]={3,4,6,7};
-    char a[]="india";
+    int a[]={2,1,0};
+    //char a[]="india";
     int n= sizeof(a)/sizeof(a[0]);
-    reverse_str(a);
+    sot012(a, n);
 
-    for(int i=0 ; i<n ; i++)
+    for(int i=0 ; i < n ; i++)
     {
         printf("%d",a[i]);
-    } */
-   // rotate right 
-    uint8_t n=1;// 0000 0000
-    uint8_t r =2;
-    n= (n>> 2) | ( n << (bit -2));
-    printf("%d\n",n);
-    00000001
+    } 
+
 
 
 
