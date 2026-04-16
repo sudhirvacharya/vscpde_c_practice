@@ -7,14 +7,32 @@
 
 
 ### use this cmd yo copy all to single file toprint 
-for f in *.md *.c; do
+# Clear file first (optional)
+> all_code.txt
+
+echo "===== FILE LIST =====" >> all_code.txt
+
+files=( *.md *.c )
+
+# Check if files actually exist
+if [ -e "${files[0]}" ]; then
+    printf "%s\n" "${files[@]}" >> all_code.txt
+else
+    echo "No .md or .c files found" >> all_code.txt
+fi
+
+echo "" >> all_code.txt
+
+# Append contents
+for f in "${files[@]}"; do
+    [ -e "$f" ] || continue
     echo "" >> all_code.txt
     echo "===== $f =====" >> all_code.txt
     echo "" >> all_code.txt
     cat "$f" >> all_code.txt
 done
 
-note: print cv, print chapter name first, all program shousl start from new page (small programs fir in single page)
+ai prompt:  print chapter name first, all program shousl start from new page (small programs fir in single page), make blakc white printable a4 formate textbook
 
 
 ### Lesson Learnt

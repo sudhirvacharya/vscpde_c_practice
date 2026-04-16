@@ -1,3 +1,58 @@
+===== FILE LIST =====
+README.md
+imp.md
+bitfield.c
+callbcakfunction.c
+enum.c
+fun_struct.c
+function_ptr.c
+getchar.c
+inlinefun.c
+memory_layout.c
+practice.c
+ptr_array.c
+struct.c
+struct_fnptr.c
+ternary.c
+union.c
+xbmp_anagram.c
+xbmp_bit_op.c
+xbmp_cnt_vowel.c
+xbmp_endians.c
+xbmp_factorial.c
+xbmp_fibonacci.c
+xbmp_mcal_reg.c
+xbmp_nextpower2.c
+xbmp_odd_occur.c
+xbmp_point2arry.c
+xbmp_print_bin.c
+xbmp_reverse_array.c
+xbmp_reverse_binary.c
+xbmp_reverse_string.c
+xbmp_rotate_oper.c
+xbmp_shift_operator.c
+xbmp_strip_lowes_bit.c
+xbmp_swap_adj.c
+xbmp_swap_nibble.c
+xbmp_swap_values.c
+xbmp_tricky.c
+xbmp_xor.c
+xmp_countsetbits.c
+y_adc_baremetal.c
+y_spi_baremetal.c
+z_ascend_sort.c
+z_move_zero_end.c
+z_remove_duplicate.c
+z_reverse_string.c
+z_second_large_num.c
+z_second_large_num1.c
+z_sizeof.c
+z_sort01.c
+z_sort012.c
+zz_circular_buff.c
+zz_linked_list.c
+zz_stack.c
+
 
 ===== README.md =====
 
@@ -1084,6 +1139,8 @@ for f in *.md *.c; do
     cat "$f" >> all_code.txt
 done
 
+note: print cv, print chapter name first, all program shousl start from new page (small programs fir in single page)
+
 
 ### Lesson Learnt
  1. bracket missed
@@ -1877,7 +1934,7 @@ int main() {
     for (i = 1; i <= n; i++) {
         printf("%lld ", a);
         next = a + b;
-        a = b;git 
+        a = b;
         b = next;
     }
 
