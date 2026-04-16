@@ -5,15 +5,13 @@
 
 
 ### intrduction about myself
-Hi I am sudhir acharya, 
-i have over all 11+ years of experice in embededd c, automtove, mcal domain.
-i hev worked in mcal driver devlopement, testing. integration.
+"Hi, I am Sudhir Acharya. 
+I have over 11 years of experience in Embedded C, with a strong focus on the Automotive domain — specifically in the MCAL layer.
+My core work has been in MCAL driver development, testing, and integration. 
+I have hands-on experience with microcontrollers from Infineon, NXP, and STMicroelectronics.
+On the tools side, I have worked with LAUTERBACH TRACE32 for software debugging, Logic Analyzers for signal-level analysis, and CANoe for automotive communication testing.
+From a quality and compliance perspective, I have experience with ASPICE process requirements and MISRA C coding guidelines,
 
-i ahve work expeircne with vairou mcu infienor, nxp, stm
-
-oter than that i have expeircne in sw debugginh,using lutare bach, logi anatyse, 
-
-qty wisw apisr and misra
 
 ### use this cmd yo copy all to single file toprint 
 # Clear file first (optional)
