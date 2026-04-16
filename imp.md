@@ -73,72 +73,163 @@ echo "</pre></body></html>" >> final.html
 
 
 ##### AI prompt
-Create a professionally formatted A4 textbook-style PDF in black and white for printing.
+The source is HTML content containing:
+### intrduction about myself
 
-CONTENT SOURCE:
-Use ONLY the provided content (README.md and code files or all_code.txt).
+theory
+
+
+Source code files
+
+
+
+
+Use ONLY the provided content.
+
+
 Do NOT generate any new theory, explanations, or code.
+
+
 Do NOT add extra examples.
+
+
 Only format and organize the existing content.
+
+
 
 FORMAT REQUIREMENTS:
 
-* Page size: A4
-* Color: strictly black and white (printer-friendly)
-* Font:
 
-  * Serif/Sans-serif for normal text
-  * Monospace for code
-* Margins: 2.5 cm on all sides
-* Page numbers at bottom center
-* Optional: Chapter title in header
+Page size: A4
+
+
+Color: Strictly black and white (printer-friendly)
+
+
+Fonts:
+
+
+Serif or sans-serif for normal text
+
+
+Monospace for code
+
+
+
+
+Margins: 2.5 cm on all sides
+
+
+Page numbers: Bottom center
+
+
+Optional: Chapter title in header
+
+
 
 COVER PAGE:
 
-* Title: "C Programming Notes & Practice"
-* Subtitle: "Beginner to Intermediate Guide"
-* Fields:
-  Name: ____________
-  Date: ____________
-* Center aligned, minimal design
-* Must be on its own page
+
+Title: C Programming Notes & Practice
+
+
+Subtitle: Beginner to Intermediate Guide
+
+
+Author: Sudhir Acharya
+
+
+Center-aligned layout
+
+
+Minimal, clean design
+
+
+Must appear on a separate page
+
+
 
 STRUCTURE:
 
-* Add a Table of Contents (based only on given files)
-* Do NOT invent chapters
-* Use file names or sections from README.md as chapters
+
+Generate a Table of Contents based only on the provided content
+
+
+Do NOT create or invent new chapters
+
+
+Use file names or sections from README.md as chapter titles
+
+
 
 THEORY SECTIONS (FROM README.md ONLY):
 
-* Preserve original text exactly (no rewriting)
-* Maintain headings and formatting
-* Keep bullet points and spacing
-* Tables must remain aligned and readable
-* Do NOT split tables across pages
+
+Preserve the original text exactly (no rewriting)
+
+
+Maintain headings and formatting
+
+
+Keep bullet points and spacing intact
+
+
+Ensure tables remain aligned and readable
+
+
+Do NOT split tables across pages
+
+
 
 CODE SECTIONS:
 
-* Each program MUST start on a NEW PAGE
-* Do NOT split any program across pages
-* Preserve code exactly (no modification)
-* Use monospace font
-* Add heading:
-  Program: <filename>
-* Put code inside a thin bordered box
+
+Each program must start on a new page
+
+
+Do NOT split any program across pages
+
+
+Preserve code exactly (no modifications)
+
+
+Use a monospace font
+
+
+Add a heading:
+Program: <filename>
+
+
+Place code inside a thin bordered box
+
+
 
 PAGE LAYOUT RULES:
 
-* Do not break sections awkwardly
-* Keep headings with their content
-* Maintain consistent spacing
-* Ensure clean print readability
+
+Avoid awkward page breaks
+
+
+Keep headings with their content
+
+
+Maintain consistent spacing throughout
+
+
+Ensure clean readability for printing
+
+
 
 OUTPUT:
 
-* A clean, print-ready PDF
-* Looks like a structured textbook/notebook
-* Strictly uses only the provided content (no additions)
+
+A clean, print-ready PDF
+
+
+Structured like a professional textbook or notebook
+
+
+Must strictly use only the provided content (no additions)
 
 ---
 
