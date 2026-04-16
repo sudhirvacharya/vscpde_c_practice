@@ -69,7 +69,78 @@ cat final.txt >> final.html
 # Step 4: Close HTML
 echo "</pre></body></html>" >> final.html
 
-ai prompt:  print chapter name first, all program shousl start from new page (small programs fir in single page), make blakc white printable a4 formate textbook
+---
+
+
+##### AI prompt
+Create a professionally formatted A4 textbook-style PDF in black and white for printing.
+
+CONTENT SOURCE:
+Use ONLY the provided content (README.md and code files or all_code.txt).
+Do NOT generate any new theory, explanations, or code.
+Do NOT add extra examples.
+Only format and organize the existing content.
+
+FORMAT REQUIREMENTS:
+
+* Page size: A4
+* Color: strictly black and white (printer-friendly)
+* Font:
+
+  * Serif/Sans-serif for normal text
+  * Monospace for code
+* Margins: 2.5 cm on all sides
+* Page numbers at bottom center
+* Optional: Chapter title in header
+
+COVER PAGE:
+
+* Title: "C Programming Notes & Practice"
+* Subtitle: "Beginner to Intermediate Guide"
+* Fields:
+  Name: ____________
+  Date: ____________
+* Center aligned, minimal design
+* Must be on its own page
+
+STRUCTURE:
+
+* Add a Table of Contents (based only on given files)
+* Do NOT invent chapters
+* Use file names or sections from README.md as chapters
+
+THEORY SECTIONS (FROM README.md ONLY):
+
+* Preserve original text exactly (no rewriting)
+* Maintain headings and formatting
+* Keep bullet points and spacing
+* Tables must remain aligned and readable
+* Do NOT split tables across pages
+
+CODE SECTIONS:
+
+* Each program MUST start on a NEW PAGE
+* Do NOT split any program across pages
+* Preserve code exactly (no modification)
+* Use monospace font
+* Add heading:
+  Program: <filename>
+* Put code inside a thin bordered box
+
+PAGE LAYOUT RULES:
+
+* Do not break sections awkwardly
+* Keep headings with their content
+* Maintain consistent spacing
+* Ensure clean print readability
+
+OUTPUT:
+
+* A clean, print-ready PDF
+* Looks like a structured textbook/notebook
+* Strictly uses only the provided content (no additions)
+
+---
 
 
 ### Lesson Learnt
