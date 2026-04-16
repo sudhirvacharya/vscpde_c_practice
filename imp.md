@@ -14,6 +14,8 @@ for f in *.md *.c; do
     cat "$f" >> all_code.txt
 done
 
+note: print cv, print chapter name first, all program shousl start from new page (small programs fir in single page)
+
 
 ### Lesson Learnt
  1. bracket missed
