@@ -71,12 +71,17 @@
     It acts as a compiler-enforced constraint to prevent accidental modifications,
      enhancing code security and allowing optimization. 
 
-### Userdefined data types 
-
+### Derived dataypes
     Structure
     Union
+### Userdefined data types 
     Enum
     Typedef
+
+## typecasring or type conversion
+    implicit->autoatically done by compiler for two compatiable data types
+    explicit ->done by programmer using typecast operator to make sure no valuble data los
+    type promotion-> smaller data to large one
 
 ### Identifier: 
 identifier is simply the name used to identify variables, functions, arrays, structures, 
@@ -813,11 +818,43 @@ When an embedded system powers on:
 
     Note:When you call malloc(100), the allocator doesn't just give you 100 bytes. 
         It secretly allocates a metadata block just before your pointer:
+
+
+##  Watchdog Timer
+
+    Hardware timer that resets the MCU if not kicked within a timeout.
+    Detects software hangs and crashes.
+    Essential for unattended and safety-critical systems.
+
 ## RTOS Concepts
 
     RTOS = Real-Time Operating System
     Schedules multiple tasks with deterministic timing.
     Guarantees response within a deadline.
+
+### Sempahore
+in rtos, a semaphore is a syxbronization mechanism used to manage access to shared resource and cororinates task. 
+semaphore helps prevent issues like race condtion and deadlock in multi tasking 
+enviranioment by ensuring that only a specified number of task can access a resource at time.
+
+### Mutexes:
+    in rtos and multithreadifn environment, a mutex is asyncornization mecanism that prevent multiple task or thread from acess that same shared reosurce at asame trime/
+    how mutex works:
+        a mutex act like lock.a task must aquire the lock the mutex before access the shared resoucre.
+        once the a task finsihed using the resoucrece, it release(unlcok) the mutx allowing other task to acess it.
+        if another task tries to aquire the mutex while its locked, it has to wait untill the mutex is relases
+
+### Difference between mutex and semaphore?
+
+    Feature              Mutex                         Semaphore
+    ----------------     --------------------------    ----------------------
+    Ownership            Owned by locking task         No ownership
+    Priority inversion   Protected                     Not protected
+    Use case             Mutual exclusion (shared data) Signaling
+
+        xSemaphoreTake(mutex, portMAX_DELAY);
+        sharedBuffer[0] = 42;   // critical section
+        xSemaphoreGive(mutex);
 
 ### Difference between a task and a thread?
 
@@ -847,17 +884,7 @@ When an embedded system powers on:
         }
 
 
-### Difference between mutex and semaphore?
 
-    Feature              Mutex                         Semaphore
-    ----------------     --------------------------    ----------------------
-    Ownership            Owned by locking task         No ownership
-    Priority inversion   Protected                     Not protected
-    Use case             Mutual exclusion (shared data) Signaling
-
-        xSemaphoreTake(mutex, portMAX_DELAY);
-        sharedBuffer[0] = 42;   // critical section
-        xSemaphoreGive(mutex);
 
 ### What is priority inversion? How is it solved?
 
@@ -882,12 +909,6 @@ When an embedded system powers on:
     - Always acquire mutexes in the SAME ORDER across all tasks
     - Use timeouts instead of blocking forever
     - Minimize number of mutexes held at the same time
-
-##  Watchdog Timer
-
-    Hardware timer that resets the MCU if not kicked within a timeout.
-    Detects software hangs and crashes.
-    Essential for unattended and safety-critical systems.
 
 ### Difference between UART, SPI, CAN, I2C?
     Feature          UART               SPI                      I2C                      CAN
