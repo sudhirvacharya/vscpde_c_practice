@@ -4,7 +4,16 @@
 3.delte node in linked list
 
 
+### intrduction about myself
+Hi I am sudhir acharya, 
+i have over all 11+ years of experice in embededd c, automtove, mcal domain.
+i hev worked in mcal driver devlopement, testing. integration.
 
+i ahve work expeircne with vairou mcu infienor, nxp, stm
+
+oter than that i have expeircne in sw debugginh,using lutare bach, logi anatyse, 
+
+qty wisw apisr and misra
 
 ### use this cmd yo copy all to single file toprint 
 # Clear file first (optional)
@@ -31,6 +40,36 @@ for f in "${files[@]}"; do
     echo "" >> all_code.txt
     cat "$f" >> all_code.txt
 done
+
+
+--->html format, looks good
+# Step 1: Add page break before each C file
+awk '/^===== .*\.c =====$/ { print "\f" } { print }' all_code.txt > final.txt
+
+# Step 2: Convert to HTML (print-friendly)
+cat << 'EOF' > final.html
+<html>
+<head>
+<style>
+body {
+    font-family: monospace;
+    white-space: pre;
+    margin: 20mm;
+}
+pre {
+    page-break-inside: avoid;
+}
+</style>
+</head>
+<body>
+<pre>
+EOF
+
+# Step 3: Append your content
+cat final.txt >> final.html
+
+# Step 4: Close HTML
+echo "</pre></body></html>" >> final.html
 
 ai prompt:  print chapter name first, all program shousl start from new page (small programs fir in single page), make blakc white printable a4 formate textbook
 

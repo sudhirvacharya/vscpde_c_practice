@@ -1,61 +1,36 @@
 #include <stdio.h>
-#include <stdlib.h>
-#include <stdint.h>
-//print binary
+#include <pthread.h>
 
-void sot012( int *a, int n)
-{
+int counter = 0;
+pthread_mutex_t lock;
 
-int start=0;
-int mid =0;
-int end=n-1;
-while(mid <end)
-{
-    int tmp;
-    // int a[]={0,0,1};
-    if(a[mid]==0)
-    {
-        tmp=a[start];
-        a[start]=a[mid];
-        a[mid]=tmp;
-        
-        start++;
-        mid++;
-
-    }else if (a[mid] ==1)
-    {
-        mid++;
+void* increment(void* arg) {
+    for (int i = 0; i < 100000; i++) {
+        pthread_mutex_lock(&lock);   // lock
+        counter++;
+        pthread_mutex_unlock(&lock); // unlock
     }
-    else //mid ==2
-    {
-        tmp=a[mid];
-        a[mid]=a[end];
-        a[end]=tmp;
-        end--;
-
-    }
-   
-
+    return NULL;
 }
 
-}
+int main() {
+    pthread_t t1, t2;
 
-int main()
-{
+    // Initialize mutex
+    pthread_mutex_init(&lock, NULL);
 
-    int a[]={2,1,0};
-    //char a[]="india";
-    int n= sizeof(a)/sizeof(a[0]);
-    sot012(a, n);
+    // Create threads
+    pthread_create(&t1, NULL, increment, NULL);
+    pthread_create(&t2, NULL, increment, NULL);
 
-    for(int i=0 ; i < n ; i++)
-    {
-        printf("%d",a[i]);
-    } 
+    // Wait for threads to finish
+    pthread_join(t1, NULL);
+    pthread_join(t2, NULL);
 
+    printf("Final counter value: %d\n", counter);
 
-
+    // Destroy mutex
+    pthread_mutex_destroy(&lock);
 
     return 0;
-
 }
