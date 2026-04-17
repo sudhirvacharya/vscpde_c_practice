@@ -1,22 +1,22 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-  int a= 0x1234;
+  int a= 0x12345678;
   int var= 0x12345678;
   /*
   a = 0x1234 (stored as 4 bytes: 0x00001234)
 
   Big Endian (MSB at lowest address):
-  addr 0x0000 --> 0x00
-  addr 0x0001 --> 0x00
-  addr 0x0002 --> 0x12
-  addr 0x0003 --> 0x34
+  addr 0x0000 --> 0x12
+  addr 0x0001 --> 0x24
+  addr 0x0002 --> 0x56
+  addr 0x0003 --> 0x78
 
   Little Endian (LSB at lowest address):
-  addr 0x0000 --> 0x34   <-- ptr points here; matches (a & 0x000000FF) = 0x34
-  addr 0x0001 --> 0x12
-  addr 0x0002 --> 0x00
-  addr 0x0003 --> 0x00
+  addr 0x0000 --> 0x78   <-- ptr points here; matches (a & 0x000000FF) = 0x78
+  addr 0x0001 --> 0x56
+  addr 0x0002 --> 0x34
+  addr 0x0003 --> 0x12
   */
 
  char *ptr = (char *)&a;
@@ -57,7 +57,7 @@ int main()
     }
     else
     {
-         printf("Big endian \n");
+         printf("big endian: lowest addr byte = 0x%x \n", (unsigned char)*ptr);
     }
 
     //convert endians
