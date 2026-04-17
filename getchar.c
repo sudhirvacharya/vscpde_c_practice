@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <stdint.h>
-
+// enter date of birth and print
 int getnum()
 {
     int num;
@@ -11,7 +11,7 @@ int getnum()
         if (num >= '0' && num <= '9') {
             value = value * 10 + (num - '0');
         }
-    } while (num != '\n' && num != EOF);
+    } while (num != '\n' && num != EOF);// EOF END OF FILE
 
     return value;
 }

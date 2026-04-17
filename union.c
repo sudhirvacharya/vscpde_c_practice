@@ -5,6 +5,7 @@
 
 #include <stdio.h>
 
+//type punning
 typedef union {
     char a[4];
     int i_num;

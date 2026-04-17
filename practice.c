@@ -1,36 +1,45 @@
 #include <stdio.h>
-#include <pthread.h>
+#include <stdint.h>
+//anagram
 
-int counter = 0;
-pthread_mutex_t lock;
+void  checkanagram(char *str1,char * str2, int n)
+{
+    char alpha[25];
+    char result1[25];
+    char result2[25];
+    for(int i=0 ; i <n ; i++)
+    {
+        alpha[i]='0'+i;
 
-void* increment(void* arg) {
-    for (int i = 0; i < 100000; i++) {
-        pthread_mutex_lock(&lock);   // lock
-        counter++;
-        pthread_mutex_unlock(&lock); // unlock
     }
-    return NULL;
+    for(int i=0 ; i< n; i++)
+    {
+        if(str1[i]==alpha[i])
+        {
+
+        }
+
+    }
+
 }
+int main()
+{
+    char str1[]='anagram';
+    char str2[]='mnagraa';
+    int n1 =sizeof(str1)/sizeof(str1[0]);
+    int n2 =sizeof(str2)/sizeof(str2[0]);
 
-int main() {
-    pthread_t t1, t2;
+    if( n1 != n2)
+    {
+        printf("not a anagram");
 
-    // Initialize mutex
-    pthread_mutex_init(&lock, NULL);
+    }
+    checkanagram(str1, str2, n1-1);
 
-    // Create threads
-    pthread_create(&t1, NULL, increment, NULL);
-    pthread_create(&t2, NULL, increment, NULL);
 
-    // Wait for threads to finish
-    pthread_join(t1, NULL);
-    pthread_join(t2, NULL);
+    
 
-    printf("Final counter value: %d\n", counter);
 
-    // Destroy mutex
-    pthread_mutex_destroy(&lock);
 
     return 0;
 }

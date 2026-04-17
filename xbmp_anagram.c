@@ -28,13 +28,13 @@ int main()
     int n = sizeof(str1)/sizeof(str1[0]);
     sort(str1 , n-1);
     sort(str2 , n-1);
-    for(int i=0 ; i<n ; i++)
+    for(int i=0 ; i<n-1 ; i++)
     {
          printf("%c",str1[i]);
 
     }
     printf("\n");
-    for(int i=0 ; i<n ; i++)
+    for(int i=0 ; i<n-1 ; i++)
     {
         printf("%c",str2[i]);
     }
