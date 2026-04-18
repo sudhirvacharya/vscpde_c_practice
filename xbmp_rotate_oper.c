@@ -13,6 +13,7 @@ void displaybits(unsigned char n)
     }
 
 }
+//https://www.browserling.com/tools/rotate-binary-right
 int main()
 {
     unsigned char var=67;//rottat left 01000011, outpput  -->00011010

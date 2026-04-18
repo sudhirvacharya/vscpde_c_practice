@@ -20,7 +20,7 @@ void sort012(int *ptr, int n)
             tmp = ptr[start];
             ptr[start] = ptr[mid];
             ptr[mid] = tmp;
-            mid++;      /* examined element, move scanner forward */
+            mid++;    //i had doubt why it here, this mid will transverse and pass to value to satar
             start++;    /* 0-zone grew by one */
         }
         else if (ptr[mid] == 1)
