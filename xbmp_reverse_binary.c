@@ -7,8 +7,8 @@ void reversebit(unsigned int n)
     for(int i=0 ;i<32 ;i++)
     {
         tmp= (tmp <<1);
-        tmp |= n & 1;
-        n= n >> 1;
+        tmp |= (n>>i) & 1;
+       
         
     }
     printf("result: %x \n",tmp);
