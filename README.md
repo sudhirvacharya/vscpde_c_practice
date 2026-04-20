@@ -1062,4 +1062,56 @@ Diffrenc ebetween timer and counter
 Timer   = counts internal clock pulses  (measures TIME)
 Counter = counts external event pulses  (measures EVENTS)
 
+## Linux OS Road map
+
+        START HERE
+        │
+        ▼
+    ✅ Phase 1 — Synchronization & Processes    (DONE ✅)
+        │
+        │   ✅ lo_mutex.c        ← mutex, threads, race condition
+        │   ✅ lo_semaphore.c    ← semaphore, shared memory, fork
+        │   ✅ lo_process.c      ← fork, wait, waitpid, execvp, exit
+        │   ✅ lo_threads.c      ← pthread_create, join, exit, return value
+        │   ✅ lo_sharedmem.c    ← mmap, sem_init, shared struct
+        │
+        ▼
+    🔜 Phase 2 — IPC (Inter Process Communication)
+        │
+        │   lo_pipe.c       ← start here, connects to fork() you know
+        │   lo_fifo.c
+        │   lo_msqueue.c
+        │   lo_socket.c     ← do this last in phase 2
+        │
+        ▼
+    🔜 Phase 3 — Memory Management
+        │
+        │   lo_malloc.c     ← start here, very practical
+        │   lo_stack_heap.c
+        │   lo_mmap.c
+        │
+        ▼
+    🔜 Phase 4 — File System
+        │
+        │   lo_fileio.c     ← start here, used everywhere
+        │   lo_dirops.c
+        │   lo_filestat.c
+        │
+        ▼
+    🔜 Phase 5 — Signals
+        │
+        │   lo_signals.c    ← start here
+        │   lo_sigaction.c
+        │
+        ▼
+    🔜 Phase 6 — Classic OS Problems
+        │
+        │   lo_prodcons.c   ← uses mutex + semaphore you already know
+        │   lo_readwrite.c
+        │   lo_deadlock.c
+        │   lo_dining.c
+        │
+        ▼
+    🏆 Linux OS / Systems Programming — COMPLETE
+
 
