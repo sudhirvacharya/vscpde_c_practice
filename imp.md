@@ -1,8 +1,17 @@
 # my wekanes i forgot every time  
-1.(*fnptr)
+1.void (*fnptr)(int, int)
 2.move zero to end
 3.delte node in linked list
-2.get char
+4.  
+    Array of Pointers (Pointer Array)
+    int *arr[5];).
+
+    Pointer to an Array (Array Pointer)
+    int (*ptr)[5];).
+5. n= sizeof(str)/sizeof(str[0])// last chra is null
+   n= n-1
+6. array sorting
+    array[left]  not just comapre right soem times
 
 
 # take care below things
