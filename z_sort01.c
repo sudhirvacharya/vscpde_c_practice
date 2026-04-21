@@ -1,5 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
+
+// here comparing first and last 
+//so right is n-1
 void sort01(int *array, int n)
 {
     int tmp=0;

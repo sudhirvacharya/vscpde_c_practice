@@ -10,6 +10,9 @@
 */
 
 //left of array always zero expect irt iteration
+
+// here comparing next element so
+//left and right is zero
 void moveZerotoEnd(int *arr, int n)
 {
     int left=0;
