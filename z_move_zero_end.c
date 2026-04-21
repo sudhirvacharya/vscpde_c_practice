@@ -41,3 +41,25 @@ int main()
         printf("moveZerotoEnd %d\n", arr[i]);
     return 0;
 }
+/*
+
+    [ 0 ]
+    [ 0 ]     [ 7 ]
+
+    [ 7 ]     [ 0 ]
+    L          R
+
+        [ 0 ]     [ 0 ]
+        L          R
+
+        [ 0 ]          [ 4 ]
+        L               R
+
+        [ 4 ]          [ 0 ]
+        L               R
+
+            [ 0 ]     [ 0 ]
+                L         R
+
+
+*/

@@ -36,3 +36,29 @@ int main()
 
 
 }
+
+/*
+
+Step 0:  |0  1  0  0  1|   L=0,R=4  arr[L]=0 → L++
+          L-----------R
+
+Step 1:   0|1  0  0  1|    L=1,R=4  arr[L]=1 → swap(1,4) R--
+            L--------R
+
+Step 2:   0|1  0  0  1|    swap 1↔1, no visible change, R--
+            L-----R
+
+Step 3:   0|1  0  0| 1     L=1,R=3  arr[L]=1 → swap(1,3) R--
+            L-----R
+
+Step 4:   0  0|0  1| 1     L=1,R=2  arr[L]=0 → L++
+               L--R
+
+Step 5:   0  0  0|1| 1     L=2,R=2  arr[L]=1 → swap(2,2) R--
+                 LR
+
+Step 6:   L > R  STOP
+
+Result:  {0  0  0  1  1}  ✅
+
+*/
