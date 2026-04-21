@@ -14,6 +14,8 @@
     array[left]  , some time forgot and uding only index like left
 7 IMP--> shift operation use proper brace else result will be wrong
 
+8. use UINT8_T FOR SHIFT OPERATION AND USE CHAR ITS EASY
+
 
 # take care below things
     uint8_t use all variabls in tmp also if  its rerquired
