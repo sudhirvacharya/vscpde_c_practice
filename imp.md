@@ -11,7 +11,8 @@
 5. n= sizeof(str)/sizeof(str[0])// last chra is null
    n= n-1
 6. array sorting
-    array[left]  not just comapre right soem times
+    array[left]  , some time forgot and uding only index like left
+7 IMP--> shift operation use proper brace else result will be wrong
 
 
 # take care below things

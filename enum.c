@@ -5,7 +5,7 @@ typedef enum
 {
     SUN,
     MON,
-    TUE,
+    TUE
 }WEEKDAY;
 
 int main(void)

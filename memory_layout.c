@@ -78,7 +78,7 @@ High Address
 |         .data             |
 |  0x618adea28010  c_init   |  value=8, initialized global
 +---------------------------+
-|         .text / .rodata   |
+|         .text / .rodata   |  const int a=4;
 +---------------------------+
 Low Address
 */
