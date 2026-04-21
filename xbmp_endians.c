@@ -3,8 +3,9 @@
 
   int a= 0x12345678;
   int var= 0x12345678;
+  // DONT LOOK INTO VARIABLE, LOOK INOT MEMORY HOW ITS SAVED.
   /*
-  a = 0x1234 (stored as 4 bytes: 0x00001234)
+  a = 0x12345678 (stored as 4 bytes: 0x12345678)
 
   Big Endian (MSB at lowest address):
   addr 0x0000 --> 0x12
@@ -51,7 +52,7 @@ int main()
      * On little endian: lowest addr holds LSB = (a & 0x000000FF) = 0x34
      * On big endian:    lowest addr holds MSB = 0x00, not equal to 0x34
      */
-    if(*ptr == (char)(a & 0x000000FF))
+    if(*ptr == (char)(a & 0x000000FF)) // checking with lsb
     {
         printf("Little endian: lowest addr byte = 0x%x \n", (unsigned char)*ptr);
     }

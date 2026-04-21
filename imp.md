@@ -1,6 +1,6 @@
 # my wekanes i forgot every time  
 1.void (*fnptr)(int, int)
-2.move zero to end
+2.move zero to end and sor0,1 always confuse
 3.delte node in linked list
 4.  
     Array of Pointers (Pointer Array)
@@ -15,6 +15,8 @@
 7 IMP--> shift operation use proper brace else result will be wrong
 
 8. use UINT8_T FOR SHIFT OPERATION AND USE CHAR ITS EASY
+
+9 for bit operation use | , for logic ||
 
 
 # take care below things
