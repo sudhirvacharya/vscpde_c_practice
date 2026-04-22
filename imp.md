@@ -32,63 +32,11 @@ On the tools side, I have worked with LAUTERBACH TRACE32 for software debugging,
 From a quality and compliance perspective, I have experience with ASPICE process requirements and MISRA C coding guidelines,
 
 
-### use this cmd yo copy all to single file toprint 
-# Clear file first (optional)
-> all_code.txt
+### how ro generate final html file
+run this
+@sudheerpaniyur ➜ /workspaces/vscpde_c_practice (main) $ chmod +x generate_html.sh
+@sudheerpaniyur ➜ /workspaces/vscpde_c_practice (main) $ bash generate_html.sh
 
-echo "===== FILE LIST =====" >> all_code.txt
-
-files=( *.md *.c )
-
-# Check if files actually exist
-if [ -e "${files[0]}" ]; then
-    printf "%s\n" "${files[@]}" >> all_code.txt
-else
-    echo "No .md or .c files found" >> all_code.txt
-fi
-
-echo "" >> all_code.txt
-
-# Append contents
-for f in "${files[@]}"; do
-    [ -e "$f" ] || continue
-    echo "" >> all_code.txt
-    echo "===== $f =====" >> all_code.txt
-    echo "" >> all_code.txt
-    cat "$f" >> all_code.txt
-done
-
-
---->html format, looks good
-# Step 1: Add page break before each C file
-awk '/^===== .*\.c =====$/ { print "\f" } { print }' all_code.txt > final.txt
-
-# Step 2: Convert to HTML (print-friendly)
-cat << 'EOF' > final.html
-<html>
-<head>
-<style>
-body {
-    font-family: monospace;
-    white-space: pre;
-    margin: 20mm;
-}
-pre {
-    page-break-inside: avoid;
-}
-</style>
-</head>
-<body>
-<pre>
-EOF
-
-# Step 3: Append your content
-cat final.txt >> final.html
-
-# Step 4: Close HTML
-echo "</pre></body></html>" >> final.html
-
----
 
 
 ##### AI prompt
