@@ -7,6 +7,10 @@ Author : Sudhir Acharya
         prohetc explanation
         problem you have faced
 
+### ADC Project
+![ADC SW and HW Group Block Diagram](doc/adc_block_diagram.svg)
+
+
 ### prmitive data types
     Type       Size      Range (signed)
     -------    ------    ----------------------------
