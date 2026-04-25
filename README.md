@@ -1048,6 +1048,18 @@ Stop        1-2     1 (HIGH)    End of frame, line returns HIGH
 
     CS pulled LOW by master to select slave.
 
+## what is SPI Synchronous vs Asynchronous ?
+
+| #  | Point                                                                              |
+|----|------------------------------------------------------------------------------------|
+| 1  | SPI bus is always clocked, hardware sync is not negotiable                         |
+| 2  | Sync vs Async is a software architecture choice, not a hardware one                |
+| 3  | DMA frees CPU but driver design decides if SW is truly async                       |
+| 4  | Best architecture is async driver as base with sync wrapper on top                 |
+| 5  | In RTOS, task pends on semaphore, ISR gives on transfer complete                   |
+| 6  | Prefer sync for boot sequences, short commands, and simple debug scenarios         |
+| 7  | Prefer async with DMA for flash bulk ops, frame buffers, and RTOS multitasking     |
+
 
 
 ## CPP
