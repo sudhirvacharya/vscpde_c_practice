@@ -10,6 +10,9 @@ Author : Sudhir Acharya
 ### ADC Project
 ![ADC SW and HW Group Block Diagram](doc/adc_block_diagram.svg)
 
+## QSPI Project
+![QSPI](doc/qspi.svg)
+
 
 ### prmitive data types
     Type       Size      Range (signed)
