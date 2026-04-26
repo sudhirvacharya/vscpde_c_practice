@@ -1,11 +1,11 @@
 Author : Sudhir Acharya
-### intreview structure
-        basic c question
-        programminng
-            bit manipulation
-            dsa or array
-        prohetc explanation
-        problem you have faced
+### Interview Structure
+- Basic C Questions
+- Programming
+  - Bit Manipulation
+  - DSA / Array
+- Project Explanation
+- Problems You Have Faced
 
 ### ADC Project
 ![ADC SW and HW Group Block Diagram](doc/adc_block_diagram.svg)
@@ -14,7 +14,7 @@ Author : Sudhir Acharya
 ![QSPI](doc/qspi.svg)
 
 
-### prmitive data types
+### what is prmitive data types
     Type       Size      Range (signed)
     -------    ------    ----------------------------
     char       1 byte    -128 to 127
@@ -22,7 +22,7 @@ Author : Sudhir Acharya
     float      4 bytes   ~6-7 decimal digits
     double     8 bytes   ~15-16 decimal digits
 
-### Storage classes:
+### what are the Storage classes:
     Keyword     Lifetime     Scope          Stored In
     ---------   ----------   ------------   -----------
     1.auto        Block        Local          Stack
@@ -30,15 +30,33 @@ Author : Sudhir Acharya
     3.extern      Program      Global         .data
     4.register    Block        Local          CPU Register (hint only)
 
-### qualifiers : qualifiers are keywords that modify the behavior of variables and data types
+### what is qualifiers ?
+    qualifiers are keywords that modify the behavior of variables and data types
     volatile
     const
 
-### type modifier in c
+### what are the type modifier in c
     short, long, signed, unsigned
 
-  ### Volatile Keyword in C
+### Derived dataypes
+    Structure
+    Union
+### Userdefined data types 
+    Enum
+    Typedef
 
+## typecasring or type conversion
+    implicit->autoatically done by compiler for two compatiable data types
+    explicit ->done by programmer using typecast operator to make sure no valuble data los
+    type promotion-> smaller data to large one
+
+### Identifier: 
+identifier is simply the name used to identify variables, functions, arrays, structures, 
+or any other user-defined element in a program. It’s how you give a meaningful label to entities in your code.
+    int a;
+    void add()
+
+### Volatile Keyword in C
     Volatile is a qualifier that is applied to a variable when it is declared.
     It tells the compiler that the value of the variable may change at any time-without any action being taken by the code the compiler finds nearby.
 
@@ -50,7 +68,14 @@ Author : Sudhir Acharya
         // With volatile:    reads from HW register every iteration (correct)
     }
 
-    ### What is const volatile — does it make sense?
+## what is the use of const keyword in c
+    The const (constant) qualifier is a type qualifier in C and C++ programming languages 
+    used to declare that a variable's value is fixed, read-only, 
+    and cannot be modified after initialization. 
+    It acts as a compiler-enforced constraint to prevent accidental modifications,
+     enhancing code security and allowing optimization. 
+
+### What is const volatile — does it make sense?
 
     const volatile uint32_t *STATUS_REG = (uint32_t *)0x40000010;
 
@@ -72,37 +97,14 @@ Author : Sudhir Acharya
     const volatile int *ptr → pointer to read-only volatile int (cannot modify the value, but pointer can change).
 
     int volatile *const ptr → constant pointer to a volatile int (can modify the value, but pointer cannot change)
-## const
-    The const (constant) qualifier is a type qualifier in C and C++ programming languages 
-    used to declare that a variable's value is fixed, read-only, 
-    and cannot be modified after initialization. 
-    It acts as a compiler-enforced constraint to prevent accidental modifications,
-     enhancing code security and allowing optimization. 
 
-### Derived dataypes
-    Structure
-    Union
-### Userdefined data types 
-    Enum
-    Typedef
 
-## typecasring or type conversion
-    implicit->autoatically done by compiler for two compatiable data types
-    explicit ->done by programmer using typecast operator to make sure no valuble data los
-    type promotion-> smaller data to large one
-
-### Identifier: 
-identifier is simply the name used to identify variables, functions, arrays, structures, 
-or any other user-defined element in a program. It’s how you give a meaningful label to entities in your code.
-    int a;
-    void add()
-
-## directrives in C
+## What is  directrives in C
     pre-prcoessor directive: #include, #ifdef
     assembler Directive: .data , .bss, .section
     Compiler directive: #pragma pack
 
-## Pre-prcoessor direcive
+## what is Pre-prcoessor direcive
     #include <stdio.h>       // include system header
     #define PI 3.14          // object-like macro
     ### MISRA C
@@ -133,12 +135,12 @@ or any other user-defined element in a program. It’s how you give a meaningful
     #error "message"         // force compile error
     #warning "message"       // compile warning (GCC extension)
 
-## assembler directive
+## what is assembler directive
  commands in assembly language source code that instruct the assembler software how to process the program,
  rather than being translated into machine code instructions
  in Linker we have .bss, .data, .txt this are assebler directiver
 
-### compiler Directive
+### what is compiler Directive
     Instructions to the compiler during compilation. Tells it how to compile, optimize, or handle specific code.
 
     ### pragma in C
@@ -148,195 +150,7 @@ or any other user-defined element in a program. It’s how you give a meaningful
 
     #pragma pack(n)Set structure member alignment to n bytes
 
-### ADC Formula
 
-    Resolution = Vref / 2^n
-
-    Example — 12-bit ADC:
-
-    Resolution = 5V / 4096 = 1.22 mV
-
-    Vout = (ADC_value / (2^n - 1)) x Vref
-    ```
-
-    - `ADC_value` — raw ADC output (0 to 4095 for 12-bit)
-    - `2^n - 1` — max count = 4095
-    - `Vref` — reference voltage = 5V
-
-    Examples:
-
-    | ADC Value | Calculation         | Result      |
-    |-----------|---------------------|-------------|
-    | 4095      | 4095 x 5 / 4095     | 5.00 V (max)|
-    | 2048      | 2048 x 5 / 4095     | ~2.50 V     |
-    | 0         | 0 x 5 / 4095        | 0.00 V (min)|
-
-
-### ADC w.r.t AUTOSAR
-
-    1. ADC Groups
-    AUTOSAR organizes ADC channels into Groups — a group is a collection of one or more channels that are converted together.
-
-    Each group has a trigger source (SW or HW)
-    Each group has a conversion mode (one-shot or continuous)
-    Each group has a result buffer (linear or circular)
-
-    2. Conversion Modes
-    Mode          Description
-    One-shot       Single conversion per trigger, then stops
-    Continuous     Keeps converting in a loop until explicitly stopped
-    Scan           Converts all channels in the group sequentially
-
-    3. Trigger Sources
-    Trigger Source        Macro / Config Value      Description
-    Software trigger      ADC_TRIGG_SRC_SW          Trigger via Adc_StartGroupConversion()
-    Hardware trigger       ADC_TRIGG_SRC_HW         Timer, PWM event, or external pin
-
-    4. Notification (Callback)
-    Each group can have a notification function (callback) registered in configuration.
-    It is called at end-of-conversion (similar to an ISR-driven callback).
-    /* Example notification function prototype */
-    void AdcGroup0_ConversionComplete(void);
-
-    #### ADC API Reference
-        void Adc_Init(const Adc_ConfigType* ConfigPtr);
-            Initializes the ADC hardware unit and driver internals.
-            ConfigPtr points to the generated configuration structure (Adc_Config).
-            Called once during ECU startup (typically from EcuM).
-    
-    Buffer Setup (Required for Streaming Mode)
-
-    Std_ReturnType Adc_SetupResultBuffer(
-    Adc_GroupType        Group,
-    Adc_ValueGroupType*  DataBufferPtr
-     );
-
-
-    SW TRIGGERED FLOW
-    Adc_Init(&AdcConfig)
-        |
-        v
-Adc_SetupResultBuffer(Group0, resultBuffer)
-        |
-        v
-Adc_EnableGroupNotification(Group0)
-        |
-        v
-Adc_StartGroupConversion(Group0)
-        |
-        v
-    [HW converts all channels in Group0]
-        |
-        v
-    [Notification callback fires]
-        |
-        v
-Adc_ReadGroup(Group0, resultBuffer)
-        |
-        v
-    Use result in application logic
-
----
-
-### SPI w.r.t AUOTSAR
-## AUTOSAR SPI Key Concepts
-
-- **Channel** — Basic data unit. Holds a buffer of data elements to be transferred.
-- **Job** — A sequence of one or more Channels sharing the same CS (Chip Select).
-- **Sequence** — A group of one or more Jobs. Unit of transmission triggered by SW.
-- **EB Buffer** — External Buffer; pointer to user-provided RAM buffer (dynamic).
-- **IB Buffer** — Internal Buffer; statically allocated inside the SPI driver.
-- **Hw Unit** — Physical SPI peripheral (e.g., QSPI0, QSPI2 on AURIX TriCore).
-
-
-SPI MODES 
-
-SPI Modes (CPOL + CPHA)
-```
-| Mode | CPOL | CPHA | Clock Idle | Sample On    |
-|------|------|------|------------|--------------|
-|  0   |  0   |  0   |    LOW     | Rising edge  |
-|  1   |  0   |  1   |    LOW     | Falling edge |
-|  2   |  1   |  0   |    HIGH    | Falling edge |
-|  3   |  1   |  1   |    HIGH    | Rising edge  |
-```
-
-3. SPI Channel Types
-TypeBuffer TypeBuffer LocationUse CaseIBInternalInside driverFixed-size, known at config timeEBExternalUser RAMVariable-size, pointer set at runtime
-
-4. SPI Transmission Modes
-ModeAPI FunctionBlockingCallbackUse CaseSynchronousSpi_SyncTransmit()YesNoSimple, deterministic transfersAsynchronousSpi_AsyncTransmit()NoYesNon-blocking, ISR/DMA driven
-
-5. SPI Driver States
-SPI_UNINIT
-    |
-    | Spi_Init()
-    v
-SPI_IDLE
-    |
-    | Spi_AsyncTransmit() / Spi_SyncTransmit()
-    v
-SPI_BUSY
-    |
-    | Transfer Complete
-    v
-SPI_IDLE
-    |
-    | Spi_DeInit()
-    v
-SPI_UNINIT
-
-6SPI APIS
-7.1 Mandatory APIs
-APIDescriptionSpi_Init()Initializes the SPI driver using config pointerSpi_DeInit()De-initializes the SPI driverSpi_WriteIB()Writes data to Internal Buffer of a ChannelSpi_ReadIB()Reads data from Internal Buffer of a ChannelSpi_SetupEB()Sets up External Buffer pointer for a ChannelSpi_SyncTransmit()Triggers synchronous transmission of a SequenceSpi_AsyncTransmit()Triggers asynchronous transmission of a SequenceSpi_GetStatus()Returns current driver status (IDLE/BUSY/UNINIT)Spi_GetJobResult()Returns result of a given Job
-
-7 APIS
-/* Initialize SPI driver */
-void Spi_Init(const Spi_ConfigType *ConfigPtr);
-
-/* De-Initialize SPI driver */
-Std_ReturnType Spi_DeInit(void);
-
-/* Write to Internal Buffer */
-Std_ReturnType Spi_WriteIB(
-    Spi_ChannelType Channel,
-    const Spi_DataBufferType *DataBufferPtr
-);
-
-/* Read from Internal Buffer */
-Std_ReturnType Spi_ReadIB(
-    Spi_ChannelType Channel,
-    Spi_DataBufferType *DataBufferPtr
-);
-
-/* Setup External Buffer */
-Std_ReturnType Spi_SetupEB(
-    Spi_ChannelType Channel,
-    const Spi_DataBufferType *SrcDataBufferPtr,
-    Spi_DataBufferType *DesDataBufferPtr,
-    Spi_NumberOfDataType Length
-);
-
-/* Synchronous transmit */
-Std_ReturnType Spi_SyncTransmit(Spi_SequenceType Sequence);
-
-/* Asynchronous transmit */
-Std_ReturnType Spi_AsyncTransmit(Spi_SequenceType Sequence);
-
-/* Get driver status */
-Spi_StatusType Spi_GetStatus(void);
-
-/* Get Job result */
-Spi_JobResultType Spi_GetJobResult(Spi_JobType Job);
-
-/* Get Sequence result */
-Spi_SeqResultType Spi_GetSequenceResult(Spi_SequenceType Sequence);
-
-/* Cancel a Sequence */
-void Spi_Cancel(Spi_SequenceType Sequence);
-
-/* Set Async Mode */
-Std_ReturnType Spi_SetAsyncMode(Spi_AsyncModeType Mode);
 ---
 
 
@@ -366,6 +180,7 @@ Std_ReturnType Spi_SetAsyncMode(Spi_AsyncModeType Mode);
     Recursion         Not possible                        Possible (compiler may not inline)
     Header needed     No                                  Defined in header (static inline)
 
+### what is side of MACRO instead of using inline function?
     Side effect trap (Macro):
 
         #define SQ(x)  ((x) * (x))
@@ -390,8 +205,7 @@ Std_ReturnType Spi_SetAsyncMode(Spi_AsyncModeType Mode);
                          When type safety matters
                          When you need to step through in debugger
 
-### Structure vs Union
-
+### what is the diffrence between Structure vs Union
     Feature           struct                              union
     -----------       ------------------------------      ------------------------------
     Memory            Sum of all member sizes             Size of largest member only
@@ -400,7 +214,7 @@ Std_ReturnType Spi_SetAsyncMode(Spi_AsyncModeType Mode);
     Use case          Group related data fields            Memory-efficient variant types
     Padding           Yes — compiler may add padding      Yes — based on largest member
 
-### typedef vs #define
+### what is the diffrence between typedef vs #define
 
     Feature           typedef                             #define
     -----------       ------------------------------      ------------------------------
@@ -416,6 +230,8 @@ Std_ReturnType Spi_SetAsyncMode(Spi_AsyncModeType Mode);
     If you call a function once, pause the execution while it's in the middle of running,
     then call it a second time, the function is now running in two "contexts."
     The point is that the function can be running multiple times simultaneously, which usually means in multiple threads.
+
+    Example:
     int add(int a, int b) {
         int c = a + b;   // c is on the stack, local to this call
         return c;
@@ -425,17 +241,18 @@ Std_ReturnType Spi_SetAsyncMode(Spi_AsyncModeType Mode);
       That’s why you can call add(2,3) and add(5,7) at the same time FROM DIFFRENT THREAD— each call has its own c.
 
 ### Polymorphism in C++
-        Polymorphism means **one interface, multiple behaviors**.
-        Two types: Compile time and Runtime.
+     Polymorphism means **one interface, multiple behaviors**.
+    Two types: Compile time and Runtime.
 
-    #### Function Overloading — Compile Time Polymorphism
+   
+### Whats  Function Overloading — Compile Time Polymorphism
         Same function name, different parameter types or count.
         Compiler decides which function to call at **compile time**.
 
         int add(int a, int b)         { return a + b; }
         float add(float a, float b)   { return a + b; }
 
-    #### Function Overriding — Runtime Polymorphism
+### Whatis  Function Overriding — Runtime Polymorphism
 
         Child class redefines a parent class function.
         Decision is made at **runtime** using virtual table (vtable).
@@ -611,7 +428,7 @@ int array[6] = {4, 3, 5, 6, 3, 8};
     (void *) ptr
     (char *)ptr
 
-### Memory Layout
+### Explain memory layout in C
 
     High Address
     +---------------------+
@@ -631,7 +448,7 @@ int array[6] = {4, 3, 5, 6, 3, 8};
     +---------------------+
     Low Address
 
-
+### Explain startup code task?
     in startup  .ro data copied to .data section
 
     start up sequence
@@ -652,7 +469,7 @@ int array[6] = {4, 3, 5, 6, 3, 8};
                                       |   Heap / Stack |
                                      +----------------+
 
-#### Compilation Stages
+#### what are the Compilation Stages
     .c --> [Preprocessor] --> .i --> [Compiler] --> .s --> [Assembler] --> .o --> [Linker] --> .elf/.bin/.hex
 
     Stage          Input    Output   Job
@@ -717,11 +534,9 @@ When an embedded system powers on:
     realloc(ptr, size)  resize existing allocation (may move memory)
     free(ptr)           release -- always set ptr = NULL after!
 
-   ### google interview
-    how to create our own malloc, my malloc?
-        simply create statci int char[500] --> this will exceeds data segment and cross heap section
-
-        we cant use pointer like assigning heap adress to ptr, next moment if we use malloca this adress wil be occupied
+### how to create our own malloc, my malloc?
+    simply create statci int char[500] --> this will exceeds data segment and cross heap section
+    we cant use pointer like assigning heap adress to ptr, next moment if we use malloca this adress wil be occupied
 
 ### What is a memory leak? How to detect?
 
@@ -737,8 +552,6 @@ When an embedded system powers on:
         free(ptr);
         ptr = NULL;
 
-    Detection tools: Valgrind (Linux), heap usage hooks, custom malloc wrappers.
-
 ### Why is malloc avoided in safety-critical embedded?
 
     - Non-deterministic timing (MISRA C rule violation)
@@ -751,32 +564,19 @@ When an embedded system powers on:
         uint8_t pool[NUM_BUFS][BUF_SIZE];
         uint8_t inUse[NUM_BUFS] = {0};
 
-        uint8_t *poolAlloc(void) {
-            for (int i = 0; i < NUM_BUFS; i++)
-                if (!inUse[i]) { inUse[i] = 1; return pool[i]; }
-            return NULL;
-        }
-
-        void poolFree(uint8_t *p) {
-            int i = (p - pool[0]) / BUF_SIZE;
-            inUse[i] = 0;
-        }
-
 
 ### What is interrupt latency?
-
     Time from interrupt signal assertion to first ISR instruction executing.
     Factors: CPU pipeline flush, saving context (stacking registers), priority.
     ARM Cortex-M3: typically 12 clock cycles minimum latency.
 
 ### What is a race condition between ISR and main? How to fix?
-
     Problem:
         volatile uint32_t counter = 0;
         void TIMER_ISR(void) 
         { 
             counter++; 
-            }
+        }
 
         int main(void) {
             uint32_t val = counter;   // ISR may fire between read and write!
@@ -800,9 +600,8 @@ When an embedded system powers on:
         NVIC_SetPriority(UART1_IRQn, 1);   // high priority
         NVIC_SetPriority(TIM2_IRQn,  5);   // lower priority
 
-    ## NVIC 
-    WHY IOTS CALLED NESTED ?
-        BECUASE HIGH PRIORITY INTERRUPT A LOW PRIOIRTY ISR
+## Whats is NVIC Table
+
     | Letter | Full Word  | What It Does                                           |
     |--------|------------|--------------------------------------------------------|
     | N      | Nested     | Higher priority IRQ can interrupt a lower priority ISR |
@@ -864,7 +663,7 @@ enviranioment by ensuring that only a specified number of task can access a reso
         sharedBuffer[0] = 42;   // critical section
         xSemaphoreGive(mutex);
 
-### Difference between a task and a thread?
+### Difference between a Process and a thread?
 
     Process (one program running)
     │
@@ -890,9 +689,6 @@ enviranioment by ensuring that only a specified number of task can access a reso
                 processData();
             }
         }
-
-
-
 
 ### What is priority inversion? How is it solved?
 
@@ -975,7 +771,7 @@ enviranioment by ensuring that only a specified number of task can access a reso
     400 kHz  ->  2.2 kohm typical
     1 MHz    ->  1.0 kohm typical
 
-### CAN Communication
+### what is Dominat and reccesive
 
 Differential signaling on CAN_H and CAN_L lines:
 
@@ -986,6 +782,8 @@ Recessive   2.5 V       2.5 V        0.0 V  (logic 1)
 
 Dominant wins on bus (wired-AND): any node sending 0 pulls bus dominant.
 
+
+### Expalin CAN frame
 ---
 Type                Description
 ----------------    ----------------------------------------
@@ -1054,6 +852,170 @@ Stop        1-2     1 (HIGH)    End of frame, line returns HIGH
     GND   ------------------------------ GND
 
     CS pulled LOW by master to select slave.
+### what are the ADC Formulas?
+
+    Resolution = Vref / 2^n
+
+    Example — 12-bit ADC:
+
+    Resolution = 5V / 4096 = 1.22 mV
+
+    Vout = (ADC_value / (2^n - 1)) x Vref
+    ```
+
+    - `ADC_value` — raw ADC output (0 to 4095 for 12-bit)
+    - `2^n - 1` — max count = 4095
+    - `Vref` — reference voltage = 5V
+
+    Examples:
+
+    | ADC Value | Calculation         | Result      |
+    |-----------|---------------------|-------------|
+    | 4095      | 4095 x 5 / 4095     | 5.00 V (max)|
+    | 2048      | 2048 x 5 / 4095     | ~2.50 V     |
+    | 0         | 0 x 5 / 4095        | 0.00 V (min)|
+
+
+### ADC groups w.r.t AUTOSAR
+
+    ADC Groups
+    AUTOSAR organizes ADC channels into Groups
+    
+    Group is a collection of one or more channels that are converted together.
+    Each group has a trigger source (SW or HW)
+    Each group has a conversion mode (one-shot or continuous)
+    Each group has a result buffer (linear or circular)
+
+    2. Conversion Modes
+    Mode          Description
+    One-shot       Single conversion per trigger, then stops
+    Continuous     Keeps converting in a loop until explicitly stopped
+    Scan           Converts all channels in the group sequentially
+
+    3. Trigger Sources
+    Trigger Source        Macro / Config Value      Description
+    Software trigger      ADC_TRIGG_SRC_SW          Trigger via Adc_StartGroupConversion()
+    Hardware trigger       ADC_TRIGG_SRC_HW         Timer, PWM event, or external pin
+
+    4. Notification (Callback)
+    Each group can have a notification function (callback) registered in configuration.
+    It is called at end-of-conversion (similar to an ISR-driven callback).
+    /* Example notification function prototype */
+    void AdcGroup0_ConversionComplete(void);
+
+### ADC API Reference
+
+SW TRIGGERED FLOW
+    Adc_Init(&AdcConfig)
+        |
+        v
+Adc_SetupResultBuffer(Group0, resultBuffer)
+// Tells the ADC driver where to store conversion results.
+// Links Group0 to your result array in RAM.
+        |
+        v
+Adc_EnableGroupNotification(Group0)
+// Registers a callback to fire when Group0 conversion completes.
+// Enables interrupt-based notification instead of polling.
+        |
+        v
+Adc_StartGroupConversion(Group0)
+// Triggers the ADC hardware to begin sampling all channels in Group0.
+// Software initiates the conversion (SW-triggered mode).
+        |
+        v
+    [HW converts all channels in Group0]
+// ADC hardware samples each channel sequentially/simultaneously.
+// Stores raw digital results into the linked resultBuffer.
+        |
+        v
+    [Notification callback fires]
+// ISR or callback function is invoked automatically by the driver.
+// Signals application that all Group0 results are ready to read.
+        |
+        v
+Adc_ReadGroup(Group0, resultBuffer)
+// Copies converted ADC values from driver buffer into application buffer.
+// Returns status; resultBuffer now holds valid channel readings.
+        |
+        v
+    Use result in application logic
+// Process ADC values: scaling, threshold check, control decisions, etc.
+// e.g., temperature = (resultBuffer[0] * VREF) / ADC_RESOLUTION
+
+
+
+
+## AUTOSAR SPI Key Concepts
+
+- **Channel** — Basic data unit. Holds a buffer of data elements to be transferred.
+- **Job** — A sequence of one or more Channels sharing the same CS (Chip Select).
+- **Sequence** — A group of one or more Jobs. Unit of transmission triggered by SW.
+- **EB Buffer** — External Buffer; pointer to user-provided RAM buffer (dynamic).
+- **IB Buffer** — Internal Buffer; statically allocated inside the SPI driver.
+- **Hw Unit** — Physical SPI peripheral (e.g., QSPI0, QSPI2 on AURIX TriCore).
+
+
+### List SPI MODES 
+
+SPI Modes (CPOL + CPHA)
+```
+| Mode | CPOL | CPHA | Clock Idle | Sample On    |
+|------|------|------|------------|--------------|
+|  0   |  0   |  0   |    LOW     | Rising edge  |
+|  1   |  0   |  1   |    LOW     | Falling edge |
+|  2   |  1   |  0   |    HIGH    | Falling edge |
+|  3   |  1   |  1   |    HIGH    | Rising edge  |
+```
+
+## What is SPI Synchronous vs Asynchronous or trnasimission mode?
+    SPI bus is always clocked, hardware sync is not negotiable
+    Sync vs Async is a software architecture choice, not a hardware one
+    DMA frees CPU but driver design decides if SW is truly async
+    Best architecture is async driver as base with sync wrapper on top
+    In RTOS, task pends on semaphore, ISR gives on transfer complete
+    Prefer sync for boot sequences, short commands, and simple debug scenarios
+    Prefer async with DMA for flash bulk ops, frame buffers, and RTOS multitasking
+
+
+## list SPI API
+SPI SW TRIGGERED FLOW
+    Spi_Init(&SpiConfig)
+        |
+        v
+Spi_SetupEB(Channel0, srcBuffer, destBuffer, length)
+// Tells the SPI driver source (TX) and destination (RX) buffers.
+// Links Channel0 to your data arrays in RAM with transfer length.
+        |
+        v
+Spi_EnableJobNotification(Job0)
+// Registers a callback to fire when Job0 transmission completes.
+// Enables interrupt-based notification instead of polling.
+        |
+        v
+Spi_AsyncTransmit(Sequence0)
+// Triggers the SPI hardware to begin transmitting Sequence0.
+// Software initiates the transfer (SW-triggered async mode).
+        |
+        v
+    [HW transmits all channels in Sequence0]
+// SPI hardware shifts out TX bytes and simultaneously captures RX bytes.
+// Handles chip select (CS) assertion/de-assertion automatically per job.
+        |
+        v
+    [Job/Sequence notification callback fires]
+// ISR or callback function is invoked automatically by the driver.
+// Signals application that all Sequence0 bytes are sent and received.
+        |
+        v
+Spi_ReadIB(Channel0, destBuffer)
+// Copies received SPI bytes from driver internal buffer to app buffer.
+// Returns status; destBuffer now holds valid RX data from slave device.
+        |
+        v
+    Use result in application logic
+// Process RX data: parse sensor response, decode register values, etc.
+// e.g., sensorVal = (destBuffer[0] << 8) | destBuffer[1]
 
 ## what is SPI Synchronous vs Asynchronous ?
 
