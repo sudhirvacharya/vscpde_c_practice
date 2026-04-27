@@ -17,10 +17,7 @@
 8. use UINT8_T FOR SHIFT OPERATION AND USE CHAR ITS EASY
 
 9 for bit operation use | , for logic ||
-
-
-# take care below things
-    uint8_t use all variabls in tmp also if  its rerquired
+10. uint8_t use all variabls in tmp also if  its rerquired
     ledt shift use <<  , seen mistaklnly used only <
 
 ### intrduction about myself

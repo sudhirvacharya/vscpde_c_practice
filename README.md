@@ -483,8 +483,6 @@ int array[6] = {4, 3, 5, 6, 3, 8};
 ### Explain startup code task?
     in startup  .ro data copied to .data section
 
-    start up sequence
-
     FLASH                              RAM
                                           
     +----------------+                +----------------+
@@ -679,9 +677,9 @@ enviranioment by ensuring that only a specified number of task can access a reso
 ### Mutexes:
     in rtos and multithreadifn environment, a mutex is asyncornization mecanism that prevent multiple task or thread from acess that same shared reosurce at asame trime/
     how mutex works:
-        a mutex act like lock.a task must aquire the lock the mutex before access the shared resoucre.
-        once the a task finsihed using the resoucrece, it release(unlcok) the mutx allowing other task to acess it.
-        if another task tries to aquire the mutex while its locked, it has to wait untill the mutex is relases
+    a mutex act like lock.a task must aquire the lock the mutex before access the shared resoucre.
+    once the a task finsihed using the resoucrece, it release(unlcok) the mutx allowing other task to acess it.
+    if another task tries to aquire the mutex while its locked, it has to wait untill the mutex is relases
 
 ### Difference between mutex and semaphore?
 
@@ -691,9 +689,9 @@ enviranioment by ensuring that only a specified number of task can access a reso
     Priority inversion   Protected                     Not protected
     Use case             Mutual exclusion (shared data) Signaling
 
-        xSemaphoreTake(mutex, portMAX_DELAY);
-        sharedBuffer[0] = 42;   // critical section
-        xSemaphoreGive(mutex);
+    xSemaphoreTake(mutex, portMAX_DELAY);
+    sharedBuffer[0] = 42;   // critical section
+    xSemaphoreGive(mutex);
 
 ### Difference between a Process and a thread?
 
@@ -1058,12 +1056,11 @@ Spi_ReadIB(Channel0, destBuffer)
 | 7  | Prefer async with DMA for flash bulk ops, frame buffers, and RTOS multitasking     |
 
 
-
 ## what is inheritance
 Inheritance   = child gets parent's properties and methods
 
 ## MCU
-Diffrenc ebetween timer and counter
+Diffrenc between timer and counter
 Timer   = counts internal clock pulses  (measures TIME)
 Counter = counts external event pulses  (measures EVENTS)
 
