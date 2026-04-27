@@ -1,11 +1,76 @@
 Author : Sudhir Acharya
-### Interview Structure
+### whta are interview Interview Structure?
 - Basic C Questions
 - Programming
   - Bit Manipulation
   - DSA / Array
 - Project Explanation
 - Problems You Have Faced
+
+
+
+### What is my Professional Summary",
+Senior Embedded Software Engineer with 11+ years of experience in automotive embedded systems, specializing in
+device driver development, AUTOSAR MCAL, and low-level firmware engineering.`
+
+
+### What are my Technical Skills",
+Device Drivers: ADC, SPI, I2C, UART, PORT, GPIO, DMA & AUTOSAR MCAL
+AUTOSAR Stack: MCAL, RTE, BSW configuration using EB Tresos; Vector DaVinci
+Microcontrollers / SoCs: Infineon AURIX TriCore TC2xx, NXP MCU, ARM Cortex architecture
+Protocols / Interfaces: SPI, I2C, UART, CAN
+RTOS: OSEK-based RTOS, task/ISR scheduling, interrupt handling
+Debugging & Test Tools: TRACE32 (JTAG), Oscilloscope, Logic Analyzer, USB Analyzer, CANoe, HIL setups
+Programming Languages: Embedded C, Python, MATLAB, MISRA-C guidelines
+Build & DevOps: Linux, Docker, cross-compilation, CI/CD pipelines, GitHub, Makefile, ARM GCC toolchain
+Requirements & SCM: IBM DOORS (traceability), MKS/PTC Integrity, SW-E5 process compliance`
+
+
+### What is my Experience",
+Continental Automotive, Bangalore
+Software Engineer | May 2019 – Present
+• Responsible for MCAL development and software integration and testing
+• Performed software integration and validation of AUTOSAR MCAL drivers ADC, SPI
+• Performed Linux Docker migration
+
+Tech Mahindra, Bangalore
+Software Engineer | Dec 2017 – Apr 2019
+• Developed and configured AUTOSAR MCAL IO drivers for ADC, SPI, and Timer modules in EB Tresos
+• Performed board bring-up on Infineon AURIX TC2xx including JTAG debug via TRACE32, flash programming, and ADC/SPI peripheral validation on target hardware
+
+KPIT Technologies Limited, Bangalore
+Software Engineer | Feb 2017 – Aug 2017
+• Designed and developed reusable AUTOSAR-compliant software libraries for MFX and IFX modules
+• Conducted unit testing to validate functionality and integration alignment
+
+BISS-ITW, Bangalore
+Firmware Developer | Sep 2013 – Jan 2017
+• Developed and optimized software on Texas Instruments DSP processors for real-time signal processing applications
+• Developed drivers for ADC and DAC modules to support sensor data acquisition and signal conversion`
+
+
+### What are my Projects",
+ADC and Timer/Watchdog Driver Development | Infineon AURIX TC2xx, EB Tresos, TRACE32
+• Developed and validated low-level MCAL device drivers for Infineon AURIX TC2xx (TriCore) microcontroller, covering ADC, SPI, PORT, DMA, Timer, and Watchdog peripherals
+• Performed register-level peripheral configuration, interrupt handling, and DMA channel setup
+• Configured Timer channels for periodic triggering
+• Configured Watchdog timer to monitor MCU health and trigger system reset on failure
+• Performed board bring-up activities including JTAG debug via TRACE32, flash programming, and peripheral validation on TC2xx target hardware
+• Validated driver functionality using TRACE32 (JTAG) debugger, Logic Analyzer, and Oscilloscope
+
+SPI Driver Development
+• Developed and integrated SPI driver for external memory (read/write operations) on Infineon AURIX TC2xx, covering register-level configuration, chip select handling, and data transfer sequences
+• Validated SPI communication and memory read/write functionality using TRACE32 (JTAG) debugger, Logic Analyzer, and Oscilloscope
+
+Software Integration
+• End-to-end software integration, release preparation, and validation aligned with DOORS-defined requirements
+• Ensured compliance with SW-E5 process through build delivery, traceability, and milestone-based quality checkpoints
+
+AUTOSAR Library Development
+• Developed modular software libraries conforming to AUTOSAR v4.2.2 specifications (MFX, IFX, IFL, MFL, EFX, E2E)
+• Applied MISRA C guidelines to ensure code safety, reliability, and compliance
+• Performed rigorous unit testing to validate functionality
+
 
 ### ADC Project
 ![ADC SW and HW Group Block Diagram](doc/adc_block_diagram.svg)
@@ -41,16 +106,17 @@ Author : Sudhir Acharya
 ### Derived dataypes
     Structure
     Union
-### Userdefined data types 
+
+### wha are the Userdefined data types 
     Enum
     Typedef
 
-## typecasring or type conversion
+## what is typecasting and type conversion
     implicit->autoatically done by compiler for two compatiable data types
     explicit ->done by programmer using typecast operator to make sure no valuble data los
     type promotion-> smaller data to large one
 
-### Identifier: 
+### what is Identifier: 
 identifier is simply the name used to identify variables, functions, arrays, structures, 
 or any other user-defined element in a program. It’s how you give a meaningful label to entities in your code.
     int a;
@@ -80,25 +146,13 @@ or any other user-defined element in a program. It’s how you give a meaningful
     const volatile uint32_t *STATUS_REG = (uint32_t *)0x40000010;
 
     YES — makes perfect sense for read-only hardware status registers:
-      const    --> your code cannot write to it
-      volatile --> compiler must re-read it every time (hardware changes it)
-
-
-
     const    --> value cannot change, compiler enforces read-only
     volatile --> value can change outside compiler's knowledge,
                  prevents compiler optimization
     
     example:
-    const int var
-    vaoltile int var
     const volatile int  var
-
-    const volatile int *ptr → pointer to read-only volatile int (cannot modify the value, but pointer can change).
-
-    int volatile *const ptr → constant pointer to a volatile int (can modify the value, but pointer cannot change)
-
-
+    
 ## What is  directrives in C
     pre-prcoessor directive: #include, #ifdef
     assembler Directive: .data , .bss, .section
@@ -107,14 +161,6 @@ or any other user-defined element in a program. It’s how you give a meaningful
 ## what is Pre-prcoessor direcive
     #include <stdio.h>       // include system header
     #define PI 3.14          // object-like macro
-    ### MISRA C
-        Example:
-            char a, b, c;
-            c=a+b // here ans will overf flow and c should be int
-
-        dynmica allocation not allowed
-
-        recursion not allowed
 
     ### Pre processor directives
     #include <stdio.h>       // include system header
@@ -143,20 +189,13 @@ or any other user-defined element in a program. It’s how you give a meaningful
 ### what is compiler Directive
     Instructions to the compiler during compilation. Tells it how to compile, optimize, or handle specific code.
 
-    ### pragma in C
-    What is it
     #pragma is a compiler-specific directive.
     It gives special instructions to the compiler that are not part of standard C syntax.
 
     #pragma pack(n)Set structure member alignment to n bytes
 
-
----
-
-
 ###  Error in embedded C
 
----
 | Error Type        | When Detected      | Tool                  | Output                       |
 |-------------------|--------------------|-----------------------|------------------------------|
 | Compiler Error    | Compile time       | GCC / armcc           | No .o file generated         |
@@ -165,7 +204,7 @@ or any other user-defined element in a program. It’s how you give a meaningful
 | Warning           | Compile time       | GCC                   | Binary generated (risky)     |
 | Logical Error     | Testing/Validation | Logic analyser / CANoe| Wrong output                 |
 | Preprocessor Error| Pre-compile        | CPP                   | No .o file generated         |
----
+
 
 ### Inline Function vs Macro
 
@@ -272,7 +311,7 @@ or any other user-defined element in a program. It’s how you give a meaningful
 
     (*fnptr)++; //this will incremnet  the value
 
-####  array vs pointer
+#### what is  array vs pointer
 
     int main() {
         int a[] = {1, 2, 3};
@@ -294,12 +333,7 @@ or any other user-defined element in a program. It’s how you give a meaningful
     Uppercase to Lowercase:   str[i] = str[i] + 32
 
 
-### Pointers
-
-    int  x   = 10;
-    int *ptr = &x;    // ptr holds address of x
-    *ptr = 20;        // dereference: changes x to 20
-    ptr++;            // moves to next int (4 bytes ahead on 32-bit)
+### What are th Pointers declartion and meaning?
 
 int array[6] = {4, 3, 5, 6, 3, 8};
 
@@ -327,7 +361,7 @@ int array[6] = {4, 3, 5, 6, 3, 8};
 +-----------------------+----------------------------------------------------------------------+
 
 
-### Difference between *ptr++, (*ptr)++, and *++ptr?
+### what is the Difference between *ptr++, (*ptr)++, and *++ptr?
 
     int arr[] = {10, 20, 30};
     int *ptr = arr;
@@ -365,7 +399,7 @@ int array[6] = {4, 3, 5, 6, 3, 8};
 
     Used for: interrupt vector tables, state machines, callbacks.
 
-### Pointer Types
+### what are the Pointer Types?
 
     NULL Pointer:A pointer that is explicitly assigned NULL.It does not point to any valid memory address.
     int *p = NULL;
