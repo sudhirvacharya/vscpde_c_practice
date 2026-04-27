@@ -42,171 +42,60 @@ run this
 ##### AI prompt
 The source is HTML content containing:
 ### intrduction about myself
-
 theory
-
-
 Source code files
-
-
-
-
 Use ONLY the provided content.
-
-
 Do NOT generate any new theory, explanations, or code.
-
-
 Do NOT add extra examples.
-
-
 Only format and organize the existing content.
-
-
-
 FORMAT REQUIREMENTS:
-
-
 Page size: A4
-
-
 Color: Strictly black and white (printer-friendly)
-
-
 Fonts:
-
-
 Serif or sans-serif for normal text
-
-
 Monospace for code
-
-
-
-
 Margins: 2.5 cm on all sides
-
-
 Page numbers: Bottom center
-
-
 Optional: Chapter title in header
-
-
-
 COVER PAGE:
-
-
 Title: C Programming Notes & Practice
-
-
 Subtitle: Beginner to Intermediate Guide
-
-
 Author: Sudhir Acharya
-
-
 Center-aligned layout
-
-
 Minimal, clean design
-
-
 Must appear on a separate page
-
-
-
 STRUCTURE:
-
-
 Generate a Table of Contents based only on the provided content
-
-
 Do NOT create or invent new chapters
-
-
 Use file names or sections from README.md as chapter titles
-
-
-
 THEORY SECTIONS (FROM README.md ONLY):
-
-
 Preserve the original text exactly (no rewriting)
-
-
 Maintain headings and formatting
-
-
 Keep bullet points and spacing intact
-
-
 Ensure tables remain aligned and readable
-
-
 Do NOT split tables across pages
-
-
-
 CODE SECTIONS:
-
-
 Each program must start on a new page
-
-
 Do NOT split any program across pages
-
-
 Preserve code exactly (no modifications)
-
-
 Use a monospace font
-
-
 Add a heading:
 Program: <filename>
-
-
 Place code inside a thin bordered box
-
-
-
 PAGE LAYOUT RULES:
-
-
 Avoid awkward page breaks
-
-
 Keep headings with their content
-
-
 Maintain consistent spacing throughout
-
-
 Ensure clean readability for printing
-
-
-
 OUTPUT:
-
-
 A clean, print-ready PDF
-
-
 Structured like a professional textbook or notebook
-
-
 Must strictly use only the provided content (no additions)
-
 ---
 
 
-### Lesson Learnt
- 1. bracket missed
- 2.simple logice not able to answer
- 3. if condition coudl have used
 
- ### list of Questions
+ ### list of future Questions
  Interview Preparation Checklist
 🔢 Array Problems
 Basic
