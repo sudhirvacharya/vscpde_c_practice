@@ -1,13 +1,11 @@
 Author : Sudhir Acharya
-### whta are interview Interview Structure?
+### what are interview Interview Structure?
 - Basic C Questions
 - Programming
   - Bit Manipulation
   - DSA / Array
 - Project Explanation
 - Problems You Have Faced
-
-
 
 ### What is my Professional Summary",
 Senior Embedded Software Engineer with 11+ years of experience in automotive embedded systems, specializing in
@@ -761,14 +759,9 @@ enviranioment by ensuring that only a specified number of task can access a reso
 
 
 ### What is I2C clock stretching?
-
     Slave holds SCL line LOW to pause the master while preparing data.
     Master must wait until slave releases SCL.
     Some I2C masters do not support clock stretching -- check datasheet!
-
-
----
-
 
 ## Communication Protocol
 
@@ -876,16 +869,7 @@ Stop        1-2     1 (HIGH)    End of frame, line returns HIGH
 
 ---
 
-### SPI communication
-    Master                          Slave
-    ------                          -----
-    SCLK  -----------------------------> SCLK
-    MOSI  -----------------------------> MOSI
-    MISO  <----------------------------- MISO
-    CS    -----------------------------> CS
-    GND   ------------------------------ GND
 
-    CS pulled LOW by master to select slave.
 ### what are the ADC Formulas?
 
     Resolution = Vref / 2^n
@@ -982,6 +966,16 @@ Adc_ReadGroup(Group0, resultBuffer)
 
 ## AUTOSAR SPI Key Concepts
 
+    Master                          Slave
+    ------                          -----
+    SCLK  -----------------------------> SCLK
+    MOSI  -----------------------------> MOSI
+    MISO  <----------------------------- MISO
+    CS    -----------------------------> CS
+    GND   ------------------------------ GND
+
+    CS pulled LOW by master to select slave.
+
 - **Channel** — Basic data unit. Holds a buffer of data elements to be transferred.
 - **Job** — A sequence of one or more Channels sharing the same CS (Chip Select).
 - **Sequence** — A group of one or more Jobs. Unit of transmission triggered by SW.
@@ -1065,68 +1059,42 @@ Spi_ReadIB(Channel0, destBuffer)
 
 
 
-## CPP
+## what is inheritance
 Inheritance   = child gets parent's properties and methods
-Polymorphism  = same function name behaves differently based on object type
-
-WHATIS VITUAL FUCNTION
-
 
 ## MCU
 Diffrenc ebetween timer and counter
 Timer   = counts internal clock pulses  (measures TIME)
 Counter = counts external event pulses  (measures EVENTS)
 
-## Linux OS Road map
+## what is my Linux OS Road map
 
-        START HERE
-        │
-        ▼
-    ✅ Phase 1 — Synchronization & Processes    (DONE ✅)
-        │
-        │   ✅ lo_mutex.c        ← mutex, threads, race condition
-        │   ✅ lo_semaphore.c    ← semaphore, shared memory, fork
-        │   ✅ lo_process.c      ← fork, wait, waitpid, execvp, exit
-        │   ✅ lo_threads.c      ← pthread_create, join, exit, return value
-        │   ✅ lo_sharedmem.c    ← mmap, sem_init, shared struct
-        │
-        ▼
-    🔜 Phase 2 — IPC (Inter Process Communication)
-        │
-        │   lo_pipe.c       ← start here, connects to fork() you know
-        │   lo_fifo.c
-        │   lo_msqueue.c
-        │   lo_socket.c     ← do this last in phase 2
-        │
-        ▼
-    🔜 Phase 3 — Memory Management
-        │
-        │   lo_malloc.c     ← start here, very practical
-        │   lo_stack_heap.c
-        │   lo_mmap.c
-        │
-        ▼
-    🔜 Phase 4 — File System
-        │
-        │   lo_fileio.c     ← start here, used everywhere
-        │   lo_dirops.c
-        │   lo_filestat.c
-        │
-        ▼
-    🔜 Phase 5 — Signals
-        │
-        │   lo_signals.c    ← start here
-        │   lo_sigaction.c
-        │
-        ▼
-    🔜 Phase 6 — Classic OS Problems
-        │
-        │   lo_prodcons.c   ← uses mutex + semaphore you already know
-        │   lo_readwrite.c
-        │   lo_deadlock.c
-        │   lo_dining.c
-        │
-        ▼
-    🏆 Linux OS / Systems Programming — COMPLETE
+| Phase   | File             | Concepts                                  |
+|---------|------------------|-------------------------------------------|
+| Phase 1 | `lo_mutex.c`     | Mutex, threads, race conditions           |
+| Phase 1 | `lo_semaphore.c` | Semaphore, shared memory, fork            |
+| Phase 1 | `lo_process.c`   | fork, wait, waitpid, execvp, exit         |
+| Phase 1 | `lo_threads.c`   | pthread_create, join, exit, return values |
+| Phase 1 | `lo_sharedmem.c` | mmap, sem_init, shared structures         |
+| Phase 2 | `lo_pipe.c`      | Pipes with fork                           |
+| Phase 2 | `lo_fifo.c`      | Named pipes (FIFO)                        |
+| Phase 2 | `lo_msqueue.c`   | Message queues                            |
+| Phase 2 | `lo_socket.c`    | Sockets (do this last)                    |
+| Phase 3 | `lo_malloc.c`    | malloc/free internals                     |
+| Phase 3 | `lo_stack_heap.c`| Stack vs Heap                             |
+| Phase 3 | `lo_mmap.c`      | Memory-mapped files                       |
+| Phase 4 | `lo_fileio.c`    | File I/O (open, read, write, close)       |
+| Phase 4 | `lo_dirops.c`    | Directory operations                      |
+| Phase 4 | `lo_filestat.c`  | File metadata (stat)                      |
+| Phase 5 | `lo_signals.c`   | Signal basics                             |
+| Phase 5 | `lo_sigaction.c` | sigaction, custom handlers                |
+| Phase 6 | `lo_prodcons.c`  | Producer–Consumer problem                 |
+| Phase 6 | `lo_readwrite.c` | Readers–Writers problem                   |
+| Phase 6 | `lo_deadlock.c`  | Deadlock detection                        |
+| Phase 6 | `lo_dining.c`    | Dining Philosophers problem               |
+
+---
+
+
 
 
