@@ -76,6 +76,9 @@ AUTOSAR Library Development
 ## QSPI Project
 ![QSPI](doc/qspi.svg)
 
+## DMA Example using 6 channel ADC
+![DMA Channel](doc/6CHADC1DMA.svg)
+
 
 ### what is prmitive data types
     Type       Size      Range (signed)

@@ -1,0 +1,71 @@
+<svg width="680" height="560" viewBox="0 0 680 560" xmlns="http://www.w3.org/2000/svg" font-family="Arial, sans-serif">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </marker>
+  </defs>
+  <rect width="680" height="560" fill="#ffffff"/>
+  <text x="340" y="22" text-anchor="middle" font-size="14" font-weight="700" fill="#1a1a1a">6 ADC Channels — 1 DMA Channel (STM32 Scan Mode)</text>
+  <rect x="30" y="36" width="110" height="34" rx="6" fill="#E1F5EE" stroke="#0F6E56" stroke-width="0.8"/>
+  <text x="85" y="57" text-anchor="middle" font-size="12" font-weight="600" fill="#085041">CH 0 (PA0)</text>
+  <rect x="30" y="80" width="110" height="34" rx="6" fill="#E1F5EE" stroke="#0F6E56" stroke-width="0.8"/>
+  <text x="85" y="101" text-anchor="middle" font-size="12" font-weight="600" fill="#085041">CH 1 (PA1)</text>
+  <rect x="30" y="124" width="110" height="34" rx="6" fill="#E1F5EE" stroke="#0F6E56" stroke-width="0.8"/>
+  <text x="85" y="145" text-anchor="middle" font-size="12" font-weight="600" fill="#085041">CH 2 (PA2)</text>
+  <rect x="30" y="168" width="110" height="34" rx="6" fill="#EEEDFE" stroke="#534AB7" stroke-width="0.8"/>
+  <text x="85" y="189" text-anchor="middle" font-size="12" font-weight="600" fill="#3C3489">CH 3 (PA3)</text>
+  <rect x="30" y="212" width="110" height="34" rx="6" fill="#EEEDFE" stroke="#534AB7" stroke-width="0.8"/>
+  <text x="85" y="233" text-anchor="middle" font-size="12" font-weight="600" fill="#3C3489">CH 4 (PA4)</text>
+  <rect x="30" y="256" width="110" height="34" rx="6" fill="#FAECE7" stroke="#993C1D" stroke-width="0.8"/>
+  <text x="85" y="277" text-anchor="middle" font-size="12" font-weight="600" fill="#712B13">CH 5 (PA5)</text>
+  <path d="M140 53  Q215 53  215 162" fill="none" stroke="#1D9E75" stroke-width="1.2" marker-end="url(#arrow)"/>
+  <path d="M140 97  Q215 97  215 166" fill="none" stroke="#1D9E75" stroke-width="1.2" marker-end="url(#arrow)"/>
+  <path d="M140 141 Q215 141 215 170" fill="none" stroke="#1D9E75" stroke-width="1.2" marker-end="url(#arrow)"/>
+  <path d="M140 185 Q215 185 215 178" fill="none" stroke="#534AB7" stroke-width="1.2" marker-end="url(#arrow)"/>
+  <path d="M140 229 Q215 229 215 188" fill="none" stroke="#534AB7" stroke-width="1.2" marker-end="url(#arrow)"/>
+  <path d="M140 273 Q215 273 215 198" fill="none" stroke="#993C1D" stroke-width="1.2" marker-end="url(#arrow)"/>
+  <rect x="200" y="152" width="130" height="58" rx="8" fill="#FAEEDA" stroke="#BA7517" stroke-width="1"/>
+  <text x="265" y="174" text-anchor="middle" font-size="13" font-weight="700" fill="#633806">ADC_DR</text>
+  <text x="265" y="190" text-anchor="middle" font-size="11" fill="#854F0B">One register</text>
+  <text x="265" y="204" text-anchor="middle" font-size="11" fill="#854F0B">overwritten each conv.</text>
+  <line x1="330" y1="181" x2="386" y2="181" stroke="#BA7517" stroke-width="1.4" marker-end="url(#arrow)"/>
+  <text x="358" y="170" text-anchor="middle" font-size="10" fill="#666666">DMA req</text>
+  <text x="358" y="196" text-anchor="middle" font-size="10" fill="#666666">x6 per sweep</text>
+  <rect x="388" y="152" width="130" height="58" rx="8" fill="#E6F1FB" stroke="#185FA5" stroke-width="1"/>
+  <text x="453" y="172" text-anchor="middle" font-size="13" font-weight="700" fill="#0C447C">1x DMA ch</text>
+  <text x="453" y="188" text-anchor="middle" font-size="11" fill="#185FA5">DMA2 Stream0</text>
+  <text x="453" y="202" text-anchor="middle" font-size="11" fill="#185FA5">Channel 0</text>
+  <line x1="518" y1="181" x2="554" y2="181" stroke="#185FA5" stroke-width="1.4" marker-end="url(#arrow)"/>
+  <text x="557" y="146" font-size="11" font-weight="600" fill="#333333">SRAM buffer</text>
+  <rect x="557" y="150" width="98" height="20" rx="3" fill="#E1F5EE" stroke="#0F6E56" stroke-width="0.7"/>
+  <text x="606" y="164" text-anchor="middle" font-size="10" font-weight="600" fill="#085041">buf[0]  CH0</text>
+  <rect x="557" y="172" width="98" height="20" rx="3" fill="#E1F5EE" stroke="#0F6E56" stroke-width="0.7"/>
+  <text x="606" y="186" text-anchor="middle" font-size="10" font-weight="600" fill="#085041">buf[1]  CH1</text>
+  <rect x="557" y="194" width="98" height="20" rx="3" fill="#E1F5EE" stroke="#0F6E56" stroke-width="0.7"/>
+  <text x="606" y="208" text-anchor="middle" font-size="10" font-weight="600" fill="#085041">buf[2]  CH2</text>
+  <rect x="557" y="216" width="98" height="20" rx="3" fill="#EEEDFE" stroke="#534AB7" stroke-width="0.7"/>
+  <text x="606" y="230" text-anchor="middle" font-size="10" font-weight="600" fill="#3C3489">buf[3]  CH3</text>
+  <rect x="557" y="238" width="98" height="20" rx="3" fill="#EEEDFE" stroke="#534AB7" stroke-width="0.7"/>
+  <text x="606" y="252" text-anchor="middle" font-size="10" font-weight="600" fill="#3C3489">buf[4]  CH4</text>
+  <rect x="557" y="260" width="98" height="20" rx="3" fill="#FAECE7" stroke="#993C1D" stroke-width="0.7"/>
+  <text x="606" y="274" text-anchor="middle" font-size="10" font-weight="600" fill="#712B13">buf[5]  CH5</text>
+  <rect x="30" y="308" width="620" height="24" rx="6" fill="#F1EFE8" stroke="#B4B2A9" stroke-width="0.7"/>
+  <text x="340" y="324" text-anchor="middle" font-size="11" fill="#444441">6 ADC channels → 1 ADC_DR register → 1 DMA channel → 1 buffer array (always)</text>
+  <line x1="30" y1="348" x2="650" y2="348" stroke="#cccccc" stroke-width="0.8" stroke-dasharray="5 4"/>
+  <text x="30" y="370" font-size="13" font-weight="700" fill="#1a1a1a">Key Notes</text>
+  <circle cx="42" cy="390" r="3.5" fill="#1D9E75"/>
+  <text x="55" y="394" font-size="12" fill="#222222">All 6 channels share a single ADC_DR register — results come out one after another.</text>
+  <circle cx="42" cy="413" r="3.5" fill="#1D9E75"/>
+  <text x="55" y="417" font-size="12" fill="#222222">Only 1 DMA channel is needed regardless of how many ADC channels are used.</text>
+  <circle cx="42" cy="436" r="3.5" fill="#534AB7"/>
+  <text x="55" y="440" font-size="12" fill="#222222">ADC_CR1: set SCAN bit to enable scan mode across all channels in the sequence.</text>
+  <circle cx="42" cy="459" r="3.5" fill="#534AB7"/>
+  <text x="55" y="463" font-size="12" fill="#222222">ADC_CR2: set DMA + DDS + CONT bits. DDS is mandatory — without it DMA stops after 1 sweep.</text>
+  <circle cx="42" cy="482" r="3.5" fill="#BA7517"/>
+  <text x="55" y="486" font-size="12" fill="#222222">DMA NDTR = NUM_CHANNELS x NUM_SWEEPS (e.g. 6 x 4 = 24).</text>
+  <circle cx="42" cy="505" r="3.5" fill="#BA7517"/>
+  <text x="55" y="509" font-size="12" fill="#222222">Use CIRC mode for continuous sampling. Use HT + TC interrupts for double-buffer processing.</text>
+  <circle cx="42" cy="528" r="3.5" fill="#993C1D"/>
+  <text x="55" y="532" font-size="12" fill="#222222">Access channel N of sweep S: buf[S * NUM_CH + N]  e.g. CH2 sweep3 = buf[20].</text>
+  <text x="340" y="554" text-anchor="middle" font-size="10" fill="#999999">STM32 ADC + DMA — Scan Mode Reference</text>
+</svg>
