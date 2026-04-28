@@ -1,42 +1,21 @@
-<html>
-<head>
-<meta charset="utf-8">
-<style>
-body {
-    font-family: monospace;
-    white-space: pre;
-    margin: 20mm;
-}
-h1 {
-    font-family: sans-serif;
-}
-pre {
-    page-break-inside: avoid;
-}
-</style>
-</head>
-<body>
-<h1>Project Documentation</h1>
-<pre>
-
-===== README.md =====
-
-Author : Sudhir Acharya
-### what are interview Interview Structure?
-- Basic C Questions
+const FLASHCARDS = [
+  {
+    q: "what are interview Interview Structure?",
+    a: `- Basic C Questions
 - Programming
   - Bit Manipulation
   - DSA / Array
 - Project Explanation
-- Problems You Have Faced
-
-### What is my Professional Summary",
-Senior Embedded Software Engineer with 11+ years of experience in automotive embedded systems, specializing in
-device driver development, AUTOSAR MCAL, and low-level firmware engineering.`
-
-
-### What are my Technical Skills",
-Device Drivers: ADC, SPI, I2C, UART, PORT, GPIO, DMA & AUTOSAR MCAL
+- Problems You Have Faced`
+  },
+  {
+    q: "What is my Professional Summary\",?",
+    a: `Senior Embedded Software Engineer with 11+ years of experience in automotive embedded systems, specializing in
+device driver development, AUTOSAR MCAL, and low-level firmware engineering.\``
+  },
+  {
+    q: "What are my Technical Skills\",?",
+    a: `Device Drivers: ADC, SPI, I2C, UART, PORT, GPIO, DMA & AUTOSAR MCAL
 AUTOSAR Stack: MCAL, RTE, BSW configuration using EB Tresos; Vector DaVinci
 Microcontrollers / SoCs: Infineon AURIX TriCore TC2xx, NXP MCU, ARM Cortex architecture
 Protocols / Interfaces: SPI, I2C, UART, CAN
@@ -44,11 +23,11 @@ RTOS: OSEK-based RTOS, task/ISR scheduling, interrupt handling
 Debugging & Test Tools: TRACE32 (JTAG), Oscilloscope, Logic Analyzer, USB Analyzer, CANoe, HIL setups
 Programming Languages: Embedded C, Python, MATLAB, MISRA-C guidelines
 Build & DevOps: Linux, Docker, cross-compilation, CI/CD pipelines, GitHub, Makefile, ARM GCC toolchain
-Requirements & SCM: IBM DOORS (traceability), MKS/PTC Integrity, SW-E5 process compliance`
-
-
-### What is my Experience",
-Continental Automotive, Bangalore
+Requirements & SCM: IBM DOORS (traceability), MKS/PTC Integrity, SW-E5 process compliance\``
+  },
+  {
+    q: "What is my Experience\",?",
+    a: `Continental Automotive, Bangalore
 Software Engineer | May 2019 – Present
 • Responsible for MCAL development and software integration and testing
 • Performed software integration and validation of AUTOSAR MCAL drivers ADC, SPI
@@ -67,11 +46,11 @@ Software Engineer | Feb 2017 – Aug 2017
 BISS-ITW, Bangalore
 Firmware Developer | Sep 2013 – Jan 2017
 • Developed and optimized software on Texas Instruments DSP processors for real-time signal processing applications
-• Developed drivers for ADC and DAC modules to support sensor data acquisition and signal conversion`
-
-
-### What are my Projects",
-ADC and Timer/Watchdog Driver Development | Infineon AURIX TC2xx, EB Tresos, TRACE32
+• Developed drivers for ADC and DAC modules to support sensor data acquisition and signal conversion\``
+  },
+  {
+    q: "What are my Projects\",?",
+    a: `ADC and Timer/Watchdog Driver Development | Infineon AURIX TC2xx, EB Tresos, TRACE32
 • Developed and validated low-level MCAL device drivers for Infineon AURIX TC2xx (TriCore) microcontroller, covering ADC, SPI, PORT, DMA, Timer, and Watchdog peripherals
 • Performed register-level peripheral configuration, interrupt handling, and DMA channel setup
 • Configured Timer channels for periodic triggering
@@ -90,64 +69,74 @@ Software Integration
 AUTOSAR Library Development
 • Developed modular software libraries conforming to AUTOSAR v4.2.2 specifications (MFX, IFX, IFL, MFL, EFX, E2E)
 • Applied MISRA C guidelines to ensure code safety, reliability, and compliance
-• Performed rigorous unit testing to validate functionality
-
-
-### ADC Project
-![ADC SW and HW Group Block Diagram](doc/adc_block_diagram.svg)
-
-## QSPI Project
-![QSPI](doc/qspi.svg)
-
-## DMA Example using 6 channel ADC
-![DMA Channel](doc/6CHADC1DMA.svg)
-
-
-### what is prmitive data types
-    Type       Size      Range (signed)
+• Performed rigorous unit testing to validate functionality`
+  },
+  {
+    q: "ADC Project?",
+    a: `![ADC SW and HW Group Block Diagram](doc/adc_block_diagram.svg)`
+  },
+  {
+    q: "QSPI Project?",
+    a: `![QSPI](doc/qspi.svg)`
+  },
+  {
+    q: "DMA Example using 6 channel ADC?",
+    a: `![DMA Channel](doc/6CHADC1DMA.svg)`
+  },
+  {
+    q: "what is prmitive data types?",
+    a: `Type       Size      Range (signed)
     -------    ------    ----------------------------
     char       1 byte    -128 to 127
     int        4 bytes   -2,147,483,648 to 2,147,483,647
     float      4 bytes   ~6-7 decimal digits
-    double     8 bytes   ~15-16 decimal digits
-
-### what are the Storage classes:
-    Keyword     Lifetime     Scope          Stored In
+    double     8 bytes   ~15-16 decimal digits`
+  },
+  {
+    q: "what are the Storage classes:?",
+    a: `Keyword     Lifetime     Scope          Stored In
     ---------   ----------   ------------   -----------
     1.auto        Block        Local          Stack
     2.static      Program      Local/File     .data / .bss
     3.extern      Program      Global         .data
-    4.register    Block        Local          CPU Register (hint only)
-
-### what is qualifiers ?
-    qualifiers are keywords that modify the behavior of variables and data types
+    4.register    Block        Local          CPU Register (hint only)`
+  },
+  {
+    q: "what is qualifiers ?",
+    a: `qualifiers are keywords that modify the behavior of variables and data types
     volatile
-    const
-
-### what are the type modifier in c
-    short, long, signed, unsigned
-
-### Derived dataypes
-    Structure
-    Union
-
-### wha are the Userdefined data types 
-    Enum
-    Typedef
-
-## what is typecasting and type conversion
-    implicit->autoatically done by compiler for two compatiable data types
+    const`
+  },
+  {
+    q: "what are the type modifier in c?",
+    a: `short, long, signed, unsigned`
+  },
+  {
+    q: "Derived dataypes?",
+    a: `Structure
+    Union`
+  },
+  {
+    q: "wha are the Userdefined data types?",
+    a: `Enum
+    Typedef`
+  },
+  {
+    q: "what is typecasting and type conversion?",
+    a: `implicit->autoatically done by compiler for two compatiable data types
     explicit ->done by programmer using typecast operator to make sure no valuble data los
-    type promotion-> smaller data to large one
-
-### what is Identifier: 
-identifier is simply the name used to identify variables, functions, arrays, structures, 
+    type promotion-> smaller data to large one`
+  },
+  {
+    q: "what is Identifier:?",
+    a: `identifier is simply the name used to identify variables, functions, arrays, structures, 
 or any other user-defined element in a program. It’s how you give a meaningful label to entities in your code.
     int a;
-    void add()
-
-### Volatile Keyword in C
-    Volatile is a qualifier that is applied to a variable when it is declared.
+    void add()`
+  },
+  {
+    q: "Volatile Keyword in C?",
+    a: `Volatile is a qualifier that is applied to a variable when it is declared.
     It tells the compiler that the value of the variable may change at any time-without any action being taken by the code the compiler finds nearby.
 
     volatile uint32_t *TIMER_REG = (uint32_t *)0x40000000;
@@ -156,18 +145,19 @@ or any other user-defined element in a program. It’s how you give a meaningful
         // Without volatile: compiler reads once, caches value
         //                   --> loop never exits (wrong!)
         // With volatile:    reads from HW register every iteration (correct)
-    }
-
-## what is the use of const keyword in c
-    The const (constant) qualifier is a type qualifier in C and C++ programming languages 
+    }`
+  },
+  {
+    q: "what is the use of const keyword in c?",
+    a: `The const (constant) qualifier is a type qualifier in C and C++ programming languages 
     used to declare that a variable's value is fixed, read-only, 
     and cannot be modified after initialization. 
     It acts as a compiler-enforced constraint to prevent accidental modifications,
-     enhancing code security and allowing optimization. 
-
-### What is const volatile — does it make sense?
-
-    const volatile uint32_t *STATUS_REG = (uint32_t *)0x40000010;
+     enhancing code security and allowing optimization.`
+  },
+  {
+    q: "What is const volatile — does it make sense?",
+    a: `const volatile uint32_t *STATUS_REG = (uint32_t *)0x40000010;
 
     YES — makes perfect sense for read-only hardware status registers:
     const    --> value cannot change, compiler enforces read-only
@@ -175,15 +165,17 @@ or any other user-defined element in a program. It’s how you give a meaningful
                  prevents compiler optimization
     
     example:
-    const volatile int  var
-    
-## What is  directrives in C
-    pre-prcoessor directive: #include, #ifdef
+    const volatile int  var`
+  },
+  {
+    q: "What is  directrives in C?",
+    a: `pre-prcoessor directive: #include, #ifdef
     assembler Directive: .data , .bss, .section
-    Compiler directive: #pragma pack
-
-## what is Pre-prcoessor direcive
-    #include <stdio.h>       // include system header
+    Compiler directive: #pragma pack`
+  },
+  {
+    q: "what is Pre-prcoessor direcive?",
+    a: `#include <stdio.h>       // include system header
     #define PI 3.14          // object-like macro
 
     ### Pre processor directives
@@ -203,46 +195,47 @@ or any other user-defined element in a program. It’s how you give a meaningful
     #pragma pack(1)          // struct alignment
 
     #error "message"         // force compile error
-    #warning "message"       // compile warning (GCC extension)
-
-## what is assembler directive
- commands in assembly language source code that instruct the assembler software how to process the program,
+    #warning "message"       // compile warning (GCC extension)`
+  },
+  {
+    q: "what is assembler directive?",
+    a: `commands in assembly language source code that instruct the assembler software how to process the program,
  rather than being translated into machine code instructions
- in Linker we have .bss, .data, .txt this are assebler directiver
-
-### what is compiler Directive
-    Instructions to the compiler during compilation. Tells it how to compile, optimize, or handle specific code.
+ in Linker we have .bss, .data, .txt this are assebler directiver`
+  },
+  {
+    q: "what is compiler Directive?",
+    a: `Instructions to the compiler during compilation. Tells it how to compile, optimize, or handle specific code.
 
     #pragma is a compiler-specific directive.
     It gives special instructions to the compiler that are not part of standard C syntax.
 
-    #pragma pack(n)Set structure member alignment to n bytes
-
-###  Error in embedded C
-
-| Error Type        | When Detected      | Tool                  | Output                       |
+    #pragma pack(n)Set structure member alignment to n bytes`
+  },
+  {
+    q: "Error in embedded C?",
+    a: `| Error Type        | When Detected      | Tool                  | Output                       |
 |-------------------|--------------------|-----------------------|------------------------------|
 | Compiler Error    | Compile time       | GCC / armcc           | No .o file generated         |
 | Linker Error      | Link time          | LD / armlink          | No .elf / .hex generated     |
 | Runtime Error     | Execution on target| Debugger / TRACE32    | HardFault / wrong behavior   |
 | Warning           | Compile time       | GCC                   | Binary generated (risky)     |
 | Logical Error     | Testing/Validation | Logic analyser / CANoe| Wrong output                 |
-| Preprocessor Error| Pre-compile        | CPP                   | No .o file generated         |
-
-### what is inline fucntion
-“Inline” Function is a provision or feature provided by the compiler. Inline is a request made to the compiler to replace the inline function call with the function definition.
-
+| Preprocessor Error| Pre-compile        | CPP                   | No .o file generated         |`
+  },
+  {
+    q: "what is inline fucntion?",
+    a: `“Inline” Function is a provision or feature provided by the compiler. Inline is a request made to the compiler to replace the inline function call with the function definition.
 
 inline void fun(/*fun argument */)
 {
     /* Function source Code */
 }
-When a normal function call happens function creates its stack in the main stack and initializes all local variables. After completion of function call return value is given back if any and stack is destroyed. Much time is consumed in stack operation. Hence for small functions, Inline function is beneficial as the call is replaced by definition, so no external stack is created and operations are much faster for small, commonly-used functions.
-
-
-### Inline Function vs Macro
-
-    Feature           Macro (#define)                     Inline Function
+When a normal function call happens function creates its stack in the main stack and initializes all local variables. After completion of function call return value is given back if any and stack is destroyed. Much time is consumed in stack operation. Hence for small functions, Inline function is beneficial as the call is replaced by definition, so no external stack is created and operations are much faster for small, commonly-used functions.`
+  },
+  {
+    q: "Inline Function vs Macro?",
+    a: `Feature           Macro (#define)                     Inline Function
     -----------       ------------------------------      ------------------------------
     Expansion         Preprocessor (text substitution)    Compiler (code inlining hint)
     Type checking     None                                Yes — full C type checking
@@ -251,10 +244,11 @@ When a normal function call happens function creates its stack in the main stack
     Side effects      Dangerous — args evaluated twice    Safe — args evaluated once
     Return value      No (expression only)                Yes — has a return type
     Recursion         Not possible                        Possible (compiler may not inline)
-    Header needed     No                                  Defined in header (static inline)
-
-### what is side of MACRO instead of using inline function?
-    Side effect trap (Macro):
+    Header needed     No                                  Defined in header (static inline)`
+  },
+  {
+    q: "what is side of MACRO instead of using inline function?",
+    a: `Side effect trap (Macro):
 
         #define SQ(x)  ((x) * (x))
 
@@ -276,31 +270,32 @@ When a normal function call happens function creates its stack in the main stack
 
         Use Inline   ->  Any computation involving arguments
                          When type safety matters
-                         When you need to step through in debugger
-
-### what is the diffrence between Structure vs Union
-    Feature           struct                              union
+                         When you need to step through in debugger`
+  },
+  {
+    q: "what is the diffrence between Structure vs Union?",
+    a: `Feature           struct                              union
     -----------       ------------------------------      ------------------------------
     Memory            Sum of all member sizes             Size of largest member only
     Storage           Each member has its own memory      All members share same memory
     Access            All members accessible anytime      Only last-written member valid
     Use case          Group related data fields            Memory-efficient variant types
-    Padding           Yes — compiler may add padding      Yes — based on largest member
-
-### what is the diffrence between typedef vs #define
-
-    Feature           typedef                             #define
+    Padding           Yes — compiler may add padding      Yes — based on largest member`
+  },
+  {
+    q: "what is the diffrence between typedef vs #define?",
+    a: `Feature           typedef                             #define
     -----------       ------------------------------      ------------------------------
     Processed by      Compiler                            Preprocessor (before compile)
     Type checking     Yes — real type alias               No — pure text substitution
     Scope             Follows C scoping rules             Global from point of definition
     Pointer types     Correct and safe                    Dangerous — see trap below
     Debugger          Shows type name                     Expanded text, no type name
-    Arrays / complex  Works cleanly                       Breaks easily
-
-       
-### what is rentrant fucntion
-    If you call a function once, pause the execution while it's in the middle of running,
+    Arrays / complex  Works cleanly                       Breaks easily`
+  },
+  {
+    q: "what is rentrant fucntion?",
+    a: `If you call a function once, pause the execution while it's in the middle of running,
     then call it a second time, the function is now running in two "contexts."
     The point is that the function can be running multiple times simultaneously, which usually means in multiple threads.
 
@@ -311,27 +306,29 @@ When a normal function call happens function creates its stack in the main stack
     }
 
     what is the use?
-      That’s why you can call add(2,3) and add(5,7) at the same time FROM DIFFRENT THREAD— each call has its own c.
-
-### Polymorphism in C++
-     Polymorphism means **one interface, multiple behaviors**.
-    Two types: Compile time and Runtime.
-
-   
-### Whats  Function Overloading — Compile Time Polymorphism
-        Same function name, different parameter types or count.
+      That’s why you can call add(2,3) and add(5,7) at the same time FROM DIFFRENT THREAD— each call has its own c.`
+  },
+  {
+    q: "Polymorphism in C++?",
+    a: `Polymorphism means **one interface, multiple behaviors**.
+    Two types: Compile time and Runtime.`
+  },
+  {
+    q: "Whats  Function Overloading — Compile Time Polymorphism?",
+    a: `Same function name, different parameter types or count.
         Compiler decides which function to call at **compile time**.
 
         int add(int a, int b)         { return a + b; }
-        float add(float a, float b)   { return a + b; }
-
-### Whatis  Function Overriding — Runtime Polymorphism
-
-        Child class redefines a parent class function.
-        Decision is made at **runtime** using virtual table (vtable).
-
-### Trap C questions
-    --
+        float add(float a, float b)   { return a + b; }`
+  },
+  {
+    q: "Whatis  Function Overriding — Runtime Polymorphism?",
+    a: `Child class redefines a parent class function.
+        Decision is made at **runtime** using virtual table (vtable).`
+  },
+  {
+    q: "Trap C questions?",
+    a: `--
     unsigned char x= 0xff;
 
     if(~x)
@@ -354,22 +351,21 @@ When a normal function call happens function creates its stack in the main stack
         return 0;
     }
 
-    result : 03
-
-### ASCII & Characters
-
-    '0' = 0x30 = 48
+    result : 03`
+  },
+  {
+    q: "ASCII & Characters?",
+    a: `'0' = 0x30 = 48
     'A' = 0x41 = 65
     'a' = 0x61 = 97
     Difference between upper and lower case = 32
 
     Lowercase to Uppercase:   str[i] = str[i] - 32
-    Uppercase to Lowercase:   str[i] = str[i] + 32
-
-
-### What are th Pointers declartion and meaning?
-
-int array[6] = {4, 3, 5, 6, 3, 8};
+    Uppercase to Lowercase:   str[i] = str[i] + 32`
+  },
+  {
+    q: "What are th Pointers declartion and meaning?",
+    a: `int array[6] = {4, 3, 5, 6, 3, 8};
 
 +-----------------------+----------------------------------------------------------------------+
 | Declaration           | Meaning and Example                                                  |
@@ -392,12 +388,11 @@ int array[6] = {4, 3, 5, 6, 3, 8};
 | int *ptr[6]           | array of 6 pointers to int                                           |
 |                       | int *ptr[6] = {&array[0], &array[1], &array[2],                      |
 |                       |                &array[3], &array[4], &array[5]};                     |
-+-----------------------+----------------------------------------------------------------------+
-
-
-### what is the Difference between *ptr++, (*ptr)++, and *++ptr?
-
-    int arr[] = {10, 20, 30};
++-----------------------+----------------------------------------------------------------------+`
+  },
+  {
+    q: "what is the Difference between ptr++, (ptr)++, and *++ptr?",
+    a: `int arr[] = {10, 20, 30};
     int *ptr = arr;
 
     *ptr++    --> returns 10, then moves ptr to arr[1]
@@ -406,17 +401,17 @@ int array[6] = {4, 3, 5, 6, 3, 8};
 
     *Note: 
     if + is near to p adress will increment  *++p or *p++
-    if + is near to * data will increment (*ptr)++, ++*p, 
-
-### Difference between const int *ptr and int * const ptr?
-
-    const int *ptr        --> can change ptr, cannot change *ptr
+    if + is near to * data will increment (*ptr)++, ++*p,`
+  },
+  {
+    q: "Difference between const int ptr and int  const ptr?",
+    a: `const int *ptr        --> can change ptr, cannot change *ptr
     int * const ptr       --> can change *ptr, cannot change ptr
-    const int * const ptr --> cannot change either
-
-### What is a function pointer? Embedded use case?
-
-    int add(int a, int b)
+    const int * const ptr --> cannot change either`
+  },
+  {
+    q: "What is a function pointer? Embedded use case?",
+    a: `int add(int a, int b)
     {
         return a + b;
     }
@@ -427,22 +422,23 @@ int array[6] = {4, 3, 5, 6, 3, 8};
         fnptr = add;              // point it at add()
 
         int result = fnptr(3, 4); // call through pointer
-        printf("Result = %d\n", result);  // prints 7
+        printf("Result = %d\\n", result);  // prints 7
         return 0;
     }
 
-    Used for: interrupt vector tables, state machines, callbacks.
-
-### what are the Pointer Types?
-    1.Null pointer
+    Used for: interrupt vector tables, state machines, callbacks.`
+  },
+  {
+    q: "what are the Pointer Types?",
+    a: `1.Null pointer
     2.wild pointer
     3.dangling pointer
     4.double pointer
-    5.void pointer
-
-## what is null nul, wild, dangling pointer
-
-    NULL Pointer:A pointer that is explicitly assigned NULL.It does not point to any valid memory address.
+    5.void pointer`
+  },
+  {
+    q: "what is null nul, wild, dangling pointer?",
+    a: `NULL Pointer:A pointer that is explicitly assigned NULL.It does not point to any valid memory address.
     int *p = NULL;
     Dereferencing a NULL pointer causes segmentation fault.
 
@@ -458,10 +454,11 @@ int array[6] = {4, 3, 5, 6, 3, 8};
     int *p = malloc(sizeof(int));
     free(p);      // memory released
     *p = 10;      // DANGLING — undefined behavior
-    Fix: after free(), always set p = NULL.
-
-### what double, void pointer
-    Double Pointer (Pointer to Pointer):
+    Fix: after free(), always set p = NULL.`
+  },
+  {
+    q: "what double, void pointer?",
+    a: `Double Pointer (Pointer to Pointer):
     A pointer that stores the address of another pointer.
     int a = 10;
     int *p = &a;
@@ -475,38 +472,40 @@ int array[6] = {4, 3, 5, 6, 3, 8};
     int a = 10;
     p = &a;                    // valid — no cast needed
     printf("%d", *(int*)p);    // type cast required to dereference
-    Used in: malloc(), memcpy(), generic functions like qsort().
-
-### Array Pointer vs Function Pointer
-
-    | Aspect      | Array Pointer          | Function Pointer         |
+    Used in: malloc(), memcpy(), generic functions like qsort().`
+  },
+  {
+    q: "Array Pointer vs Function Pointer?",
+    a: `| Aspect      | Array Pointer          | Function Pointer         |
     |-------------|------------------------|--------------------------|
     | Points to   | Data (RAM)             | Code (Flash / .text seg) |
     | Memory seg  | Stack / Heap / BSS     | .text segment            |
     | Operation   | Read / write the value | Call / execute only      |
-    | Arithmetic  | Valid                  | Not meaningful           |
-
-### what is the diffrence *a[10] vs (*a)[10]
-    *a[10]   -> [] first, array of pointers
+    | Arithmetic  | Valid                  | Not meaningful           |`
+  },
+  {
+    q: "what is the diffrence a[10] vs (a)[10]?",
+    a: `*a[10]   -> [] first, array of pointers
     (*a)[10] -> *  first, pointer to an array
 
     /* array of pointers */
     int x = 1, y = 2, z = 3;
     int *a[3] = {&x, &y, &z};
-    printf("%d\n", *a[1]);       /* 2 */
+    printf("%d\\n", *a[1]);       /* 2 */
 
     /* pointer to array */
     int arr[10] = {0};
     int (*p)[10] = &arr;
-    printf("%d\n", (*p)[3]);     /* 0 */
-
-### how to type caste pointer adress
-    (void *) ptr
-    (char *)ptr
-
-### Explain memory layout in C
-
-    High Address
+    printf("%d\\n", (*p)[3]);     /* 0 */`
+  },
+  {
+    q: "how to type caste pointer adress?",
+    a: `(void *) ptr
+    (char *)ptr`
+  },
+  {
+    q: "Explain memory layout in C?",
+    a: `High Address
     +---------------------+
     |        Stack        |   Local vars, function frames      (grows ↓)
     +---------------------+
@@ -522,10 +521,11 @@ int array[6] = {4, 3, 5, 6, 3, 8};
     +---------------------+
     |        .text        |   Machine instructions only        (FLASH, read-only, execute)
     +---------------------+
-    Low Address
-
-### Explain startup code task?
-    in startup  .ro data copied to .data section
+    Low Address`
+  },
+  {
+    q: "Explain startup code task?",
+    a: `in startup  .ro data copied to .data section
 
     FLASH                              RAM
                                           
@@ -551,19 +551,20 @@ int array[6] = {4, 3, 5, 6, 3, 8};
     Preprocessor   .c       .i       Expand macros, ###include, ###ifdef, remove comments
     Compiler       .i       .s       Generate assembly (syntax + semantic check)
     Assembler      .s       .o       Generate machine code object file
-    Linker         .o       .elf     Resolve symbols, link libs, apply memory map
-
-### Difference between .bin, .hex, and .elf?
-
-    Format   Description                          Used For
+    Linker         .o       .elf     Resolve symbols, link libs, apply memory map`
+  },
+  {
+    q: "Difference between .bin, .hex, and .elf?",
+    a: `Format   Description                          Used For
     ------   ----------------------------------   --------------------
     .bin     Raw binary bytes                     Direct flash write
     .hex     Intel HEX (ASCII + address + CRC)    Most programmers
     .elf     With debug symbols                   GDB debugging
-    .mot     Motorola S-Record                    Automotive tools
-
-### Bootup sequence
-    Power ON / Reset
+    .mot     Motorola S-Record                    Automotive tools`
+  },
+  {
+    q: "Bootup sequence?",
+    a: `Power ON / Reset
         │
         ▼
     Reset Vector ──► points to startup code (written in assembly)
@@ -579,40 +580,41 @@ int array[6] = {4, 3, 5, 6, 3, 8};
         │
         ▼
     main()  ──► Application entry point
-                ⚠️  Must NEVER return in embedded systems!
-
-### What is a Reset Vector?
-
-    Fixed memory address the CPU fetches and jumps to after reset.
+                ⚠️  Must NEVER return in embedded systems!`
+  },
+  {
+    q: "What is a Reset Vector?",
+    a: `Fixed memory address the CPU fetches and jumps to after reset.
     On ARM Cortex-M:
         0x00000000 = initial Stack Pointer value
-        0x00000004 = Reset Handler address (start of startup code)
-
-### Embedded System Startup Flow or reset to main or power on
-
-- **Reset Vector**: CPU fetches the reset vector, which points to the startup code (written in assembly).
+        0x00000004 = Reset Handler address (start of startup code)`
+  },
+  {
+    q: "Embedded System Startup Flow or reset to main or power on?",
+    a: `- **Reset Vector**: CPU fetches the reset vector, which points to the startup code (written in assembly).
 - **Startup Code**:
   - Sets up the **stack pointer**.
-  - Copies initialized variables from **FLASH to RAM** (`.data` section).
-  - Zeros out uninitialized variables (`.bss` section).
+  - Copies initialized variables from **FLASH to RAM** (\`.data\` section).
+  - Zeros out uninitialized variables (\`.bss\` section).
 - **SystemInit()**: Configures system clocks and hardware setup.
 - **main()**: Application entry point.  
-  - In embedded systems, `main()` should **never return**.
-
-### Dynamic Memory Allocation
-
-    malloc(size)        allocate, memory is UNINITIALIZED (garbage)
+  - In embedded systems, \`main()\` should **never return**.`
+  },
+  {
+    q: "Dynamic Memory Allocation?",
+    a: `malloc(size)        allocate, memory is UNINITIALIZED (garbage)
     calloc(n, size)     allocate n items, memory is ZERO-INITIALIZED
     realloc(ptr, size)  resize existing allocation (may move memory)
-    free(ptr)           release -- always set ptr = NULL after!
-
-### how to create our own malloc, my malloc?
-    simply create statci int char[500] --> this will exceeds data segment and cross heap section
-    we cant use pointer like assigning heap adress to ptr, next moment if we use malloca this adress wil be occupied
-
-### What is a memory leak? How to detect?
-
-    void leak(void) {
+    free(ptr)           release -- always set ptr = NULL after!`
+  },
+  {
+    q: "how to create our own malloc, my malloc?",
+    a: `simply create statci int char[500] --> this will exceeds data segment and cross heap section
+    we cant use pointer like assigning heap adress to ptr, next moment if we use malloca this adress wil be occupied`
+  },
+  {
+    q: "What is a memory leak? How to detect?",
+    a: `void leak(void) {
         int *ptr = malloc(100);
         return;   // forgot free() --> heap shrinks on every call
     }             //                --> eventually malloc returns NULL --> crash
@@ -622,11 +624,11 @@ int array[6] = {4, 3, 5, 6, 3, 8};
         if (ptr == NULL) return;
         // ... use ptr ...
         free(ptr);
-        ptr = NULL;
-
-### Why is malloc avoided in safety-critical embedded?
-
-    - Non-deterministic timing (MISRA C rule violation)
+        ptr = NULL;`
+  },
+  {
+    q: "Why is malloc avoided in safety-critical embedded?",
+    a: `- Non-deterministic timing (MISRA C rule violation)
     - Heap fragmentation over time
     - Memory leaks cause silent failure
     - Limited RAM on MCU gets exhausted unpredictably
@@ -634,16 +636,17 @@ int array[6] = {4, 3, 5, 6, 3, 8};
     Alternative -- static memory pool:
 
         uint8_t pool[NUM_BUFS][BUF_SIZE];
-        uint8_t inUse[NUM_BUFS] = {0};
-
-
-### What is interrupt latency?
-    Time from interrupt signal assertion to first ISR instruction executing.
+        uint8_t inUse[NUM_BUFS] = {0};`
+  },
+  {
+    q: "What is interrupt latency?",
+    a: `Time from interrupt signal assertion to first ISR instruction executing.
     Factors: CPU pipeline flush, saving context (stacking registers), priority.
-    ARM Cortex-M3: typically 12 clock cycles minimum latency.
-
-### What is a race condition between ISR and main? How to fix?
-    Problem:
+    ARM Cortex-M3: typically 12 clock cycles minimum latency.`
+  },
+  {
+    q: "What is a race condition between ISR and main? How to fix?",
+    a: `Problem:
         volatile uint32_t counter = 0;
         void TIMER_ISR(void) 
         { 
@@ -660,30 +663,29 @@ int array[6] = {4, 3, 5, 6, 3, 8};
     Fix: disable interrupts around the critical section:
         __disable_irq();
         uint32_t val = counter;
-        __enable_irq();
-
-
-### What is interrupt priority and nesting?
-
-    Higher priority interrupts can preempt lower priority ISRs.
+        __enable_irq();`
+  },
+  {
+    q: "What is interrupt priority and nesting?",
+    a: `Higher priority interrupts can preempt lower priority ISRs.
     ARM Cortex-M: lower number = higher priority (0 = highest).
     Configured via NVIC (Nested Vectored Interrupt Controller).
 
         NVIC_SetPriority(UART1_IRQn, 1);   // high priority
-        NVIC_SetPriority(TIM2_IRQn,  5);   // lower priority
-
-## Whats is NVIC Table
-
-    | Letter | Full Word  | What It Does                                           |
+        NVIC_SetPriority(TIM2_IRQn,  5);   // lower priority`
+  },
+  {
+    q: "Whats is NVIC Table?",
+    a: `| Letter | Full Word  | What It Does                                           |
     |--------|------------|--------------------------------------------------------|
     | N      | Nested     | Higher priority IRQ can interrupt a lower priority ISR |
     | V      | Vectored   | Each interrupt has a fixed address in the vector table |
     | I      | Interrupt  | Handles hardware interrupt signals from peripherals    |
-    | C      | Controller | Hardware block that manages priorities, enabling, pending |
-
-### Dynamic memory allocation
-
-    // 1. malloc — allocates raw uninitialized memory
+    | C      | Controller | Hardware block that manages priorities, enabling, pending |`
+  },
+  {
+    q: "Dynamic memory allocation?",
+    a: `// 1. malloc — allocates raw uninitialized memory
     int *ptr = malloc(sizeof(int));          // contents are garbage
 
     // 2. calloc — allocates AND zero-initializes
@@ -696,41 +698,42 @@ int array[6] = {4, 3, 5, 6, 3, 8};
     free(ptr);                               // how does it know the size? ↓
 
     Note:When you call malloc(100), the allocator doesn't just give you 100 bytes. 
-        It secretly allocates a metadata block just before your pointer:
-
-
-##  Watchdog Timer
-
-    Hardware timer that resets the MCU if not kicked within a timeout.
+        It secretly allocates a metadata block just before your pointer:`
+  },
+  {
+    q: "Watchdog Timer?",
+    a: `Hardware timer that resets the MCU if not kicked within a timeout.
     Detects software hangs and crashes.
-    Essential for unattended and safety-critical systems.
-
-## RTOS Concepts
-
-    RTOS = Real-Time Operating System
+    Essential for unattended and safety-critical systems.`
+  },
+  {
+    q: "RTOS Concepts?",
+    a: `RTOS = Real-Time Operating System
     Schedules multiple tasks with deterministic timing.
-    Guarantees response within a deadline.
-
-### Sempahore
-in rtos, a semaphore is a syxbronization mechanism used to manage access to shared resource and cororinates task. 
+    Guarantees response within a deadline.`
+  },
+  {
+    q: "Sempahore?",
+    a: `in rtos, a semaphore is a syxbronization mechanism used to manage access to shared resource and cororinates task. 
 semaphore helps prevent issues like race condtion and deadlock in multi tasking 
 enviranioment by ensuring that only a specified number of task can access a resource at time.
 
 exammple:
- Parking Lot with N slots Multiple people can enter (up to N slots).  ANY person can signal (release a slot). When slots = 0, everyone WAITS.
-
-### Mutexes:
-    in rtos and multithreadifn environment, a mutex is asyncornization mecanism that prevent multiple task or thread from acess that same shared reosurce at asame trime/
+ Parking Lot with N slots Multiple people can enter (up to N slots).  ANY person can signal (release a slot). When slots = 0, everyone WAITS.`
+  },
+  {
+    q: "Mutexes:?",
+    a: `in rtos and multithreadifn environment, a mutex is asyncornization mecanism that prevent multiple task or thread from acess that same shared reosurce at asame trime/
     how mutex works:
     a mutex act like lock.a task must aquire the lock the mutex before access the shared resoucre.
     once the a task finsihed using the resoucrece, it release(unlcok) the mutx allowing other task to acess it.
     if another task tries to aquire the mutex while its locked, it has to wait untill the mutex is relases
 Example:
-Toilet with 1 key 🚽, Only 1 person can enter at a time. The SAME person who locked must unlock.
-
-### Difference between mutex and semaphore?
-
-    Feature              Mutex                         Semaphore
+Toilet with 1 key 🚽, Only 1 person can enter at a time. The SAME person who locked must unlock.`
+  },
+  {
+    q: "Difference between mutex and semaphore?",
+    a: `Feature              Mutex                         Semaphore
     ----------------     --------------------------    ----------------------
     Ownership            Owned by locking task         No ownership
     Priority inversion   Protected                     Not protected
@@ -738,21 +741,21 @@ Toilet with 1 key 🚽, Only 1 person can enter at a time. The SAME person who l
 
     xSemaphoreTake(mutex, portMAX_DELAY);
     sharedBuffer[0] = 42;   // critical section
-    xSemaphoreGive(mutex);
-
-### Difference between a Process and a thread?
-
-    Process (one program running)
+    xSemaphoreGive(mutex);`
+  },
+  {
+    q: "Difference between a Process and a thread?",
+    a: `Process (one program running)
     │
     ├── Shared: heap, globals, code, file descriptors
     │
     ├── Thread 1 → own stack, PC, registers
     ├── Thread 2 → own stack, PC, registers
-    └── Thread 3 → own stack, PC, registers
-
-### What is priority inversion? How is it solved?
-
-    Scenario:
+    └── Thread 3 → own stack, PC, registers`
+  },
+  {
+    q: "What is priority inversion? How is it solved?",
+    a: `Scenario:
     - Low-priority task holds mutex
     - High-priority task needs that mutex -- blocks
     - Medium-priority task runs instead (doesn't need mutex)
@@ -760,22 +763,22 @@ Toilet with 1 key 🚽, Only 1 person can enter at a time. The SAME person who l
 
     Solution: Priority Inheritance
     - Temporarily boost low-priority task to match high-priority waiter
-    - FreeRTOS mutexes support this automatically
-
-
-###  What is a deadlock? How to avoid it?
-
-    Task A holds Mutex1, waits for Mutex2.
+    - FreeRTOS mutexes support this automatically`
+  },
+  {
+    q: "What is a deadlock? How to avoid it?",
+    a: `Task A holds Mutex1, waits for Mutex2.
     Task B holds Mutex2, waits for Mutex1.
     Both block forever --> deadlock.
 
     Prevention:
     - Always acquire mutexes in the SAME ORDER across all tasks
     - Use timeouts instead of blocking forever
-    - Minimize number of mutexes held at the same time
-
-### Difference between UART, SPI, CAN, I2C?
-    Feature          UART               SPI                      I2C                      CAN
+    - Minimize number of mutexes held at the same time`
+  },
+  {
+    q: "Difference between UART, SPI, CAN, I2C?",
+    a: `Feature          UART               SPI                      I2C                      CAN
     -----------      ----------------   ----------------------   ----------------------   ----------------------
     Wires            2 (TX, RX)         4 (MOSI,MISO,SCK,CS)     2 (SDA, SCL)             2 (CANH, CANL)
     Speed            up to ~5 Mbps      up to 100mhz            100k / 400k / 1MHz/3mhz       125k / 250k / 500k / 1Mbps
@@ -783,19 +786,17 @@ Toilet with 1 key 🚽, Only 1 person can enter at a time. The SAME person who l
     Addressing       None               Chip Select per slave    7-bit address             11-bit / 29-bit ID
     Synchronous      No (async)         Yes                      Yes                      No (async)
     Error handling   None               None                     ACK only                 CRC, ACK, error frames
-    Use case         Debug, GPS, BT     Flash, ADC, display      Sensors, EEPROM           Automotive ECUs, OBD
-
-
-### What is I2C clock stretching?
-    Slave holds SCL line LOW to pause the master while preparing data.
+    Use case         Debug, GPS, BT     Flash, ADC, display      Sensors, EEPROM           Automotive ECUs, OBD`
+  },
+  {
+    q: "What is I2C clock stretching?",
+    a: `Slave holds SCL line LOW to pause the master while preparing data.
     Master must wait until slave releases SCL.
-    Some I2C masters do not support clock stretching -- check datasheet!
-
-## Communication Protocol
-
-### i2c Communication
-
-    +-------+----------+---+----------+---+--------+---+---+
+    Some I2C masters do not support clock stretching -- check datasheet!`
+  },
+  {
+    q: "i2c Communication?",
+    a: `+-------+----------+---+----------+---+--------+---+---+
     |   S   | ADDR[7:1]|R/W|  A/NA    |  DATA[7:0] | A |P  |
     +-------+----------+---+----------+---+--------+---+---+
 
@@ -811,7 +812,6 @@ Toilet with 1 key 🚽, Only 1 person can enter at a time. The SAME person who l
                         Master(R)
     P             -     Master          STOP condition
 
-
 #### what is i2c clock Speed
 
     Mode            Speed       Notes
@@ -824,22 +824,22 @@ Toilet with 1 key 🚽, Only 1 person can enter at a time. The SAME person who l
     Pull-up resistors:
     100 kHz  ->  4.7 kohm typical
     400 kHz  ->  2.2 kohm typical
-    1 MHz    ->  1.0 kohm typical
-
-### what is Dominat and reccesive
-
-Differential signaling on CAN_H and CAN_L lines:
+    1 MHz    ->  1.0 kohm typical`
+  },
+  {
+    q: "what is Dominat and reccesive?",
+    a: `Differential signaling on CAN_H and CAN_L lines:
 
 State       CAN_H       CAN_L       Differential (H-L)
 ---------   -------     -------     ------------------
 Dominant    3.5 V       1.5 V       +2.0 V  (logic 0)
 Recessive   2.5 V       2.5 V        0.0 V  (logic 1)
 
-Dominant wins on bus (wired-AND): any node sending 0 pulls bus dominant.
-
-
-### Expalin CAN frame
----
+Dominant wins on bus (wired-AND): any node sending 0 pulls bus dominant.`
+  },
+  {
+    q: "Expalin CAN frame?",
+    a: `---
 Type                Description
 ----------------    ----------------------------------------
 Data Frame          Carries actual data (most common)
@@ -871,10 +871,11 @@ ACK DEL       1     1 (rec)         ACK delimiter
 EOF           7     1111111 (rec)   End of frame
 IFS           3     111 (rec)       Intermission (bus idle)
 
----
-### UART Communication
-
-One UART frame = 1 start bit + data bits + optional parity + stop bit(s)
+---`
+  },
+  {
+    q: "UART Communication?",
+    a: `One UART frame = 1 start bit + data bits + optional parity + stop bit(s)
 
 IDLE  Start   D0   D1   D2   D3   D4   D5   D6   D7   Parity  Stop  IDLE
 ----+       +----+----+----+----+----+----+----+----+--------+------+----
@@ -895,23 +896,22 @@ Data        5-9     payload     LSB sent first (D0 first)
 Parity      0-1     E/O/N       Even, Odd, or None
 Stop        1-2     1 (HIGH)    End of frame, line returns HIGH
 
----
-
-
-### what are the ADC Formulas?
-
-    Resolution = Vref / 2^n
+---`
+  },
+  {
+    q: "what are the ADC Formulas?",
+    a: `Resolution = Vref / 2^n
 
     Example — 12-bit ADC:
 
     Resolution = 5V / 4096 = 1.22 mV
 
     Vout = (ADC_value / (2^n - 1)) x Vref
-    ```
+    \`\`\`
 
-    - `ADC_value` — raw ADC output (0 to 4095 for 12-bit)
-    - `2^n - 1` — max count = 4095
-    - `Vref` — reference voltage = 5V
+    - \`ADC_value\` — raw ADC output (0 to 4095 for 12-bit)
+    - \`2^n - 1\` — max count = 4095
+    - \`Vref\` — reference voltage = 5V
 
     Examples:
 
@@ -919,12 +919,11 @@ Stop        1-2     1 (HIGH)    End of frame, line returns HIGH
     |-----------|---------------------|-------------|
     | 4095      | 4095 x 5 / 4095     | 5.00 V (max)|
     | 2048      | 2048 x 5 / 4095     | ~2.50 V     |
-    | 0         | 0 x 5 / 4095        | 0.00 V (min)|
-
-
-### ADC groups w.r.t AUTOSAR
-
-    ADC Groups
+    | 0         | 0 x 5 / 4095        | 0.00 V (min)|`
+  },
+  {
+    q: "ADC groups w.r.t AUTOSAR?",
+    a: `ADC Groups
     AUTOSAR organizes ADC channels into Groups
     
     Group is a collection of one or more channels that are converted together.
@@ -947,11 +946,11 @@ Stop        1-2     1 (HIGH)    End of frame, line returns HIGH
     Each group can have a notification function (callback) registered in configuration.
     It is called at end-of-conversion (similar to an ISR-driven callback).
     /* Example notification function prototype */
-    void AdcGroup0_ConversionComplete(void);
-
-### ADC API Reference
-
-SW TRIGGERED FLOW
+    void AdcGroup0_ConversionComplete(void);`
+  },
+  {
+    q: "ADC API Reference?",
+    a: `SW TRIGGERED FLOW
     Adc_Init(&AdcConfig)
         |
         v
@@ -987,14 +986,11 @@ Adc_ReadGroup(Group0, resultBuffer)
         v
     Use result in application logic
 // Process ADC values: scaling, threshold check, control decisions, etc.
-// e.g., temperature = (resultBuffer[0] * VREF) / ADC_RESOLUTION
-
-
-
-
-## AUTOSAR SPI Key Concepts
-
-    Master                          Slave
+// e.g., temperature = (resultBuffer[0] * VREF) / ADC_RESOLUTION`
+  },
+  {
+    q: "AUTOSAR SPI Key Concepts?",
+    a: `Master                          Slave
     ------                          -----
     SCLK  -----------------------------> SCLK
     MOSI  -----------------------------> MOSI
@@ -1009,33 +1005,33 @@ Adc_ReadGroup(Group0, resultBuffer)
 - **Sequence** — A group of one or more Jobs. Unit of transmission triggered by SW.
 - **EB Buffer** — External Buffer; pointer to user-provided RAM buffer (dynamic).
 - **IB Buffer** — Internal Buffer; statically allocated inside the SPI driver.
-- **Hw Unit** — Physical SPI peripheral (e.g., QSPI0, QSPI2 on AURIX TriCore).
-
-
-### List SPI MODES 
-
-SPI Modes (CPOL + CPHA)
-```
+- **Hw Unit** — Physical SPI peripheral (e.g., QSPI0, QSPI2 on AURIX TriCore).`
+  },
+  {
+    q: "List SPI MODES?",
+    a: `SPI Modes (CPOL + CPHA)
+\`\`\`
 | Mode | CPOL | CPHA | Clock Idle | Sample On    |
 |------|------|------|------------|--------------|
 |  0   |  0   |  0   |    LOW     | Rising edge  |
 |  1   |  0   |  1   |    LOW     | Falling edge |
 |  2   |  1   |  0   |    HIGH    | Falling edge |
 |  3   |  1   |  1   |    HIGH    | Rising edge  |
-```
-
-## What is SPI Synchronous vs Asynchronous or trnasimission mode?
-    SPI bus is always clocked, hardware sync is not negotiable
+\`\`\``
+  },
+  {
+    q: "What is SPI Synchronous vs Asynchronous or trnasimission mode?",
+    a: `SPI bus is always clocked, hardware sync is not negotiable
     Sync vs Async is a software architecture choice, not a hardware one
     DMA frees CPU but driver design decides if SW is truly async
     Best architecture is async driver as base with sync wrapper on top
     In RTOS, task pends on semaphore, ISR gives on transfer complete
     Prefer sync for boot sequences, short commands, and simple debug scenarios
-    Prefer async with DMA for flash bulk ops, frame buffers, and RTOS multitasking
-
-
-## list SPI API
-SPI SW TRIGGERED FLOW
+    Prefer async with DMA for flash bulk ops, frame buffers, and RTOS multitasking`
+  },
+  {
+    q: "list SPI API?",
+    a: `SPI SW TRIGGERED FLOW
     Spi_Init(&SpiConfig)
         |
         v
@@ -1071,11 +1067,11 @@ Spi_ReadIB(Channel0, destBuffer)
         v
     Use result in application logic
 // Process RX data: parse sensor response, decode register values, etc.
-// e.g., sensorVal = (destBuffer[0] << 8) | destBuffer[1]
-
-## what is SPI Synchronous vs Asynchronous ?
-
-| #  | Point                                                                              |
+// e.g., sensorVal = (destBuffer[0] << 8) | destBuffer[1]`
+  },
+  {
+    q: "what is SPI Synchronous vs Asynchronous ?",
+    a: `| #  | Point                                                                              |
 |----|------------------------------------------------------------------------------------|
 | 1  | SPI bus is always clocked, hardware sync is not negotiable                         |
 | 2  | Sync vs Async is a software architecture choice, not a hardware one                |
@@ -1083,93 +1079,65 @@ Spi_ReadIB(Channel0, destBuffer)
 | 4  | Best architecture is async driver as base with sync wrapper on top                 |
 | 5  | In RTOS, task pends on semaphore, ISR gives on transfer complete                   |
 | 6  | Prefer sync for boot sequences, short commands, and simple debug scenarios         |
-| 7  | Prefer async with DMA for flash bulk ops, frame buffers, and RTOS multitasking     |
-
-
-## what is inheritance
-Inheritance   = child gets parent's properties and methods
-
-## MCU
-Diffrenc between timer and counter
+| 7  | Prefer async with DMA for flash bulk ops, frame buffers, and RTOS multitasking     |`
+  },
+  {
+    q: "what is inheritance?",
+    a: `Inheritance   = child gets parent's properties and methods`
+  },
+  {
+    q: "MCU?",
+    a: `Diffrenc between timer and counter
 Timer   = counts internal clock pulses  (measures TIME)
-Counter = counts external event pulses  (measures EVENTS)
-
-## what is my Linux OS Road map
-
-| Phase   | File             | Concepts                                  |
+Counter = counts external event pulses  (measures EVENTS)`
+  },
+  {
+    q: "what is my Linux OS Road map?",
+    a: `| Phase   | File             | Concepts                                  |
 |---------|------------------|-------------------------------------------|
-| Phase 1 | `lo_mutex.c`     | Mutex, threads, race conditions           |
-| Phase 1 | `lo_semaphore.c` | Semaphore, shared memory, fork            |
-| Phase 1 | `lo_process.c`   | fork, wait, waitpid, execvp, exit         |
-| Phase 1 | `lo_threads.c`   | pthread_create, join, exit, return values |
-| Phase 1 | `lo_sharedmem.c` | mmap, sem_init, shared structures         |
-| Phase 2 | `lo_pipe.c`      | Pipes with fork                           |
-| Phase 2 | `lo_fifo.c`      | Named pipes (FIFO)                        |
-| Phase 2 | `lo_msqueue.c`   | Message queues                            |
-| Phase 2 | `lo_socket.c`    | Sockets (do this last)                    |
-| Phase 3 | `lo_malloc.c`    | malloc/free internals                     |
-| Phase 3 | `lo_stack_heap.c`| Stack vs Heap                             |
-| Phase 3 | `lo_mmap.c`      | Memory-mapped files                       |
-| Phase 4 | `lo_fileio.c`    | File I/O (open, read, write, close)       |
-| Phase 4 | `lo_dirops.c`    | Directory operations                      |
-| Phase 4 | `lo_filestat.c`  | File metadata (stat)                      |
-| Phase 5 | `lo_signals.c`   | Signal basics                             |
-| Phase 5 | `lo_sigaction.c` | sigaction, custom handlers                |
-| Phase 6 | `lo_prodcons.c`  | Producer–Consumer problem                 |
-| Phase 6 | `lo_readwrite.c` | Readers–Writers problem                   |
-| Phase 6 | `lo_deadlock.c`  | Deadlock detection                        |
-| Phase 6 | `lo_dining.c`    | Dining Philosophers problem               |
-
-
-
-
-
-
-
-===== imp.md =====
-
-# my wekanes i forgot every time  
-1.void (*fnptr)(int, int)
-2.move zero to end and sor0,1 always confuse
-3.delte node in linked list
-4.  
-    Array of Pointers (Pointer Array)
-    int *arr[5];).
-
-    Pointer to an Array (Array Pointer)
-    int (*ptr)[5];).
-5. n= sizeof(str)/sizeof(str[0])// last chra is null
-   n= n-1
-6. array sorting
-    array[left]  , some time forgot and uding only index like left
-7 IMP--> shift operation use proper brace else result will be wrong
-
-8. use UINT8_T FOR SHIFT OPERATION AND USE CHAR ITS EASY
-
-9 for bit operation use | , for logic ||
-10. uint8_t use all variabls in tmp also if  its rerquired
-    ledt shift use <<  , seen mistaklnly used only <
-
-### intrduction about myself
-"Hi, I am Sudhir Acharya. 
+| Phase 1 | \`lo_mutex.c\`     | Mutex, threads, race conditions           |
+| Phase 1 | \`lo_semaphore.c\` | Semaphore, shared memory, fork            |
+| Phase 1 | \`lo_process.c\`   | fork, wait, waitpid, execvp, exit         |
+| Phase 1 | \`lo_threads.c\`   | pthread_create, join, exit, return values |
+| Phase 1 | \`lo_sharedmem.c\` | mmap, sem_init, shared structures         |
+| Phase 2 | \`lo_pipe.c\`      | Pipes with fork                           |
+| Phase 2 | \`lo_fifo.c\`      | Named pipes (FIFO)                        |
+| Phase 2 | \`lo_msqueue.c\`   | Message queues                            |
+| Phase 2 | \`lo_socket.c\`    | Sockets (do this last)                    |
+| Phase 3 | \`lo_malloc.c\`    | malloc/free internals                     |
+| Phase 3 | \`lo_stack_heap.c\`| Stack vs Heap                             |
+| Phase 3 | \`lo_mmap.c\`      | Memory-mapped files                       |
+| Phase 4 | \`lo_fileio.c\`    | File I/O (open, read, write, close)       |
+| Phase 4 | \`lo_dirops.c\`    | Directory operations                      |
+| Phase 4 | \`lo_filestat.c\`  | File metadata (stat)                      |
+| Phase 5 | \`lo_signals.c\`   | Signal basics                             |
+| Phase 5 | \`lo_sigaction.c\` | sigaction, custom handlers                |
+| Phase 6 | \`lo_prodcons.c\`  | Producer–Consumer problem                 |
+| Phase 6 | \`lo_readwrite.c\` | Readers–Writers problem                   |
+| Phase 6 | \`lo_deadlock.c\`  | Deadlock detection                        |
+| Phase 6 | \`lo_dining.c\`    | Dining Philosophers problem               |`
+  },
+  {
+    q: "intrduction about myself?",
+    a: `"Hi, I am Sudhir Acharya. 
 I have over 11 years of experience in Embedded C, with a strong focus on the Automotive domain — specifically in the MCAL layer.
 My core work has been in MCAL driver development, testing, and integration. 
 I have hands-on experience with microcontrollers from Infineon, NXP, and STMicroelectronics.
 On the tools side, I have worked with LAUTERBACH TRACE32 for software debugging, Logic Analyzers for signal-level analysis, and CANoe for automotive communication testing.
-From a quality and compliance perspective, I have experience with ASPICE process requirements and MISRA C coding guidelines,
-
-
-### how ro generate final html file
-run this
+From a quality and compliance perspective, I have experience with ASPICE process requirements and MISRA C coding guidelines,`
+  },
+  {
+    q: "how ro generate final html file?",
+    a: `run this
 @sudheerpaniyur ➜ /workspaces/vscpde_c_practice (main) $ chmod +x generate_html.sh
 @sudheerpaniyur ➜ /workspaces/vscpde_c_practice (main) $ bash generate_html.sh
 
-
-
 ##### AI prompt
-The source is HTML content containing:
-### intrduction about myself
-theory
+The source is HTML content containing:`
+  },
+  {
+    q: "intrduction about myself?",
+    a: `theory
 Source code files
 Use ONLY the provided content.
 Do NOT generate any new theory, explanations, or code.
@@ -1220,8 +1188,6 @@ Structured like a professional textbook or notebook
 Must strictly use only the provided content (no additions)
 ---
 
-
-
  ### list of future Questions
  Interview Preparation Checklist
 🔢 Array Problems
@@ -1247,7 +1213,6 @@ Intermediate
  Best time to buy & sell stock
  Trapping rain water
 
-
 🔤 String Problems
 Basic
 
@@ -1265,7 +1230,6 @@ Intermediate
  First non-repeating character
  Reverse words in a sentence
 
-
 🔗 Linked List
 
  Reverse a linked list
@@ -1275,7 +1239,6 @@ Intermediate
  Remove Nth node from end
  Intersection of two linked lists
 
-
 📚 Stack & Queue
 
  Implement stack using array/queue
@@ -1283,7 +1246,6 @@ Intermediate
  Next greater element
  Min stack (getMin in O(1))
  Implement queue using two stacks
-
 
 🌳 Trees
 
@@ -1294,7 +1256,6 @@ Intermediate
  Lowest common ancestor
  Diameter of binary tree
 
-
 🔍 Searching & Sorting
 
  Binary search
@@ -1304,7 +1265,6 @@ Intermediate
  Quick sort
  Find first and last position of element
 
-
 💡 Dynamic Programming (Basics)
 
  Fibonacci (memoization vs tabulation)
@@ -1313,7 +1273,6 @@ Intermediate
  Longest Increasing Subsequence
  Coin change problem
  Climbing stairs
-
 
 ⚙️ Bit Manipulation (Important for Semiconductor!)
 
@@ -1326,7 +1285,6 @@ Intermediate
  Set / Clear / Toggle a specific bit
  Reverse bits of a number
 
-
 🧮 Math & Number Theory
 
  Check prime number
@@ -1336,7 +1294,6 @@ Intermediate
  Sieve of Eratosthenes (all primes up to N)
  Integer overflow detection
 
-
 🏭 Semiconductor / Embedded Specific
 
  Implement a circular buffer / ring buffer
@@ -1345,13 +1302,11 @@ Intermediate
  Bitfield manipulation in structs
  Fixed-point arithmetic
  CRC checksum basic concept
- Interrupt-safe data structures (volatile, atomic)
-
-
-
-===== array_ptr.c =====
-
-#include <stdio.h>
+ Interrupt-safe data structures (volatile, atomic)`
+  },
+  {
+    q: "Write array_ptr code?",
+    a: `#include <stdio.h>
 
 int main()
 {
@@ -1366,11 +1321,11 @@ int main()
 
 
     return 0;
-}
-
-===== bitfield.c =====
-
-#include <stdio.h>
+}`
+  },
+  {
+    q: "Write bitfield code?",
+    a: `#include <stdio.h>
 #include <stdint.h>
 
 struct EngineStatus {
@@ -1386,23 +1341,23 @@ int main() {
     status.gear       = 5;
     status.error_code = 3;
 
-    printf("Engine on  : %d\n", status.engine_on);
-    printf("Gear       : %d\n", status.gear);
-    printf("Error code : %d\n", status.error_code);
-    printf("Size       : %zu byte\n", sizeof(status));
+    printf("Engine on  : %d\\n", status.engine_on);
+    printf("Gear       : %d\\n", status.gear);
+    printf("Error code : %d\\n", status.error_code);
+    printf("Size       : %zu byte\\n", sizeof(status));
 
     return 0;
-}
-
-===== callbcakfunction.c =====
-
-#include <stdio.h>
+}`
+  },
+  {
+    q: "Write callbcakfunction code?",
+    a: `#include <stdio.h>
 #include <stdlib.h>
 
 void add(int a, int b)
 {
     int c=a+b;
-    printf("addition :%d \n", c);
+    printf("addition :%d \\n", c);
 }
 
 
@@ -1418,11 +1373,11 @@ int main()
     calulcate(3, 2, add);
     return 0;
 
-}
-
-===== enum.c =====
-
-#include <stdio.h>
+}`
+  },
+  {
+    q: "Write enum code?",
+    a: `#include <stdio.h>
 #include <stdlib.h>
 
 typedef enum
@@ -1438,16 +1393,14 @@ int main(void)
     WEEKDAY today;
 
     today=TUE;
-    printf("today:%d \n", today);
+    printf("today:%d \\n", today);
 
     return 0;
-}
-
-
-
-===== fun_struct.c =====
-
-#include <stdio.h>
+}`
+  },
+  {
+    q: "Write fun_struct code?",
+    a: `#include <stdio.h>
 
 
 //fucntion inside structure
@@ -1467,25 +1420,24 @@ int main(void) {
 
     /* 1 */
     Calc c = { .x = 3, .y = 4, .add = do_add };
-    printf("add = %d\n", c.add(c.x, c.y));      /* add = 7 */
+    printf("add = %d\\n", c.add(c.x, c.y));      /* add = 7 */
 	
-	}
-
-
-===== function_ptr.c =====
-
-#include <stdio.h>
+	}`
+  },
+  {
+    q: "Write function_ptr code?",
+    a: `#include <stdio.h>
 #include <stdlib.h>
 
 void add(int a, int b)
 {
     int c= a+b;
-    printf("addition %d \n", c);
+    printf("addition %d \\n", c);
 }
 void sub(int a, int b)
 {
     int c= a-b;
-    printf("sub %d\n", c);
+    printf("sub %d\\n", c);
 }
 int main()
 {
@@ -1495,11 +1447,11 @@ int main()
 
     return 0;
 
-}
-
-===== getchar.c =====
-
-#include <stdio.h>
+}`
+  },
+  {
+    q: "Write getchar code?",
+    a: `#include <stdio.h>
 #include <stdint.h>
 // enter date of birth and print
 int getnum()
@@ -1512,21 +1464,20 @@ int getnum()
         if (num >= '0' && num <= '9') {
             value = value * 10 + (num - '0');
         }
-    } while (num != '\n' && num != EOF);// EOF END OF FILE
+    } while (num != '\\n' && num != EOF);// EOF END OF FILE
 
     return value;
 }
 
 int main()
 {
-    printf("dob %d\n", getnum());
+    printf("dob %d\\n", getnum());
     return 0;
-}
-
-
-===== inlinefun.c =====
-
-#include <stdio.h>
+}`
+  },
+  {
+    q: "Write inlinefun code?",
+    a: `#include <stdio.h>
 #include <stdlib.h>
 
 // Benefits: Reduces function call overhead (no pushing arguments/return addresses to the stack).
@@ -1556,15 +1507,15 @@ int main()
 {
 
     int a=10, b=20;
-    printf("result %d \n", add(a,b));
-    // printf("result %d \n", add(a,b));
+    printf("result %d \\n", add(a,b));
+    // printf("result %d \\n", add(a,b));
 
     return 0;
-}
-
-===== lo_mutex.c =====
-
-#include <stdio.h>      // For printf()
+}`
+  },
+  {
+    q: "Write lo_mutex code?",
+    a: `#include <stdio.h>      // For printf()
 #include <pthread.h>    // For pthread functions (threads, mutex)
 
 
@@ -1699,7 +1650,7 @@ int main() {
      * Expected result = 100,000 + 100,000 = 200,000
      * Thanks to mutex, the answer will always be correct!
      */
-    printf("Final counter: %d\n", shared_counter);
+    printf("Final counter: %d\\n", shared_counter);
 
     return 0; // Program ended successfully
 }
@@ -1735,11 +1686,11 @@ Result: WRONG            T2 writes → 7
 │
 └── prints final counter = 200000
 
-*/
-
-===== lo_process.c =====
-
-#include <stdio.h>
+*/`
+  },
+  {
+    q: "Write lo_process code?",
+    a: `#include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>      // fork(), getpid(), getppid(), exec()
 #include <sys/wait.h>    // wait(), waitpid()
@@ -1832,7 +1783,7 @@ PARENT: exec child finished!
  * DEMO 1: Basic fork() — parent and child
  * ----------------------------------------------- */
 void demo_basic_fork() {
-    printf("\n===== DEMO 1: Basic fork() =====\n");
+    printf("\\n===== DEMO 1: Basic fork() =====\\n");
 
     pid_t pid = fork();   // creates child process here
 
@@ -1847,8 +1798,8 @@ void demo_basic_fork() {
          * CHILD PROCESS
          * pid == 0 means "I am the child"
          */
-        printf("CHILD : I am child!  My PID = %d\n", getpid());
-        printf("CHILD : My parent's PID = %d\n", getppid());
+        printf("CHILD : I am child!  My PID = %d\\n", getpid());
+        printf("CHILD : My parent's PID = %d\\n", getppid());
         exit(0);   // child done
     }
 
@@ -1857,11 +1808,11 @@ void demo_basic_fork() {
          * PARENT PROCESS
          * pid > 0 means "I am the parent, child PID = pid"
          */
-        printf("PARENT: I am parent! My PID = %d\n", getpid());
-        printf("PARENT: I created child with PID = %d\n", pid);
+        printf("PARENT: I am parent! My PID = %d\\n", getpid());
+        printf("PARENT: I created child with PID = %d\\n", pid);
 
         wait(NULL);   // wait for child to finish
-        printf("PARENT: Child finished!\n");
+        printf("PARENT: Child finished!\\n");
     }
 }
 
@@ -1870,25 +1821,25 @@ void demo_basic_fork() {
  * DEMO 2: Multiple children — waitpid()
  * ----------------------------------------------- */
 void demo_multiple_children() {
-    printf("\n===== DEMO 2: Multiple Children =====\n");
+    printf("\\n===== DEMO 2: Multiple Children =====\\n");
 
     pid_t child1, child2;
 
     /* --- Create Child 1 --- */
     child1 = fork();
     if (child1 == 0) {
-        printf("CHILD 1 (PID %d): Working...\n", getpid());
+        printf("CHILD 1 (PID %d): Working...\\n", getpid());
         sleep(1);   // simulate some work
-        printf("CHILD 1 (PID %d): Done!\n", getpid());
+        printf("CHILD 1 (PID %d): Done!\\n", getpid());
         exit(0);
     }
 
     /* --- Create Child 2 --- */
     child2 = fork();
     if (child2 == 0) {
-        printf("CHILD 2 (PID %d): Working...\n", getpid());
+        printf("CHILD 2 (PID %d): Working...\\n", getpid());
         sleep(2);   // simulate more work
-        printf("CHILD 2 (PID %d): Done!\n", getpid());
+        printf("CHILD 2 (PID %d): Done!\\n", getpid());
         exit(0);
     }
 
@@ -1896,15 +1847,15 @@ void demo_multiple_children() {
      * PARENT waits for SPECIFIC child using waitpid()
      * More control than wait() which waits for ANY child
      */
-    printf("PARENT: Waiting for Child 1 (PID %d)...\n", child1);
+    printf("PARENT: Waiting for Child 1 (PID %d)...\\n", child1);
     waitpid(child1, NULL, 0);
-    printf("PARENT: Child 1 finished!\n");
+    printf("PARENT: Child 1 finished!\\n");
 
-    printf("PARENT: Waiting for Child 2 (PID %d)...\n", child2);
+    printf("PARENT: Waiting for Child 2 (PID %d)...\\n", child2);
     waitpid(child2, NULL, 0);
-    printf("PARENT: Child 2 finished!\n");
+    printf("PARENT: Child 2 finished!\\n");
 
-    printf("PARENT: All children done!\n");
+    printf("PARENT: All children done!\\n");
 }
 
 
@@ -1912,13 +1863,13 @@ void demo_multiple_children() {
  * DEMO 3: exit status — child sends code to parent
  * ----------------------------------------------- */
 void demo_exit_status() {
-    printf("\n===== DEMO 3: Exit Status =====\n");
+    printf("\\n===== DEMO 3: Exit Status =====\\n");
 
     pid_t pid = fork();
 
     if (pid == 0) {
         /* Child exits with code 42 */
-        printf("CHILD : Exiting with status 42\n");
+        printf("CHILD : Exiting with status 42\\n");
         exit(42);
     }
 
@@ -1933,7 +1884,7 @@ void demo_exit_status() {
         waitpid(pid, &status, 0);
 
         if (WIFEXITED(status)) {
-            printf("PARENT: Child exited with code = %d\n",
+            printf("PARENT: Child exited with code = %d\\n",
                    WEXITSTATUS(status));
         }
     }
@@ -1944,7 +1895,7 @@ void demo_exit_status() {
  * DEMO 4: execvp() — replace process image
  * ----------------------------------------------- */
 void demo_exec() {
-    printf("\n===== DEMO 4: execvp() =====\n");
+    printf("\\n===== DEMO 4: execvp() =====\\n");
 
     pid_t pid = fork();
 
@@ -1957,7 +1908,7 @@ void demo_exec() {
          */
         char *args[] = {"ls", "-l", NULL};
 
-        printf("CHILD : About to exec 'ls -l'\n");
+        printf("CHILD : About to exec 'ls -l'\\n");
 
         execvp("ls", args);
 
@@ -1971,7 +1922,7 @@ void demo_exec() {
 
     else {
         wait(NULL);
-        printf("PARENT: exec child finished!\n");
+        printf("PARENT: exec child finished!\\n");
     }
 }
 
@@ -1980,17 +1931,17 @@ void demo_exec() {
  * MAIN — runs all demos
  * ----------------------------------------------- */
 int main() {
-    printf("========================================\n");
-    printf("  lo_process.c — Process Management\n");
-    printf("========================================\n");
-    printf("Main process PID: %d\n", getpid());
+    printf("========================================\\n");
+    printf("  lo_process.c — Process Management\\n");
+    printf("========================================\\n");
+    printf("Main process PID: %d\\n", getpid());
 
     demo_basic_fork();
     demo_multiple_children();
     demo_exit_status();
     demo_exec();
 
-    printf("\n===== ALL DEMOS COMPLETE =====\n");
+    printf("\\n===== ALL DEMOS COMPLETE =====\\n");
     return 0;
 }
 
@@ -2039,11 +1990,11 @@ int main() {
  * exit(code)        → terminate with code
  * execvp(cmd, args) → replace with new program
  * ─────────────────────────────────────────
- */
-
-===== lo_semaphore.c =====
-
-#include <stdio.h>       // For printf()
+ */`
+  },
+  {
+    q: "Write lo_semaphore code?",
+    a: `#include <stdio.h>       // For printf()
 #include <pthread.h>     // For pthread functions (threads)
 #include <semaphore.h>   // For semaphore functions ← NEW HEADER
 /*
@@ -2191,7 +2142,7 @@ int main() {
      * Expected = 100,000 + 100,000 = 200,000
      * Semaphore ensures the answer is always correct!
      */
-    printf("Final counter: %d\n", shared_counter);
+    printf("Final counter: %d\\n", shared_counter);
 
     return 0; // Program ended successfully
 }
@@ -2222,11 +2173,11 @@ Header             <pthread.h>       <semaphore.h>
 Lock function      pthread_mutex_lock   sem_wait
 Unlock function    pthread_mutex_unlock sem_post
 
-*/
-
-===== lo_sharedmem.c =====
-
-/*
+*/`
+  },
+  {
+    q: "Write lo_sharedmem code?",
+    a: `/*
  * ============================================================
  * FILE    : lo_sharedmem.c
  * TOPIC   : Linux OS — Shared Memory between Processes
@@ -2361,7 +2312,7 @@ typedef struct {
  * DEMO 1: Basic shared memory — parent writes, child reads
  * ============================================================ */
 void demo_basic_shared_memory() {
-    printf("\n===== DEMO 1: Basic Shared Memory =====\n");
+    printf("\\n===== DEMO 1: Basic Shared Memory =====\\n");
 
     /*
      * mmap() — create shared memory
@@ -2388,30 +2339,30 @@ void demo_basic_shared_memory() {
 
     if (pid == 0) {
         /* ── CHILD ── */
-        printf("CHILD : My PID = %d\n", getpid());
+        printf("CHILD : My PID = %d\\n", getpid());
         sleep(1);   /* wait for parent to write first */
 
         sem_wait(&shared->sem);                          /* LOCK   */
-        printf("CHILD : Read value from shared memory = %d\n",
+        printf("CHILD : Read value from shared memory = %d\\n",
                shared->value);
         shared->value += 50;
-        printf("CHILD : Added 50, new value = %d\n", shared->value);
+        printf("CHILD : Added 50, new value = %d\\n", shared->value);
         sem_post(&shared->sem);                          /* UNLOCK */
 
         exit(0);
     }
     else {
         /* ── PARENT ── */
-        printf("PARENT: My PID = %d\n", getpid());
+        printf("PARENT: My PID = %d\\n", getpid());
 
         sem_wait(&shared->sem);                          /* LOCK   */
         shared->value = 100;
-        printf("PARENT: Written 100 to shared memory\n");
+        printf("PARENT: Written 100 to shared memory\\n");
         sem_post(&shared->sem);                          /* UNLOCK */
 
         wait(NULL);   /* wait for child */
 
-        printf("PARENT: Final value in shared memory = %d\n",
+        printf("PARENT: Final value in shared memory = %d\\n",
                shared->value);
     }
 
@@ -2424,7 +2375,7 @@ void demo_basic_shared_memory() {
  * DEMO 2: Shared counter — both processes increment safely
  * ============================================================ */
 void demo_shared_counter() {
-    printf("\n===== DEMO 2: Shared Counter (Race Condition Safe) =====\n");
+    printf("\\n===== DEMO 2: Shared Counter (Race Condition Safe) =====\\n");
 
     SharedBasic* shared = mmap(
         NULL,
@@ -2446,7 +2397,7 @@ void demo_shared_counter() {
 
     if (pid == 0) {
         /* ── CHILD: increment 100000 times ── */
-        printf("CHILD : Starting 100000 increments...\n");
+        printf("CHILD : Starting 100000 increments...\\n");
 
         for (int i = 0; i < 100000; i++) {
             sem_wait(&shared->sem);   /* LOCK   */
@@ -2454,12 +2405,12 @@ void demo_shared_counter() {
             sem_post(&shared->sem);   /* UNLOCK */
         }
 
-        printf("CHILD : Done incrementing!\n");
+        printf("CHILD : Done incrementing!\\n");
         exit(0);
     }
     else {
         /* ── PARENT: increment 100000 times ── */
-        printf("PARENT: Starting 100000 increments...\n");
+        printf("PARENT: Starting 100000 increments...\\n");
 
         for (int i = 0; i < 100000; i++) {
             sem_wait(&shared->sem);   /* LOCK   */
@@ -2467,11 +2418,11 @@ void demo_shared_counter() {
             sem_post(&shared->sem);   /* UNLOCK */
         }
 
-        printf("PARENT: Done incrementing!\n");
+        printf("PARENT: Done incrementing!\\n");
 
         wait(NULL);   /* wait for child */
 
-        printf("MAIN  : Final counter = %d (expected 200000) %s\n",
+        printf("MAIN  : Final counter = %d (expected 200000) %s\\n",
                shared->counter,
                shared->counter == 200000 ? "✓" : "✗ ERROR!");
     }
@@ -2485,7 +2436,7 @@ void demo_shared_counter() {
  * DEMO 3: Shared struct — pass complex data between processes
  * ============================================================ */
 void demo_shared_struct() {
-    printf("\n===== DEMO 3: Shared Struct =====\n");
+    printf("\\n===== DEMO 3: Shared Struct =====\\n");
 
     SharedStruct* shared = mmap(
         NULL,
@@ -2512,10 +2463,10 @@ void demo_shared_struct() {
         sleep(1);   /* wait for parent to write */
 
         sem_wait(&shared->sem);
-        printf("CHILD : Read from shared struct:\n");
-        printf("        name    = %s\n", shared->name);
-        printf("        value   = %d\n", shared->value);
-        printf("        flag    = %d\n", shared->flag);
+        printf("CHILD : Read from shared struct:\\n");
+        printf("        name    = %s\\n", shared->name);
+        printf("        value   = %d\\n", shared->value);
+        printf("        flag    = %d\\n", shared->flag);
         sem_post(&shared->sem);
 
         exit(0);
@@ -2527,10 +2478,10 @@ void demo_shared_struct() {
                 sizeof(shared->name) - 1);
         shared->value = 42;
         shared->flag  = 1;
-        printf("PARENT: Written to shared struct:\n");
-        printf("        name    = %s\n", shared->name);
-        printf("        value   = %d\n", shared->value);
-        printf("        flag    = %d\n", shared->flag);
+        printf("PARENT: Written to shared struct:\\n");
+        printf("        name    = %s\\n", shared->name);
+        printf("        value   = %d\\n", shared->value);
+        printf("        flag    = %d\\n", shared->flag);
         sem_post(&shared->sem);
 
         wait(NULL);
@@ -2545,24 +2496,24 @@ void demo_shared_struct() {
  * MAIN
  * ============================================================ */
 int main() {
-    printf("========================================\n");
-    printf("  lo_sharedmem.c — Shared Memory\n");
-    printf("========================================\n");
-    printf("MAIN  : Main process PID = %d\n", getpid());
+    printf("========================================\\n");
+    printf("  lo_sharedmem.c — Shared Memory\\n");
+    printf("========================================\\n");
+    printf("MAIN  : Main process PID = %d\\n", getpid());
 
     demo_basic_shared_memory();
     demo_shared_counter();
     demo_shared_struct();
 
-    printf("\n===== ALL DEMOS COMPLETE =====\n");
-    printf("MAIN  : Shared memory released\n");
+    printf("\\n===== ALL DEMOS COMPLETE =====\\n");
+    printf("MAIN  : Shared memory released\\n");
 
     return 0;
-}
-
-===== lo_threads.c =====
-
-/*
+}`
+  },
+  {
+    q: "Write lo_threads code?",
+    a: `/*
  * ============================================================
  * FILE    : lo_threads.c
  * TOPIC   : Linux OS — Thread Management (POSIX Threads)
@@ -2706,27 +2657,27 @@ int main() {
  * DEMO 1: Basic thread creation
  * ============================================================ */
 void* basic_thread(void* arg) {
-    printf("THREAD: I am running! Thread ID = %lu\n",
+    printf("THREAD: I am running! Thread ID = %lu\\n",
            (unsigned long)pthread_self());
-    printf("THREAD: Doing some work...\n");
+    printf("THREAD: Doing some work...\\n");
     sleep(1);
-    printf("THREAD: Work done! Exiting.\n");
+    printf("THREAD: Work done! Exiting.\\n");
     return NULL;
 }
 
 void demo_basic_thread() {
-    printf("\n===== DEMO 1: Basic Thread =====\n");
+    printf("\\n===== DEMO 1: Basic Thread =====\\n");
 
     pthread_t t1;
 
     pthread_create(&t1, NULL, basic_thread, NULL);
 
-    printf("MAIN  : Thread created, ID = %lu\n",
+    printf("MAIN  : Thread created, ID = %lu\\n",
            (unsigned long)t1);
 
     pthread_join(t1, NULL);
 
-    printf("MAIN  : Thread joined (finished)!\n");
+    printf("MAIN  : Thread joined (finished)!\\n");
 }
 
 
@@ -2736,17 +2687,17 @@ void demo_basic_thread() {
 void* thread_with_arg(void* arg) {
     int thread_num = *((int*)arg);
 
-    printf("THREAD %d: Hello from thread number %d!\n",
+    printf("THREAD %d: Hello from thread number %d!\\n",
            thread_num, thread_num);
-    printf("THREAD %d: My ID = %lu\n",
+    printf("THREAD %d: My ID = %lu\\n",
            thread_num, (unsigned long)pthread_self());
     sleep(1);
-    printf("THREAD %d: Done!\n", thread_num);
+    printf("THREAD %d: Done!\\n", thread_num);
     return NULL;
 }
 
 void demo_pass_argument() {
-    printf("\n===== DEMO 2: Pass Argument to Thread =====\n");
+    printf("\\n===== DEMO 2: Pass Argument to Thread =====\\n");
 
     pthread_t t1, t2, t3;
     int n1 = 1, n2 = 2, n3 = 3;
@@ -2759,7 +2710,7 @@ void demo_pass_argument() {
     pthread_join(t2, NULL);
     pthread_join(t3, NULL);
 
-    printf("MAIN  : All 3 threads finished!\n");
+    printf("MAIN  : All 3 threads finished!\\n");
 }
 
 
@@ -2769,7 +2720,7 @@ void demo_pass_argument() {
 void* thread_return_value(void* arg) {
     int num = *((int*)arg);
 
-    printf("THREAD: Calculating %d x %d...\n", num, num);
+    printf("THREAD: Calculating %d x %d...\\n", num, num);
     sleep(1);
 
     /*
@@ -2780,12 +2731,12 @@ void* thread_return_value(void* arg) {
     int* result = malloc(sizeof(int));
     *result = num * num;
 
-    printf("THREAD: Result = %d, returning to main!\n", *result);
+    printf("THREAD: Result = %d, returning to main!\\n", *result);
     return (void*)result;
 }
 
 void demo_return_value() {
-    printf("\n===== DEMO 3: Return Value from Thread =====\n");
+    printf("\\n===== DEMO 3: Return Value from Thread =====\\n");
 
     pthread_t t1;
     int num = 7;
@@ -2796,7 +2747,7 @@ void demo_return_value() {
     pthread_join(t1, &retval);   // captures thread's return
 
     int* result = (int*)retval;
-    printf("MAIN  : Thread returned result = %d\n", *result);
+    printf("MAIN  : Thread returned result = %d\\n", *result);
 
     free(result);   // always free heap memory!
 }
@@ -2807,29 +2758,29 @@ void demo_return_value() {
  * ============================================================ */
 void* worker(void* arg) {
     int id = *((int*)arg);
-    printf("WORKER %d: Started\n", id);
+    printf("WORKER %d: Started\\n", id);
     sleep(id);   // worker 1 sleeps 1s, worker 4 sleeps 4s
-    printf("WORKER %d: Finished (slept %d sec)\n", id, id);
+    printf("WORKER %d: Finished (slept %d sec)\\n", id, id);
     return NULL;
 }
 
 void demo_multiple_threads() {
-    printf("\n===== DEMO 4: Multiple Threads =====\n");
+    printf("\\n===== DEMO 4: Multiple Threads =====\\n");
 
     pthread_t threads[4];
     int ids[4] = {1, 2, 3, 4};
 
     for (int i = 0; i < 4; i++) {
         pthread_create(&threads[i], NULL, worker, &ids[i]);
-        printf("MAIN  : Created worker %d\n", ids[i]);
+        printf("MAIN  : Created worker %d\\n", ids[i]);
     }
 
     for (int i = 0; i < 4; i++) {
         pthread_join(threads[i], NULL);
-        printf("MAIN  : Worker %d joined!\n", ids[i]);
+        printf("MAIN  : Worker %d joined!\\n", ids[i]);
     }
 
-    printf("MAIN  : All workers done!\n");
+    printf("MAIN  : All workers done!\\n");
 }
 
 
@@ -2837,8 +2788,8 @@ void demo_multiple_threads() {
  * DEMO 5: pthread_exit() vs return NULL
  * ============================================================ */
 void* thread_exit_demo(void* arg) {
-    printf("THREAD: Running...\n");
-    printf("THREAD: Calling pthread_exit() now\n");
+    printf("THREAD: Running...\\n");
+    printf("THREAD: Calling pthread_exit() now\\n");
 
     /*
      * pthread_exit() → exits ONLY this thread
@@ -2850,18 +2801,18 @@ void* thread_exit_demo(void* arg) {
      */
     pthread_exit(NULL);
 
-    printf("THREAD: You will NEVER see this line!\n");
+    printf("THREAD: You will NEVER see this line!\\n");
     return NULL;
 }
 
 void demo_pthread_exit() {
-    printf("\n===== DEMO 5: pthread_exit() =====\n");
+    printf("\\n===== DEMO 5: pthread_exit() =====\\n");
 
     pthread_t t1;
     pthread_create(&t1, NULL, thread_exit_demo, NULL);
     pthread_join(t1, NULL);
 
-    printf("MAIN  : Thread exited cleanly!\n");
+    printf("MAIN  : Thread exited cleanly!\\n");
 }
 
 
@@ -2869,10 +2820,10 @@ void demo_pthread_exit() {
  * MAIN
  * ============================================================ */
 int main() {
-    printf("========================================\n");
-    printf("  lo_threads.c — Thread Management\n");
-    printf("========================================\n");
-    printf("MAIN  : Main thread ID = %lu\n",
+    printf("========================================\\n");
+    printf("  lo_threads.c — Thread Management\\n");
+    printf("========================================\\n");
+    printf("MAIN  : Main thread ID = %lu\\n",
            (unsigned long)pthread_self());
 
     demo_basic_thread();
@@ -2881,13 +2832,13 @@ int main() {
     demo_multiple_threads();
     demo_pthread_exit();
 
-    printf("\n===== ALL DEMOS COMPLETE =====\n");
+    printf("\\n===== ALL DEMOS COMPLETE =====\\n");
     return 0;
-}
-
-===== memory_layout.c =====
-
-#include <stdio.h>
+}`
+  },
+  {
+    q: "Write memory_layout code?",
+    a: `#include <stdio.h>
 #include <stdlib.h>
 
 int main()
@@ -2904,23 +2855,23 @@ int main()
   //  char *ptr="ro_data";
     char *buff_ptr=malloc(10);
 
-    printf("a_stack adress=%p \t",&a_stack);
-    printf("a_stack data=%d\n",a_stack);
+    printf("a_stack adress=%p \\t",&a_stack);
+    printf("a_stack data=%d\\n",a_stack);
 
-    printf("b_bss adress=%p\t",&b_bss);
-    printf("b_bss data =%d\n",b_bss);
+    printf("b_bss adress=%p\\t",&b_bss);
+    printf("b_bss data =%d\\n",b_bss);
 
-    printf("c_init adress=%p \t",&c_init);
-     printf("c_init data=%d \n",c_init);
+    printf("c_init adress=%p \\t",&c_init);
+     printf("c_init data=%d \\n",c_init);
 
-    //printf("d_reg adress=%p \t",&d_reg);/* this will not due ti register will not give acess to user*/
-       printf("d_reg data=%d \n",d_reg);
+    //printf("d_reg adress=%p \\t",&d_reg);/* this will not due ti register will not give acess to user*/
+       printf("d_reg data=%d \\n",d_reg);
 
-       printf("ptr adress=%p \t",&ptr);
-           printf("ptr data=%#lx \n",ptr);
+       printf("ptr adress=%p \\t",&ptr);
+           printf("ptr data=%#lx \\n",ptr);
 
-           printf("buff_ptr adress=%p \t",&buff_ptr);
-                   printf("buff_ptr data=%#lx \n",buff_ptr);
+           printf("buff_ptr adress=%p \\t",&buff_ptr);
+                   printf("buff_ptr data=%#lx \\n",buff_ptr);
 
                    if (buff_ptr)
                 	  free(buff_ptr) ;
@@ -2928,17 +2879,17 @@ int main()
 
 
 
-	    printf("a: %d\n", a);
-	    printf("*ptr: %d\n", *ptr);
-	    printf("**ptr_ptr: %d\n", **ptr_ptr);
+	    printf("a: %d\\n", a);
+	    printf("*ptr: %d\\n", *ptr);
+	    printf("**ptr_ptr: %d\\n", **ptr_ptr);
 
 	    // Print addresses
-	    printf("\nAddresses:\n");
-	    printf("&a: %p\n", (void*)&a);
-	    printf("ptr (address of a): %p\n", (void*)ptr);
-	    printf("&ptr: %p\n", (void*)&ptr);
-	    printf("ptr_ptr (address of ptr): %p\n", (void*)ptr_ptr);
-	    printf("&ptr_ptr: %p\n", (void*)&ptr_ptr);
+	    printf("\\nAddresses:\\n");
+	    printf("&a: %p\\n", (void*)&a);
+	    printf("ptr (address of a): %p\\n", (void*)ptr);
+	    printf("&ptr: %p\\n", (void*)&ptr);
+	    printf("ptr_ptr (address of ptr): %p\\n", (void*)ptr_ptr);
+	    printf("&ptr_ptr: %p\\n", (void*)&ptr_ptr);
 
     return 0;
 }
@@ -2970,12 +2921,11 @@ High Address
 |         .text / .rodata   |  const int a=4;
 +---------------------------+
 Low Address
-*/
-
-
-===== practice.c =====
-
-#include <stdio.h>
+*/`
+  },
+  {
+    q: "Write practice code?",
+    a: `#include <stdio.h>
 #include <stdint.h>
 #include <stdlib.h>
 
@@ -3019,11 +2969,11 @@ int main()
     }
 
     return 0;
-}
-
-===== ptr_array.c =====
-
-#include <stdio.h>
+}`
+  },
+  {
+    q: "Write ptr_array code?",
+    a: `#include <stdio.h>
 
 int main() {
     int a = 10, b = 20, c = 30;
@@ -3034,15 +2984,14 @@ int main() {
     arr[2] = &c;
 
     for(int i=0; i<3; i++) {
-        printf("Value at arr[%d] = %d\n", i, *arr[i]);
+        printf("Value at arr[%d] = %d\\n", i, *arr[i]);
     }
     return 0;
-}
-
-
-===== struct.c =====
-
-#include <stdio.h>
+}`
+  },
+  {
+    q: "Write struct code?",
+    a: `#include <stdio.h>
 #include <stdlib.h>
 
 typedef struct
@@ -3057,12 +3006,12 @@ int main(void)
     reg1 *gpio= malloc(sizeof(reg1));
    gpio->a=1;
 
-    printf("hello \n");
-}
-
-===== switch_case.c =====
-
-#include <stdio.h>
+    printf("hello \\n");
+}`
+  },
+  {
+    q: "Write switch_case code?",
+    a: `#include <stdio.h>
 int main() {
    int day = 3;
    switch (day) {
@@ -3076,11 +3025,11 @@ int main() {
            printf("Invalid day number");
    }
    return 0;
-}
-
-===== ternary.c =====
-
-#include <stdio.h>
+}`
+  },
+  {
+    q: "Write ternary code?",
+    a: `#include <stdio.h>
 #include <stdlib.h>
 
 int main()
@@ -3090,14 +3039,13 @@ int main()
     (a>b)? (c=10):(c=20); 
     max= ( a > b) ? a:b;
     max = (a > b) ? ((a > c) ? a : c) : ((b > c) ? 5 : 7);
-    printf("c:%d \n",c);
+    printf("c:%d \\n",c);
     return 0;
-}
-
-===== union.c =====
-
-
-// union is a userdefined data types that allows multiple member
+}`
+  },
+  {
+    q: "Write union code?",
+    a: `// union is a userdefined data types that allows multiple member
 // with poeencially diffrent data types, to share the same memory
 
 
@@ -3128,14 +3076,12 @@ unionreg gpio;
 int main()
 {
     gpio.reg=0xffff;
-    printf("setbit : %d \n", gpio.bits.setbit);
-}
-
-
-
-===== xbmp_2byte_swap.c =====
-
-#include <stdio.h>
+    printf("setbit : %d \\n", gpio.bits.setbit);
+}`
+  },
+  {
+    q: "Write xbmp_2byte_swap code?",
+    a: `#include <stdio.h>
 #include <stdint.h>
 
 uint16_t n=0x1234;
@@ -3145,13 +3091,13 @@ int main()
 
   n= ((n & 0x00ff) << 8)  | (( n & 0xff00 )>> 8);
 
-  printf("0x%x\n",n);
+  printf("0x%x\\n",n);
     
-}
-
-===== xbmp_4byteswap.c =====
-
-#include <stdio.h>
+}`
+  },
+  {
+    q: "Write xbmp_4byteswap code?",
+    a: `#include <stdio.h>
 #include <stdint.h>
 
 uint32_t n=0x12345678;
@@ -3161,13 +3107,13 @@ int main()
 
   n= ((n & 0x000000ff) << 24)  | (( n & 0x0000ff00 ) <<8) | (( n & 0xff000000 ) >> 24) | (( n & 0x00ff0000 ) >> 8);
 
-  printf("0x%x\n",n);
+  printf("0x%x\\n",n);
     
-}
-
-===== xbmp_anagram.c =====
-
-#include <stdio.h>
+}`
+  },
+  {
+    q: "Write xbmp_anagram code?",
+    a: `#include <stdio.h>
 
 void sort(char *array, int n)
 {
@@ -3202,21 +3148,21 @@ int main()
          printf("%c",str1[i]);
 
     }
-    printf("\n");
+    printf("\\n");
     for(int i=0 ; i<n-1 ; i++)
     {
         printf("%c",str2[i]);
     }
-    printf("\n");
+    printf("\\n");
 
   
    
     return 0;
-}
-
-===== xbmp_bit_op.c =====
-
-#include <stdio.h>
+}`
+  },
+  {
+    q: "Write xbmp_bit_op code?",
+    a: `#include <stdio.h>
 #include <stdlib.h>
 
 #define SETBIT(N, POS) ( N |= 1<< POS )
@@ -3231,17 +3177,17 @@ int main()
     int c=1;
         int d=1;
 
-    printf("SETBIT %d \n", SETBIT(a, 0));
-    printf("CLEABIT %d \n", CLEABIT(b, 0));
-    printf("TOGGLE %d \n", TOGGLE(c, 0));
-    printf(" is bit set" %d \n",  IS_BIT_SET(d, 0));
+    printf("SETBIT %d \\n", SETBIT(a, 0));
+    printf("CLEABIT %d \\n", CLEABIT(b, 0));
+    printf("TOGGLE %d \\n", TOGGLE(c, 0));
+    printf(" is bit set" %d \\n",  IS_BIT_SET(d, 0));
 
     return 0;
-}
-
-===== xbmp_byteswap.c =====
-
-#include <stdio.h>
+}`
+  },
+  {
+    q: "Write xbmp_byteswap code?",
+    a: `#include <stdio.h>
 #include <stdint.h>
 
 uint8_t n=0x12;
@@ -3250,13 +3196,13 @@ int main()
 
   n= ((n & 0x0f) << 4)  | (( n & 0xf0 )>> 4);
 
-  printf("0x%x\n",n);
+  printf("0x%x\\n",n);
     
-}
-
-===== xbmp_cnt_vowel.c =====
-
-#include <stdio.h>
+}`
+  },
+  {
+    q: "Write xbmp_cnt_vowel code?",
+    a: `#include <stdio.h>
 #include <ctype.h>
  
 int main()
@@ -3267,7 +3213,7 @@ int main()
 
     
     //Initializing for loop. 
-    for(i = 0; str[i]; i++)  // loops until the null terminator ('\0') is reached.
+    for(i = 0; str[i]; i++)  // loops until the null terminator ('\\0') is reached.
     {
         //Counting the vowels.
         //a, e, i, o, u
@@ -3280,14 +3226,14 @@ int main()
     }
  	
     //Printing the count of vowels.
-    printf("Total number of vowels: = %d\n",vowels);
+    printf("Total number of vowels: = %d\\n",vowels);
     
     return 0;
-}
-
-===== xbmp_endians.c =====
-
-#include <stdio.h>
+}`
+  },
+  {
+    q: "Write xbmp_endians code?",
+    a: `#include <stdio.h>
 #include <stdlib.h>
 
   int a= 0x12345678;
@@ -3327,12 +3273,12 @@ int main()
      * Swap: byte0<->byte3, byte1<->byte2
      * Result: 0x78563412
      */
-    printf("Before conv: 0x%08x \n", var);
+    printf("Before conv: 0x%08x \\n", var);
     var = ((var & 0x000000FF) << 24) |  /* byte0 -> byte3 */
           ((var & 0x0000FF00) <<  8) |  /* byte1 -> byte2 */
           ((var & 0x00FF0000) >>  8) |  /* byte2 -> byte1 */
           ((var & 0xFF000000) >> 24);   /* byte3 -> byte0 */
-    printf("After  conv: 0x%08x \n", var);
+    printf("After  conv: 0x%08x \\n", var);
  }
 
 int main()
@@ -3343,21 +3289,21 @@ int main()
      */
     if(*ptr == (char)(a & 0x000000FF)) // checking with lsb
     {
-        printf("Little endian: lowest addr byte = 0x%x \n", (unsigned char)*ptr);
+        printf("Little endian: lowest addr byte = 0x%x \\n", (unsigned char)*ptr);
     }
     else
     {
-         printf("big endian: lowest addr byte = 0x%x \n", (unsigned char)*ptr);
+         printf("big endian: lowest addr byte = 0x%x \\n", (unsigned char)*ptr);
     }
 
     //convert endians
     convert_endians();
     return 0;
-}
-
-===== xbmp_factorial.c =====
-
-#include <stdio.h>
+}`
+  },
+  {
+    q: "Write xbmp_factorial code?",
+    a: `#include <stdio.h>
 #include <stdlib.h>
 
 
@@ -3376,11 +3322,11 @@ int main()
 
 
     return 0;
-}
-
-===== xbmp_fibonacci.c =====
-
-#include <stdio.h>
+}`
+  },
+  {
+    q: "Write xbmp_fibonacci code?",
+    a: `#include <stdio.h>
 
 int main() {
     int n=9, i;
@@ -3397,11 +3343,11 @@ int main() {
 
     return 0;
 }
-//ans: 0 1 1 2 3 5 8 13 21
-
-===== xbmp_mcal_reg.c =====
-
-#include <stdio.h>
+//ans: 0 1 1 2 3 5 8 13 21`
+  },
+  {
+    q: "Write xbmp_mcal_reg code?",
+    a: `#include <stdio.h>
 #include <stdint.h>
 
 /*
@@ -3442,17 +3388,17 @@ int main(void)
     pCtrlReg->bit.parity = 1u;   /* enable parity check               */
 
     /* --- 3. Read back and verify --- */
-    printf("Full register value : 0x%08X\n", pCtrlReg->reg);
-    printf("  enable  (bit 0)   : %u\n",     pCtrlReg->bit.enable);
-    printf("  addr    (bits 1-3): %u\n",     pCtrlReg->bit.addr);
-    printf("  parity  (bit 4)   : %u\n",     pCtrlReg->bit.parity);
+    printf("Full register value : 0x%08X\\n", pCtrlReg->reg);
+    printf("  enable  (bit 0)   : %u\\n",     pCtrlReg->bit.enable);
+    printf("  addr    (bits 1-3): %u\\n",     pCtrlReg->bit.addr);
+    printf("  parity  (bit 4)   : %u\\n",     pCtrlReg->bit.parity);
 
     return 0;
-}
-
-===== xbmp_nextpower2.c =====
-
-#include <stdio.h>
+}`
+  },
+  {
+    q: "Write xbmp_nextpower2 code?",
+    a: `#include <stdio.h>
 #include <stdlib.h>
 #include <stdio.h>
 #include <stdint.h>
@@ -3469,8 +3415,8 @@ uint32_t next_pow2(uint32_t n) {
 }
 /*
 
-**How it works — trace with `n = 5` (binary `0101`):**
-```
+**How it works — trace with \`n = 5\` (binary \`0101\`):**
+\`\`\`
 n--      → 4       = 0000 0100
 n |= n>>1  0000 0100
          | 0000 0010
@@ -3495,15 +3441,14 @@ n + 1    → 8       = 0000 1000  ✓
 
 int main()
 {
-   printf("%d \n", next_pow2(4));
-   printf("%d\n", next_pow2_loop(4));
+   printf("%d \\n", next_pow2(4));
+   printf("%d\\n", next_pow2_loop(4));
     return 0;
-}
-
-
-===== xbmp_odd_occur.c =====
-
-#include <stdio.h>
+}`
+  },
+  {
+    q: "Write xbmp_odd_occur code?",
+    a: `#include <stdio.h>
 #include <stdlib.h>
 /*  this works only for odd number of repeation 1,3,5,7,9...
 
@@ -3526,17 +3471,16 @@ int main()
     int odd_occ=0;
     for( int i =0 ; i<n ; i++)
          odd_occ ^= array[i];
-    printf("odd ocurence %d \n", odd_occ);
+    printf("odd ocurence %d \\n", odd_occ);
 
 
 
     return 0;
-}
-
-
-===== xbmp_point2arry.c =====
-
-#include <stdio.h>
+}`
+  },
+  {
+    q: "Write xbmp_point2arry code?",
+    a: `#include <stdio.h>
 
 int main() {
     int arr[5] = {10, 20, 30, 40, 50};
@@ -3544,21 +3488,21 @@ int main() {
     // ptr is a pointer to an array of 5 ints
     int (*ptr)[5] = &arr;
 
-    printf("Array address : %p\n", ptr);
-    printf("First element : %d\n", (*ptr)[0]);
-    printf("Third element : %d\n", (*ptr)[2]);
+    printf("Array address : %p\\n", ptr);
+    printf("First element : %d\\n", (*ptr)[0]);
+    printf("Third element : %d\\n", (*ptr)[2]);
 
     // Traversing using pointer to array
     for (int i = 0; i < 5; i++) {
-        printf("(*ptr)[%d] = %d\n", i, (*ptr)[i]);
+        printf("(*ptr)[%d] = %d\\n", i, (*ptr)[i]);
     }
 
     return 0;
-}
-
-===== xbmp_print_bin.c =====
-
-#include <stdio.h>
+}`
+  },
+  {
+    q: "Write xbmp_print_bin code?",
+    a: `#include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
 
@@ -3569,7 +3513,7 @@ void displaybits(unsigned char n)
     {
         printf("%c", ((n >> i) & 1) ? '1' : '0');
     }
-    printf("\n");
+    printf("\\n");
 }
 int main()
 {
@@ -3579,11 +3523,11 @@ int main()
 
 
     return 0;
-}
-
-===== xbmp_reverse_array.c =====
-
-#include <stdio.h>
+}`
+  },
+  {
+    q: "Write xbmp_reverse_array code?",
+    a: `#include <stdio.h>
 #include <stdlib.h>
 void reverse_recursion(int *ptr, int left, int right)
 {
@@ -3613,12 +3557,11 @@ int main()
         printf("%d", array[i]);
     
     return 0;
-}
-
-
-===== xbmp_reverse_binary.c =====
-
-#include <stdio.h>
+}`
+  },
+  {
+    q: "Write xbmp_reverse_binary code?",
+    a: `#include <stdio.h>
 #include <stdlib.h>
 
 void reversebit(unsigned int n)
@@ -3631,7 +3574,7 @@ void reversebit(unsigned int n)
        
         
     }
-    printf("result: %x \n",tmp);
+    printf("result: %x \\n",tmp);
 }
 int main()
 {
@@ -3640,11 +3583,11 @@ int main()
 
     return 0;
 
-}
-
-===== xbmp_reverse_string.c =====
-
-#include <stdio.h>
+}`
+  },
+  {
+    q: "Write xbmp_reverse_string code?",
+    a: `#include <stdio.h>
 #include <stdlib.h>
 void reverse_str(char *ptr, int n)
 {
@@ -3658,7 +3601,7 @@ void reverse_str(char *ptr, int n)
 }
 void recur_reverse_str(char *ptr)
 {
-    if(*ptr != '\0')
+    if(*ptr != '\\0')
     {
         recur_reverse_str(ptr +1);
          putchar(*ptr);
@@ -3695,11 +3638,11 @@ int main()
 
        
     return 0;
-}
-
-===== xbmp_rotate_oper.c =====
-
-#include <stdio.h>
+}`
+  },
+  {
+    q: "Write xbmp_rotate_oper code?",
+    a: `#include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
 #define bit 8
@@ -3721,80 +3664,80 @@ int main()
     unsigned char var1=67;//rottat right 01000011, outpput  -->01101000
     unsigned char r=3;//0000 0011
 
-    printf("before rotate left\n");
+    printf("before rotate left\\n");
     displaybits(var);
     //left shift operator
     var = (var << r) |( var >> (bit - r) );
-    printf("aft rtae left\n");
+    printf("aft rtae left\\n");
     displaybits(var);
 
 //rotate right operator
-  printf("before rotate right\n");
+  printf("before rotate right\\n");
     displaybits(var1);
 
     var1 = (var1 >> r ) | var1 << (bit -r);
-      printf("aft rotate right\n");
+      printf("aft rotate right\\n");
     displaybits(var1);
 
 
 
 
-}
-
-===== xbmp_shift_operator.c =====
-
-#include <stdio.h>
+}`
+  },
+  {
+    q: "Write xbmp_shift_operator code?",
+    a: `#include <stdio.h>
 #include <stdlib.h>
 
 int main()
 {
     // basic shifts
-    printf("1 << 0 = %d\n", 1 << 0);   // 1
-    printf("1 << 1 = %d\n", 1 << 1);   // 2
-    printf("1 << 2 = %d\n", 1 << 2);   // 4
-    printf("1 << 3 = %d\n", 1 << 3);   // 8
+    printf("1 << 0 = %d\\n", 1 << 0);   // 1
+    printf("1 << 1 = %d\\n", 1 << 1);   // 2
+    printf("1 << 2 = %d\\n", 1 << 2);   // 4
+    printf("1 << 3 = %d\\n", 1 << 3);   // 8
 
     // tricky 1 — people forget shift multiplies/divides by 2
-    printf("\n-- tricky: shift = multiply/divide by 2 --\n");
-    printf("5 << 1 = %d\n", 5 << 1);   // 5 * 2 = 10
-    printf("5 << 2 = %d\n", 5 << 2);   // 5 * 4 = 20
-    printf("8 >> 1 = %d\n", 8 >> 1);   // 8 / 2 = 4
-    printf("8 >> 2 = %d\n", 8 >> 2);   // 8 / 4 = 2
+    printf("\\n-- tricky: shift = multiply/divide by 2 --\\n");
+    printf("5 << 1 = %d\\n", 5 << 1);   // 5 * 2 = 10
+    printf("5 << 2 = %d\\n", 5 << 2);   // 5 * 4 = 20
+    printf("8 >> 1 = %d\\n", 8 >> 1);   // 8 / 2 = 4
+    printf("8 >> 2 = %d\\n", 8 >> 2);   // 8 / 4 = 2
 
     // tricky 2 — shifting by 0 does nothing
-    printf("\n-- tricky: shift by 0 --\n");
-    printf("7 << 0 = %d\n", 7 << 0);   // still 7
+    printf("\\n-- tricky: shift by 0 --\\n");
+    printf("7 << 0 = %d\\n", 7 << 0);   // still 7
 
     // tricky 3 — OR sets a bit, AND checks a bit
-    printf("\n-- tricky: set vs check bit --\n");
+    printf("\\n-- tricky: set vs check bit --\\n");
     unsigned char reg = 0;
     reg |= (1 << 3);                    // SET bit 3
-    printf("after set  bit3 = %d\n", reg);       // 8
+    printf("after set  bit3 = %d\\n", reg);       // 8
 
     if(reg & (1 << 3))                  // CHECK bit 3
-        printf("bit 3 is SET\n");
+        printf("bit 3 is SET\\n");
 
     reg &= ~(1 << 3);                   // CLEAR bit 3
-    printf("after clear bit3 = %d\n", reg);      // 0
+    printf("after clear bit3 = %d\\n", reg);      // 0
 
     // tricky 4 — ~ on small variable promotes to int!
-    printf("\n-- tricky: ~ on unsigned char --\n");
+    printf("\\n-- tricky: ~ on unsigned char --\\n");
     unsigned char a = 1;
-    printf("~a = %d\n", ~a);            // NOT 254! prints -2 due to int promotion
-    printf("~a & 0xFF = %d\n", ~a & 0xFF);  // correct way = 254
+    printf("~a = %d\\n", ~a);            // NOT 254! prints -2 due to int promotion
+    printf("~a & 0xFF = %d\\n", ~a & 0xFF);  // correct way = 254
 
     // tricky 5 — shifting negative number is undefined behavior
-    printf("\n-- tricky: never shift negative --\n");
+    printf("\\n-- tricky: never shift negative --\\n");
     int x = -1;
     // x << 1  — undefined behavior! never do this
-    printf("always use unsigned for shifts\n");
+    printf("always use unsigned for shifts\\n");
 
     return 0;
-}
-
-===== xbmp_strip_lowes_bit.c =====
-
-#include <stdio.h>
+}`
+  },
+  {
+    q: "Write xbmp_strip_lowes_bit code?",
+    a: `#include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
 
@@ -3817,28 +3760,27 @@ void display_bits(unsigned char n)
     {
         printf("%c", ((n >> i) & 1) ? '1' : '0');
     }
-    printf("\n");
+    printf("\\n");
 }
 int main()
 {
     unsigned char n=12;//0000 1100
-    printf("before \n");
+    printf("before \\n");
     display_bits(n);
     n=n & (n-1);
-      printf("aft \n");
+      printf("aft \\n");
     display_bits(n);
-     printf("\n");
+     printf("\\n");
 
 
 
 
     return 0;
-}
-
-
-===== xbmp_swap_adj.c =====
-
-#include <stdio.h>
+}`
+  },
+  {
+    q: "Write xbmp_swap_adj code?",
+    a: `#include <stdio.h>
 
 int main()
 {
@@ -3846,14 +3788,14 @@ int main()
     //// take odd  bits, shift right 0xaa
     //  // take even bits, shift left 0x55
     n = (n & 0xaaaaaaaa) >> 1 | (n & 0x55555555) << 1;
-    printf("%x \n", n);
+    printf("%x \\n", n);
 
     return 0;
-}
-
-===== xbmp_swap_nibble.c =====
-
-#include <stdio.h>
+}`
+  },
+  {
+    q: "Write xbmp_swap_nibble code?",
+    a: `#include <stdio.h>
 #include <stdlib.h>
 
 int main()
@@ -3863,37 +3805,37 @@ int main()
     var = ( (var & 0xF0) >> 4) | ( (var & 0x0F) << 4);
     var1=  (var1 & 0xffff0000  ) >> 16  |   (var1 & 0x00000ffff ) << 16;
 
-    printf(" swap nibble %x \n", var);
-    printf(" swap nibble %x \n", var1);
+    printf(" swap nibble %x \\n", var);
+    printf(" swap nibble %x \\n", var1);
 
     return 0;
-}
-
-===== xbmp_swap_values.c =====
-
-#include <stdio.h>
+}`
+  },
+  {
+    q: "Write xbmp_swap_values code?",
+    a: `#include <stdio.h>
 #include <stdlib.h>
 void swap(int a, int b)
 {
     a ^=b;
     b ^=  a;
     a ^= b;
-     printf("aft swap: \n %d \n %d \n", a, b);
+     printf("aft swap: \\n %d \\n %d \\n", a, b);
 
 }
 int main()
 {
 
     int a=2, b=5;
-    printf("before swap: \n %d \n %d \n", a, b);
+    printf("before swap: \\n %d \\n %d \\n", a, b);
     swap(a, b);
 
 
-}
-
-===== xbmp_tricky.c =====
-
-#include <stdio.h>
+}`
+  },
+  {
+    q: "Write xbmp_tricky code?",
+    a: `#include <stdio.h>
 
 #if 1
 int main()
@@ -3910,9 +3852,9 @@ int main()
 	unsigned int x=5;
 	         int y=-1;
 	if(x > y)
-		printf("Sudheer \n");
+		printf("Sudheer \\n");
 	else
-		printf("test\n");
+		printf("test\\n");
 
     return 0;
 }
@@ -3931,17 +3873,17 @@ int main()
 	unsigned short x=5;
 	         int y=-1;
 	if(x > y)
-		printf("Sudheer\n");
+		printf("Sudheer\\n");
 	else
-		printf("test\n");
+		printf("test\\n");
 
 return 0;
    }
-#endif
-
-===== xbmp_xor.c =====
-
-#include <stdio.h>
+#endif`
+  },
+  {
+    q: "Write xbmp_xor code?",
+    a: `#include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
 // xor operation without xor operator
@@ -3978,22 +3920,22 @@ void xor_oper()
         }
        
     }
-    printf(" xor operation %d \n",tmp);
+    printf(" xor operation %d \\n",tmp);
 }
 int main()
 {
    // xor_oper();
     // XOR = A'B + AB'
     tmp = (~a & b) | (a & ~b);
-     printf(" xor operation %d \n",tmp);
+     printf(" xor operation %d \\n",tmp);
 
 
     return 0;
-}
-
-===== xmp_countsetbits.c =====
-
-#include <stdio.h>
+}`
+  },
+  {
+    q: "Write xmp_countsetbits code?",
+    a: `#include <stdio.h>
 #include <stdlib.h>
 
 
@@ -4012,14 +3954,14 @@ int main()
     {
         var = var & (var -1);
         cnt++;
-        printf("var:%b \n", var);
+        printf("var:%b \\n", var);
     }
-    printf("total count:%d \n", cnt);
-}
-
-===== y_adc_baremetal.c =====
-
-void Adc_Init()
+    printf("total count:%d \\n", cnt);
+}`
+  },
+  {
+    q: "Write y_adc_baremetal code?",
+    a: `void Adc_Init()
 {
 
 	RCC->CFGR |= (6 <<12); //APB = HCLK/8 = 8Mhz
@@ -4074,11 +4016,11 @@ int main(void)
 	}
 
 
-}
-
-===== y_spi_baremetal.c =====
-
-#include "stm32g0xx.h"
+}`
+  },
+  {
+    q: "Write y_spi_baremetal code?",
+    a: `#include "stm32g0xx.h"
 #include <stdint.h>
 #include <stdbool.h>
 
@@ -4189,11 +4131,11 @@ int main(void)
     {
         /* Application loop */
     }
-}
-
-===== z_ascend_sort.c =====
-
-#include <stdio.h>
+}`
+  },
+  {
+    q: "Write z_ascend_sort code?",
+    a: `#include <stdio.h>
 #include <stdlib.h>
 void sort(int *array, int n)
 {
@@ -4217,14 +4159,14 @@ int main()
     sort(array, n);
     for(int i =0 ; i<n; i++)
     {
-        printf("sort %d \n", array[i]);
+        printf("sort %d \\n", array[i]);
     }
     return 0;
-}
-
-===== z_move_zero_end.c =====
-
-#include <stdio.h>
+}`
+  },
+  {
+    q: "Write z_move_zero_end code?",
+    a: `#include <stdio.h>
 #include <stdlib.h>
 
 //move all zero to end using two pointers
@@ -4264,7 +4206,7 @@ int main()
     int n= sizeof(arr)/sizeof(arr[0]);
     moveZerotoEnd(arr, n);
     for(int i=0; i < n ; i++)
-        printf("moveZerotoEnd %d\n", arr[i]);
+        printf("moveZerotoEnd %d\\n", arr[i]);
     return 0;
 }
 /*
@@ -4288,11 +4230,11 @@ int main()
                 L         R
 
 
-*/
-
-===== z_remove_duplicate.c =====
-
-#include<stdio.h>
+*/`
+  },
+  {
+    q: "Write z_remove_duplicate code?",
+    a: `#include<stdio.h>
 #include<stdlib.h>
 int duplicate(int *array, int n)
 {
@@ -4316,13 +4258,12 @@ int main()
     int n=sizeof(array)/sizeof(array[0]);
     n=duplicate(array, n);
     for(int i=0; i<n ;i++)
-     printf("array %d \n",array[i]);
-}
-
-
-===== z_second_large_num.c =====
-
-#include <stdio.h>
+     printf("array %d \\n",array[i]);
+}`
+  },
+  {
+    q: "Write z_second_large_num code?",
+    a: `#include <stdio.h>
 #include <stdlib.h>
 
 //find secodn largest using sort and find second higest
@@ -4349,21 +4290,21 @@ int main()
     int array[]={7, 4, 6, 2};
     int second_large;
     int len= sizeof(array)/sizeof(array[0]);
-    printf("len %d\n ", len);
+    printf("len %d\\n ", len);
     sort(array, len);
     for(int i=0; i<len; i++)
     {
-      printf("sort %d \n", array[i]);
+      printf("sort %d \\n", array[i]);
     }
     second_large=array[len-2];
-    printf("second_large %d \n", second_large);
+    printf("second_large %d \\n", second_large);
 
     return 0;
-}
-
-===== z_sizeof.c =====
-
-#include <stdio.h>
+}`
+  },
+  {
+    q: "Write z_sizeof code?",
+    a: `#include <stdio.h>
 #include <stdlib.h>
 #include <stddef.h>
 
@@ -4375,13 +4316,13 @@ int main()
     int *ptr1=&array[0];
     int *ptr2=&array[1];
     ptrdiff_t diff = (char*)ptr2 - (char*)ptr1;
-    printf("size of int: %td\n", diff);
+    printf("size of int: %td\\n", diff);
     
-}
-
-===== z_sort01.c =====
-
-#include <stdio.h>
+}`
+  },
+  {
+    q: "Write z_sort01 code?",
+    a: `#include <stdio.h>
 #include <stdlib.h>
 
 // here comparing first and last 
@@ -4444,11 +4385,11 @@ Step 6:   L > R  STOP
 
 Result:  {0  0  0  1  1}  ✅
 
-*/
-
-===== z_sort012.c =====
-
-#include <stdio.h>
+*/`
+  },
+  {
+    q: "Write z_sort012 code?",
+    a: `#include <stdio.h>
 #include <stdlib.h>
 
 void sort012(int *ptr, int n)
@@ -4499,14 +4440,14 @@ int main()
 
     for (int i = 0; i < n; i++)
     {
-        printf("sorted array: %d \n", array[i]);
+        printf("sorted array: %d \\n", array[i]);
     }
     return 0;
-}
-
-===== zz_circular_buff.c =====
-
-#include <stdio.h>
+}`
+  },
+  {
+    q: "Write zz_circular_buff code?",
+    a: `#include <stdio.h>
 #include <stdlib.h>
 
 #define MAX_BUFF 6
@@ -4525,12 +4466,12 @@ void enqueue(char tmp)
 {
     if (rb->count == MAX_BUFF)
     {
-        printf("buffer full, drop %d\n", tmp);
+        printf("buffer full, drop %d\\n", tmp);
         return;
     }
 
     rb->data[rb->head] = tmp;
-    printf("enqueue: %d at head: %d\n", rb->data[rb->head], rb->head);
+    printf("enqueue: %d at head: %d\\n", rb->data[rb->head], rb->head);
     rb->head = (rb->head + 1) % MAX_BUFF;
     rb->count++;
 }
@@ -4541,12 +4482,12 @@ void dequeue(void)
 
     if (rb->count == 0)
     {
-        printf("buffer empty\n");
+        printf("buffer empty\\n");
         return;
     }
 
     tmp = rb->data[rb->tail];
-    printf("dequeue: %d from tail: %d\n", tmp, rb->tail);
+    printf("dequeue: %d from tail: %d\\n", tmp, rb->tail);
     rb->tail = (rb->tail + 1) % MAX_BUFF;
     rb->count--;
 }
@@ -4568,7 +4509,7 @@ void print_buffer(void)
 
     if (is_empty())
     {
-        printf("buffer empty\n");
+        printf("buffer empty\\n");
         return;
     }
 
@@ -4578,7 +4519,7 @@ void print_buffer(void)
         idx = (rb->tail + i) % MAX_BUFF;
         printf("%d ", rb->data[idx]);
     }
-    printf("\n");
+    printf("\\n");
 }
 
 int main(void)
@@ -4610,11 +4551,11 @@ int main(void)
 
     free(rb);
     return 0;
-}
-
-===== zz_linked_list.c =====
-
-#include <stdio.h>
+}`
+  },
+  {
+    q: "Write zz_linked_list code?",
+    a: `#include <stdio.h>
 #include <stdlib.h>
 
 typedef struct node
@@ -4659,7 +4600,7 @@ void print_list(node *head)
         printf("%d-->", tempp->data);
         tempp=tempp->next;//this hsolb be place here , this soemthing i++;
     }
-    printf("NULL \n");
+    printf("NULL \\n");
 
 
 }
@@ -4720,9 +4661,12 @@ int main()
     printf("After delete: ");
     print_list(head);
     return 0;
-}
-
-===== zz_stack.c =====
+}`
+  },
+  {
+    q: "Write zz_stack code?",
+    a: `#inlcude`
+  },
+];
 
-#inlcude
-</pre></body></html>
+// Total: 146 flashcards

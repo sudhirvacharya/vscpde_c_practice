@@ -2,15 +2,88 @@
 ===== README.md =====
 
 Author : Sudhir Acharya
-### intreview structure
-        basic c question
-        programminng
-            bit manipulation
-            dsa or array
-        prohetc explanation
-        problem you have faced
+### what are interview Interview Structure?
+- Basic C Questions
+- Programming
+  - Bit Manipulation
+  - DSA / Array
+- Project Explanation
+- Problems You Have Faced
 
-### prmitive data types
+### What is my Professional Summary",
+Senior Embedded Software Engineer with 11+ years of experience in automotive embedded systems, specializing in
+device driver development, AUTOSAR MCAL, and low-level firmware engineering.`
+
+
+### What are my Technical Skills",
+Device Drivers: ADC, SPI, I2C, UART, PORT, GPIO, DMA & AUTOSAR MCAL
+AUTOSAR Stack: MCAL, RTE, BSW configuration using EB Tresos; Vector DaVinci
+Microcontrollers / SoCs: Infineon AURIX TriCore TC2xx, NXP MCU, ARM Cortex architecture
+Protocols / Interfaces: SPI, I2C, UART, CAN
+RTOS: OSEK-based RTOS, task/ISR scheduling, interrupt handling
+Debugging & Test Tools: TRACE32 (JTAG), Oscilloscope, Logic Analyzer, USB Analyzer, CANoe, HIL setups
+Programming Languages: Embedded C, Python, MATLAB, MISRA-C guidelines
+Build & DevOps: Linux, Docker, cross-compilation, CI/CD pipelines, GitHub, Makefile, ARM GCC toolchain
+Requirements & SCM: IBM DOORS (traceability), MKS/PTC Integrity, SW-E5 process compliance`
+
+
+### What is my Experience",
+Continental Automotive, Bangalore
+Software Engineer | May 2019 – Present
+• Responsible for MCAL development and software integration and testing
+• Performed software integration and validation of AUTOSAR MCAL drivers ADC, SPI
+• Performed Linux Docker migration
+
+Tech Mahindra, Bangalore
+Software Engineer | Dec 2017 – Apr 2019
+• Developed and configured AUTOSAR MCAL IO drivers for ADC, SPI, and Timer modules in EB Tresos
+• Performed board bring-up on Infineon AURIX TC2xx including JTAG debug via TRACE32, flash programming, and ADC/SPI peripheral validation on target hardware
+
+KPIT Technologies Limited, Bangalore
+Software Engineer | Feb 2017 – Aug 2017
+• Designed and developed reusable AUTOSAR-compliant software libraries for MFX and IFX modules
+• Conducted unit testing to validate functionality and integration alignment
+
+BISS-ITW, Bangalore
+Firmware Developer | Sep 2013 – Jan 2017
+• Developed and optimized software on Texas Instruments DSP processors for real-time signal processing applications
+• Developed drivers for ADC and DAC modules to support sensor data acquisition and signal conversion`
+
+
+### What are my Projects",
+ADC and Timer/Watchdog Driver Development | Infineon AURIX TC2xx, EB Tresos, TRACE32
+• Developed and validated low-level MCAL device drivers for Infineon AURIX TC2xx (TriCore) microcontroller, covering ADC, SPI, PORT, DMA, Timer, and Watchdog peripherals
+• Performed register-level peripheral configuration, interrupt handling, and DMA channel setup
+• Configured Timer channels for periodic triggering
+• Configured Watchdog timer to monitor MCU health and trigger system reset on failure
+• Performed board bring-up activities including JTAG debug via TRACE32, flash programming, and peripheral validation on TC2xx target hardware
+• Validated driver functionality using TRACE32 (JTAG) debugger, Logic Analyzer, and Oscilloscope
+
+SPI Driver Development
+• Developed and integrated SPI driver for external memory (read/write operations) on Infineon AURIX TC2xx, covering register-level configuration, chip select handling, and data transfer sequences
+• Validated SPI communication and memory read/write functionality using TRACE32 (JTAG) debugger, Logic Analyzer, and Oscilloscope
+
+Software Integration
+• End-to-end software integration, release preparation, and validation aligned with DOORS-defined requirements
+• Ensured compliance with SW-E5 process through build delivery, traceability, and milestone-based quality checkpoints
+
+AUTOSAR Library Development
+• Developed modular software libraries conforming to AUTOSAR v4.2.2 specifications (MFX, IFX, IFL, MFL, EFX, E2E)
+• Applied MISRA C guidelines to ensure code safety, reliability, and compliance
+• Performed rigorous unit testing to validate functionality
+
+
+### ADC Project
+![ADC SW and HW Group Block Diagram](doc/adc_block_diagram.svg)
+
+## QSPI Project
+![QSPI](doc/qspi.svg)
+
+## DMA Example using 6 channel ADC
+![DMA Channel](doc/6CHADC1DMA.svg)
+
+
+### what is prmitive data types
     Type       Size      Range (signed)
     -------    ------    ----------------------------
     char       1 byte    -128 to 127
@@ -18,7 +91,7 @@ Author : Sudhir Acharya
     float      4 bytes   ~6-7 decimal digits
     double     8 bytes   ~15-16 decimal digits
 
-### Storage classes:
+### what are the Storage classes:
     Keyword     Lifetime     Scope          Stored In
     ---------   ----------   ------------   -----------
     1.auto        Block        Local          Stack
@@ -26,15 +99,34 @@ Author : Sudhir Acharya
     3.extern      Program      Global         .data
     4.register    Block        Local          CPU Register (hint only)
 
-### qualifiers : qualifiers are keywords that modify the behavior of variables and data types
+### what is qualifiers ?
+    qualifiers are keywords that modify the behavior of variables and data types
     volatile
     const
 
-### type modifier in c
+### what are the type modifier in c
     short, long, signed, unsigned
 
-  ### Volatile Keyword in C
+### Derived dataypes
+    Structure
+    Union
 
+### wha are the Userdefined data types 
+    Enum
+    Typedef
+
+## what is typecasting and type conversion
+    implicit->autoatically done by compiler for two compatiable data types
+    explicit ->done by programmer using typecast operator to make sure no valuble data los
+    type promotion-> smaller data to large one
+
+### what is Identifier: 
+identifier is simply the name used to identify variables, functions, arrays, structures, 
+or any other user-defined element in a program. It’s how you give a meaningful label to entities in your code.
+    int a;
+    void add()
+
+### Volatile Keyword in C
     Volatile is a qualifier that is applied to a variable when it is declared.
     It tells the compiler that the value of the variable may change at any time-without any action being taken by the code the compiler finds nearby.
 
@@ -46,69 +138,33 @@ Author : Sudhir Acharya
         // With volatile:    reads from HW register every iteration (correct)
     }
 
-    ### What is const volatile — does it make sense?
-
-    const volatile uint32_t *STATUS_REG = (uint32_t *)0x40000010;
-
-    YES — makes perfect sense for read-only hardware status registers:
-      const    --> your code cannot write to it
-      volatile --> compiler must re-read it every time (hardware changes it)
-
-
-
-    const    --> value cannot change, compiler enforces read-only
-    volatile --> value can change outside compiler's knowledge,
-                 prevents compiler optimization
-    
-    example:
-    const int var
-    vaoltile int var
-    const volatile int  var
-
-    const volatile int *ptr → pointer to read-only volatile int (cannot modify the value, but pointer can change).
-
-    int volatile *const ptr → constant pointer to a volatile int (can modify the value, but pointer cannot change)
-## const
+## what is the use of const keyword in c
     The const (constant) qualifier is a type qualifier in C and C++ programming languages 
     used to declare that a variable's value is fixed, read-only, 
     and cannot be modified after initialization. 
     It acts as a compiler-enforced constraint to prevent accidental modifications,
      enhancing code security and allowing optimization. 
 
-### Derived dataypes
-    Structure
-    Union
-### Userdefined data types 
-    Enum
-    Typedef
+### What is const volatile — does it make sense?
 
-## typecasring or type conversion
-    implicit->autoatically done by compiler for two compatiable data types
-    explicit ->done by programmer using typecast operator to make sure no valuble data los
-    type promotion-> smaller data to large one
+    const volatile uint32_t *STATUS_REG = (uint32_t *)0x40000010;
 
-### Identifier: 
-identifier is simply the name used to identify variables, functions, arrays, structures, 
-or any other user-defined element in a program. It’s how you give a meaningful label to entities in your code.
-    int a;
-    void add()
-
-## directrives in C
+    YES — makes perfect sense for read-only hardware status registers:
+    const    --> value cannot change, compiler enforces read-only
+    volatile --> value can change outside compiler's knowledge,
+                 prevents compiler optimization
+    
+    example:
+    const volatile int  var
+    
+## What is  directrives in C
     pre-prcoessor directive: #include, #ifdef
     assembler Directive: .data , .bss, .section
     Compiler directive: #pragma pack
 
-## Pre-prcoessor direcive
+## what is Pre-prcoessor direcive
     #include <stdio.h>       // include system header
     #define PI 3.14          // object-like macro
-    ### MISRA C
-        Example:
-            char a, b, c;
-            c=a+b // here ans will overf flow and c should be int
-
-        dynmica allocation not allowed
-
-        recursion not allowed
 
     ### Pre processor directives
     #include <stdio.h>       // include system header
@@ -129,216 +185,21 @@ or any other user-defined element in a program. It’s how you give a meaningful
     #error "message"         // force compile error
     #warning "message"       // compile warning (GCC extension)
 
-## assembler directive
+## what is assembler directive
  commands in assembly language source code that instruct the assembler software how to process the program,
  rather than being translated into machine code instructions
  in Linker we have .bss, .data, .txt this are assebler directiver
 
-### compiler Directive
+### what is compiler Directive
     Instructions to the compiler during compilation. Tells it how to compile, optimize, or handle specific code.
 
-    ### pragma in C
-    What is it
     #pragma is a compiler-specific directive.
     It gives special instructions to the compiler that are not part of standard C syntax.
 
     #pragma pack(n)Set structure member alignment to n bytes
 
-### ADC Formula
-
-    Resolution = Vref / 2^n
-
-    Example — 12-bit ADC:
-
-    Resolution = 5V / 4096 = 1.22 mV
-
-    Vout = (ADC_value / (2^n - 1)) x Vref
-    ```
-
-    - `ADC_value` — raw ADC output (0 to 4095 for 12-bit)
-    - `2^n - 1` — max count = 4095
-    - `Vref` — reference voltage = 5V
-
-    Examples:
-
-    | ADC Value | Calculation         | Result      |
-    |-----------|---------------------|-------------|
-    | 4095      | 4095 x 5 / 4095     | 5.00 V (max)|
-    | 2048      | 2048 x 5 / 4095     | ~2.50 V     |
-    | 0         | 0 x 5 / 4095        | 0.00 V (min)|
-
-
-### ADC w.r.t AUTOSAR
-
-    1. ADC Groups
-    AUTOSAR organizes ADC channels into Groups — a group is a collection of one or more channels that are converted together.
-
-    Each group has a trigger source (SW or HW)
-    Each group has a conversion mode (one-shot or continuous)
-    Each group has a result buffer (linear or circular)
-
-    2. Conversion Modes
-    Mode          Description
-    One-shot       Single conversion per trigger, then stops
-    Continuous     Keeps converting in a loop until explicitly stopped
-    Scan           Converts all channels in the group sequentially
-
-    3. Trigger Sources
-    Trigger Source        Macro / Config Value      Description
-    Software trigger      ADC_TRIGG_SRC_SW          Trigger via Adc_StartGroupConversion()
-    Hardware trigger       ADC_TRIGG_SRC_HW         Timer, PWM event, or external pin
-
-    4. Notification (Callback)
-    Each group can have a notification function (callback) registered in configuration.
-    It is called at end-of-conversion (similar to an ISR-driven callback).
-    /* Example notification function prototype */
-    void AdcGroup0_ConversionComplete(void);
-
-    #### ADC API Reference
-        void Adc_Init(const Adc_ConfigType* ConfigPtr);
-            Initializes the ADC hardware unit and driver internals.
-            ConfigPtr points to the generated configuration structure (Adc_Config).
-            Called once during ECU startup (typically from EcuM).
-    
-    Buffer Setup (Required for Streaming Mode)
-
-    Std_ReturnType Adc_SetupResultBuffer(
-    Adc_GroupType        Group,
-    Adc_ValueGroupType*  DataBufferPtr
-     );
-
-
-    SW TRIGGERED FLOW
-    Adc_Init(&AdcConfig)
-        |
-        v
-Adc_SetupResultBuffer(Group0, resultBuffer)
-        |
-        v
-Adc_EnableGroupNotification(Group0)
-        |
-        v
-Adc_StartGroupConversion(Group0)
-        |
-        v
-    [HW converts all channels in Group0]
-        |
-        v
-    [Notification callback fires]
-        |
-        v
-Adc_ReadGroup(Group0, resultBuffer)
-        |
-        v
-    Use result in application logic
-
----
-
-### SPI w.r.t AUOTSAR
-## AUTOSAR SPI Key Concepts
-
-- **Channel** — Basic data unit. Holds a buffer of data elements to be transferred.
-- **Job** — A sequence of one or more Channels sharing the same CS (Chip Select).
-- **Sequence** — A group of one or more Jobs. Unit of transmission triggered by SW.
-- **EB Buffer** — External Buffer; pointer to user-provided RAM buffer (dynamic).
-- **IB Buffer** — Internal Buffer; statically allocated inside the SPI driver.
-- **Hw Unit** — Physical SPI peripheral (e.g., QSPI0, QSPI2 on AURIX TriCore).
-
-
-SPI MODES 
-
-SPI Modes (CPOL + CPHA)
-```
-| Mode | CPOL | CPHA | Clock Idle | Sample On    |
-|------|------|------|------------|--------------|
-|  0   |  0   |  0   |    LOW     | Rising edge  |
-|  1   |  0   |  1   |    LOW     | Falling edge |
-|  2   |  1   |  0   |    HIGH    | Falling edge |
-|  3   |  1   |  1   |    HIGH    | Rising edge  |
-```
-
-3. SPI Channel Types
-TypeBuffer TypeBuffer LocationUse CaseIBInternalInside driverFixed-size, known at config timeEBExternalUser RAMVariable-size, pointer set at runtime
-
-4. SPI Transmission Modes
-ModeAPI FunctionBlockingCallbackUse CaseSynchronousSpi_SyncTransmit()YesNoSimple, deterministic transfersAsynchronousSpi_AsyncTransmit()NoYesNon-blocking, ISR/DMA driven
-
-5. SPI Driver States
-SPI_UNINIT
-    |
-    | Spi_Init()
-    v
-SPI_IDLE
-    |
-    | Spi_AsyncTransmit() / Spi_SyncTransmit()
-    v
-SPI_BUSY
-    |
-    | Transfer Complete
-    v
-SPI_IDLE
-    |
-    | Spi_DeInit()
-    v
-SPI_UNINIT
-
-6SPI APIS
-7.1 Mandatory APIs
-APIDescriptionSpi_Init()Initializes the SPI driver using config pointerSpi_DeInit()De-initializes the SPI driverSpi_WriteIB()Writes data to Internal Buffer of a ChannelSpi_ReadIB()Reads data from Internal Buffer of a ChannelSpi_SetupEB()Sets up External Buffer pointer for a ChannelSpi_SyncTransmit()Triggers synchronous transmission of a SequenceSpi_AsyncTransmit()Triggers asynchronous transmission of a SequenceSpi_GetStatus()Returns current driver status (IDLE/BUSY/UNINIT)Spi_GetJobResult()Returns result of a given Job
-
-7 APIS
-/* Initialize SPI driver */
-void Spi_Init(const Spi_ConfigType *ConfigPtr);
-
-/* De-Initialize SPI driver */
-Std_ReturnType Spi_DeInit(void);
-
-/* Write to Internal Buffer */
-Std_ReturnType Spi_WriteIB(
-    Spi_ChannelType Channel,
-    const Spi_DataBufferType *DataBufferPtr
-);
-
-/* Read from Internal Buffer */
-Std_ReturnType Spi_ReadIB(
-    Spi_ChannelType Channel,
-    Spi_DataBufferType *DataBufferPtr
-);
-
-/* Setup External Buffer */
-Std_ReturnType Spi_SetupEB(
-    Spi_ChannelType Channel,
-    const Spi_DataBufferType *SrcDataBufferPtr,
-    Spi_DataBufferType *DesDataBufferPtr,
-    Spi_NumberOfDataType Length
-);
-
-/* Synchronous transmit */
-Std_ReturnType Spi_SyncTransmit(Spi_SequenceType Sequence);
-
-/* Asynchronous transmit */
-Std_ReturnType Spi_AsyncTransmit(Spi_SequenceType Sequence);
-
-/* Get driver status */
-Spi_StatusType Spi_GetStatus(void);
-
-/* Get Job result */
-Spi_JobResultType Spi_GetJobResult(Spi_JobType Job);
-
-/* Get Sequence result */
-Spi_SeqResultType Spi_GetSequenceResult(Spi_SequenceType Sequence);
-
-/* Cancel a Sequence */
-void Spi_Cancel(Spi_SequenceType Sequence);
-
-/* Set Async Mode */
-Std_ReturnType Spi_SetAsyncMode(Spi_AsyncModeType Mode);
----
-
-
 ###  Error in embedded C
 
----
 | Error Type        | When Detected      | Tool                  | Output                       |
 |-------------------|--------------------|-----------------------|------------------------------|
 | Compiler Error    | Compile time       | GCC / armcc           | No .o file generated         |
@@ -347,7 +208,17 @@ Std_ReturnType Spi_SetAsyncMode(Spi_AsyncModeType Mode);
 | Warning           | Compile time       | GCC                   | Binary generated (risky)     |
 | Logical Error     | Testing/Validation | Logic analyser / CANoe| Wrong output                 |
 | Preprocessor Error| Pre-compile        | CPP                   | No .o file generated         |
----
+
+### what is inline fucntion
+“Inline” Function is a provision or feature provided by the compiler. Inline is a request made to the compiler to replace the inline function call with the function definition.
+
+
+inline void fun(/*fun argument */)
+{
+    /* Function source Code */
+}
+When a normal function call happens function creates its stack in the main stack and initializes all local variables. After completion of function call return value is given back if any and stack is destroyed. Much time is consumed in stack operation. Hence for small functions, Inline function is beneficial as the call is replaced by definition, so no external stack is created and operations are much faster for small, commonly-used functions.
+
 
 ### Inline Function vs Macro
 
@@ -362,6 +233,7 @@ Std_ReturnType Spi_SetAsyncMode(Spi_AsyncModeType Mode);
     Recursion         Not possible                        Possible (compiler may not inline)
     Header needed     No                                  Defined in header (static inline)
 
+### what is side of MACRO instead of using inline function?
     Side effect trap (Macro):
 
         #define SQ(x)  ((x) * (x))
@@ -386,8 +258,7 @@ Std_ReturnType Spi_SetAsyncMode(Spi_AsyncModeType Mode);
                          When type safety matters
                          When you need to step through in debugger
 
-### Structure vs Union
-
+### what is the diffrence between Structure vs Union
     Feature           struct                              union
     -----------       ------------------------------      ------------------------------
     Memory            Sum of all member sizes             Size of largest member only
@@ -396,7 +267,7 @@ Std_ReturnType Spi_SetAsyncMode(Spi_AsyncModeType Mode);
     Use case          Group related data fields            Memory-efficient variant types
     Padding           Yes — compiler may add padding      Yes — based on largest member
 
-### typedef vs #define
+### what is the diffrence between typedef vs #define
 
     Feature           typedef                             #define
     -----------       ------------------------------      ------------------------------
@@ -412,6 +283,8 @@ Std_ReturnType Spi_SetAsyncMode(Spi_AsyncModeType Mode);
     If you call a function once, pause the execution while it's in the middle of running,
     then call it a second time, the function is now running in two "contexts."
     The point is that the function can be running multiple times simultaneously, which usually means in multiple threads.
+
+    Example:
     int add(int a, int b) {
         int c = a + b;   // c is on the stack, local to this call
         return c;
@@ -421,17 +294,18 @@ Std_ReturnType Spi_SetAsyncMode(Spi_AsyncModeType Mode);
       That’s why you can call add(2,3) and add(5,7) at the same time FROM DIFFRENT THREAD— each call has its own c.
 
 ### Polymorphism in C++
-        Polymorphism means **one interface, multiple behaviors**.
-        Two types: Compile time and Runtime.
+     Polymorphism means **one interface, multiple behaviors**.
+    Two types: Compile time and Runtime.
 
-    #### Function Overloading — Compile Time Polymorphism
+   
+### Whats  Function Overloading — Compile Time Polymorphism
         Same function name, different parameter types or count.
         Compiler decides which function to call at **compile time**.
 
         int add(int a, int b)         { return a + b; }
         float add(float a, float b)   { return a + b; }
 
-    #### Function Overriding — Runtime Polymorphism
+### Whatis  Function Overriding — Runtime Polymorphism
 
         Child class redefines a parent class function.
         Decision is made at **runtime** using virtual table (vtable).
@@ -451,7 +325,7 @@ Std_ReturnType Spi_SetAsyncMode(Spi_AsyncModeType Mode);
 
     (*fnptr)++; //this will incremnet  the value
 
-####  array vs pointer
+#### what is  array vs pointer
 
     int main() {
         int a[] = {1, 2, 3};
@@ -473,12 +347,7 @@ Std_ReturnType Spi_SetAsyncMode(Spi_AsyncModeType Mode);
     Uppercase to Lowercase:   str[i] = str[i] + 32
 
 
-### Pointers
-
-    int  x   = 10;
-    int *ptr = &x;    // ptr holds address of x
-    *ptr = 20;        // dereference: changes x to 20
-    ptr++;            // moves to next int (4 bytes ahead on 32-bit)
+### What are th Pointers declartion and meaning?
 
 int array[6] = {4, 3, 5, 6, 3, 8};
 
@@ -506,7 +375,7 @@ int array[6] = {4, 3, 5, 6, 3, 8};
 +-----------------------+----------------------------------------------------------------------+
 
 
-### Difference between *ptr++, (*ptr)++, and *++ptr?
+### what is the Difference between *ptr++, (*ptr)++, and *++ptr?
 
     int arr[] = {10, 20, 30};
     int *ptr = arr;
@@ -544,7 +413,14 @@ int array[6] = {4, 3, 5, 6, 3, 8};
 
     Used for: interrupt vector tables, state machines, callbacks.
 
-### Pointer Types
+### what are the Pointer Types?
+    1.Null pointer
+    2.wild pointer
+    3.dangling pointer
+    4.double pointer
+    5.void pointer
+
+## what is null nul, wild, dangling pointer
 
     NULL Pointer:A pointer that is explicitly assigned NULL.It does not point to any valid memory address.
     int *p = NULL;
@@ -564,6 +440,7 @@ int array[6] = {4, 3, 5, 6, 3, 8};
     *p = 10;      // DANGLING — undefined behavior
     Fix: after free(), always set p = NULL.
 
+### what double, void pointer
     Double Pointer (Pointer to Pointer):
     A pointer that stores the address of another pointer.
     int a = 10;
@@ -607,7 +484,7 @@ int array[6] = {4, 3, 5, 6, 3, 8};
     (void *) ptr
     (char *)ptr
 
-### Memory Layout
+### Explain memory layout in C
 
     High Address
     +---------------------+
@@ -627,10 +504,8 @@ int array[6] = {4, 3, 5, 6, 3, 8};
     +---------------------+
     Low Address
 
-
+### Explain startup code task?
     in startup  .ro data copied to .data section
-
-    start up sequence
 
     FLASH                              RAM
                                           
@@ -648,7 +523,7 @@ int array[6] = {4, 3, 5, 6, 3, 8};
                                       |   Heap / Stack |
                                      +----------------+
 
-#### Compilation Stages
+#### what are the Compilation Stages
     .c --> [Preprocessor] --> .i --> [Compiler] --> .s --> [Assembler] --> .o --> [Linker] --> .elf/.bin/.hex
 
     Stage          Input    Output   Job
@@ -695,8 +570,6 @@ int array[6] = {4, 3, 5, 6, 3, 8};
 
 ### Embedded System Startup Flow or reset to main or power on
 
-When an embedded system powers on:
-
 - **Reset Vector**: CPU fetches the reset vector, which points to the startup code (written in assembly).
 - **Startup Code**:
   - Sets up the **stack pointer**.
@@ -713,11 +586,9 @@ When an embedded system powers on:
     realloc(ptr, size)  resize existing allocation (may move memory)
     free(ptr)           release -- always set ptr = NULL after!
 
-   ### google interview
-    how to create our own malloc, my malloc?
-        simply create statci int char[500] --> this will exceeds data segment and cross heap section
-
-        we cant use pointer like assigning heap adress to ptr, next moment if we use malloca this adress wil be occupied
+### how to create our own malloc, my malloc?
+    simply create statci int char[500] --> this will exceeds data segment and cross heap section
+    we cant use pointer like assigning heap adress to ptr, next moment if we use malloca this adress wil be occupied
 
 ### What is a memory leak? How to detect?
 
@@ -733,8 +604,6 @@ When an embedded system powers on:
         free(ptr);
         ptr = NULL;
 
-    Detection tools: Valgrind (Linux), heap usage hooks, custom malloc wrappers.
-
 ### Why is malloc avoided in safety-critical embedded?
 
     - Non-deterministic timing (MISRA C rule violation)
@@ -747,32 +616,19 @@ When an embedded system powers on:
         uint8_t pool[NUM_BUFS][BUF_SIZE];
         uint8_t inUse[NUM_BUFS] = {0};
 
-        uint8_t *poolAlloc(void) {
-            for (int i = 0; i < NUM_BUFS; i++)
-                if (!inUse[i]) { inUse[i] = 1; return pool[i]; }
-            return NULL;
-        }
-
-        void poolFree(uint8_t *p) {
-            int i = (p - pool[0]) / BUF_SIZE;
-            inUse[i] = 0;
-        }
-
 
 ### What is interrupt latency?
-
     Time from interrupt signal assertion to first ISR instruction executing.
     Factors: CPU pipeline flush, saving context (stacking registers), priority.
     ARM Cortex-M3: typically 12 clock cycles minimum latency.
 
 ### What is a race condition between ISR and main? How to fix?
-
     Problem:
         volatile uint32_t counter = 0;
         void TIMER_ISR(void) 
         { 
             counter++; 
-            }
+        }
 
         int main(void) {
             uint32_t val = counter;   // ISR may fire between read and write!
@@ -796,9 +652,8 @@ When an embedded system powers on:
         NVIC_SetPriority(UART1_IRQn, 1);   // high priority
         NVIC_SetPriority(TIM2_IRQn,  5);   // lower priority
 
-    ## NVIC 
-    WHY IOTS CALLED NESTED ?
-        BECUASE HIGH PRIORITY INTERRUPT A LOW PRIOIRTY ISR
+## Whats is NVIC Table
+
     | Letter | Full Word  | What It Does                                           |
     |--------|------------|--------------------------------------------------------|
     | N      | Nested     | Higher priority IRQ can interrupt a lower priority ISR |
@@ -841,12 +696,17 @@ in rtos, a semaphore is a syxbronization mechanism used to manage access to shar
 semaphore helps prevent issues like race condtion and deadlock in multi tasking 
 enviranioment by ensuring that only a specified number of task can access a resource at time.
 
+exammple:
+ Parking Lot with N slots Multiple people can enter (up to N slots).  ANY person can signal (release a slot). When slots = 0, everyone WAITS.
+
 ### Mutexes:
     in rtos and multithreadifn environment, a mutex is asyncornization mecanism that prevent multiple task or thread from acess that same shared reosurce at asame trime/
     how mutex works:
-        a mutex act like lock.a task must aquire the lock the mutex before access the shared resoucre.
-        once the a task finsihed using the resoucrece, it release(unlcok) the mutx allowing other task to acess it.
-        if another task tries to aquire the mutex while its locked, it has to wait untill the mutex is relases
+    a mutex act like lock.a task must aquire the lock the mutex before access the shared resoucre.
+    once the a task finsihed using the resoucrece, it release(unlcok) the mutx allowing other task to acess it.
+    if another task tries to aquire the mutex while its locked, it has to wait untill the mutex is relases
+Example:
+Toilet with 1 key 🚽, Only 1 person can enter at a time. The SAME person who locked must unlock.
 
 ### Difference between mutex and semaphore?
 
@@ -856,11 +716,11 @@ enviranioment by ensuring that only a specified number of task can access a reso
     Priority inversion   Protected                     Not protected
     Use case             Mutual exclusion (shared data) Signaling
 
-        xSemaphoreTake(mutex, portMAX_DELAY);
-        sharedBuffer[0] = 42;   // critical section
-        xSemaphoreGive(mutex);
+    xSemaphoreTake(mutex, portMAX_DELAY);
+    sharedBuffer[0] = 42;   // critical section
+    xSemaphoreGive(mutex);
 
-### Difference between a task and a thread?
+### Difference between a Process and a thread?
 
     Process (one program running)
     │
@@ -869,26 +729,6 @@ enviranioment by ensuring that only a specified number of task can access a reso
     ├── Thread 1 → own stack, PC, registers
     ├── Thread 2 → own stack, PC, registers
     └── Thread 3 → own stack, PC, registers
-
-### What is a semaphore? Give an embedded example.
-
-    Binary semaphore -- like a signal flag between ISR and task.
-
-        SemaphoreHandle_t sem = xSemaphoreCreateBinary();
-
-        void UART_ISR(void) {
-            xSemaphoreGiveFromISR(sem, NULL);   // signal from ISR
-        }
-
-        void uartTask(void *arg) {
-            while (1) {
-                xSemaphoreTake(sem, portMAX_DELAY);  // block until ISR fires
-                processData();
-            }
-        }
-
-
-
 
 ### What is priority inversion? How is it solved?
 
@@ -927,14 +767,9 @@ enviranioment by ensuring that only a specified number of task can access a reso
 
 
 ### What is I2C clock stretching?
-
     Slave holds SCL line LOW to pause the master while preparing data.
     Master must wait until slave releases SCL.
     Some I2C masters do not support clock stretching -- check datasheet!
-
-
----
-
 
 ## Communication Protocol
 
@@ -957,7 +792,7 @@ enviranioment by ensuring that only a specified number of task can access a reso
     P             -     Master          STOP condition
 
 
-#### clock Speed
+#### what is i2c clock Speed
 
     Mode            Speed       Notes
     -----------     --------    ---------------------------
@@ -971,7 +806,7 @@ enviranioment by ensuring that only a specified number of task can access a reso
     400 kHz  ->  2.2 kohm typical
     1 MHz    ->  1.0 kohm typical
 
-### CAN Communication
+### what is Dominat and reccesive
 
 Differential signaling on CAN_H and CAN_L lines:
 
@@ -982,6 +817,8 @@ Recessive   2.5 V       2.5 V        0.0 V  (logic 1)
 
 Dominant wins on bus (wired-AND): any node sending 0 pulls bus dominant.
 
+
+### Expalin CAN frame
 ---
 Type                Description
 ----------------    ----------------------------------------
@@ -1040,7 +877,103 @@ Stop        1-2     1 (HIGH)    End of frame, line returns HIGH
 
 ---
 
-### SPI communication
+
+### what are the ADC Formulas?
+
+    Resolution = Vref / 2^n
+
+    Example — 12-bit ADC:
+
+    Resolution = 5V / 4096 = 1.22 mV
+
+    Vout = (ADC_value / (2^n - 1)) x Vref
+    ```
+
+    - `ADC_value` — raw ADC output (0 to 4095 for 12-bit)
+    - `2^n - 1` — max count = 4095
+    - `Vref` — reference voltage = 5V
+
+    Examples:
+
+    | ADC Value | Calculation         | Result      |
+    |-----------|---------------------|-------------|
+    | 4095      | 4095 x 5 / 4095     | 5.00 V (max)|
+    | 2048      | 2048 x 5 / 4095     | ~2.50 V     |
+    | 0         | 0 x 5 / 4095        | 0.00 V (min)|
+
+
+### ADC groups w.r.t AUTOSAR
+
+    ADC Groups
+    AUTOSAR organizes ADC channels into Groups
+    
+    Group is a collection of one or more channels that are converted together.
+    Each group has a trigger source (SW or HW)
+    Each group has a conversion mode (one-shot or continuous)
+    Each group has a result buffer (linear or circular)
+
+    2. Conversion Modes
+    Mode          Description
+    One-shot       Single conversion per trigger, then stops
+    Continuous     Keeps converting in a loop until explicitly stopped
+    Scan           Converts all channels in the group sequentially
+
+    3. Trigger Sources
+    Trigger Source        Macro / Config Value      Description
+    Software trigger      ADC_TRIGG_SRC_SW          Trigger via Adc_StartGroupConversion()
+    Hardware trigger       ADC_TRIGG_SRC_HW         Timer, PWM event, or external pin
+
+    4. Notification (Callback)
+    Each group can have a notification function (callback) registered in configuration.
+    It is called at end-of-conversion (similar to an ISR-driven callback).
+    /* Example notification function prototype */
+    void AdcGroup0_ConversionComplete(void);
+
+### ADC API Reference
+
+SW TRIGGERED FLOW
+    Adc_Init(&AdcConfig)
+        |
+        v
+Adc_SetupResultBuffer(Group0, resultBuffer)
+// Tells the ADC driver where to store conversion results.
+// Links Group0 to your result array in RAM.
+        |
+        v
+Adc_EnableGroupNotification(Group0)
+// Registers a callback to fire when Group0 conversion completes.
+// Enables interrupt-based notification instead of polling.
+        |
+        v
+Adc_StartGroupConversion(Group0)
+// Triggers the ADC hardware to begin sampling all channels in Group0.
+// Software initiates the conversion (SW-triggered mode).
+        |
+        v
+    [HW converts all channels in Group0]
+// ADC hardware samples each channel sequentially/simultaneously.
+// Stores raw digital results into the linked resultBuffer.
+        |
+        v
+    [Notification callback fires]
+// ISR or callback function is invoked automatically by the driver.
+// Signals application that all Group0 results are ready to read.
+        |
+        v
+Adc_ReadGroup(Group0, resultBuffer)
+// Copies converted ADC values from driver buffer into application buffer.
+// Returns status; resultBuffer now holds valid channel readings.
+        |
+        v
+    Use result in application logic
+// Process ADC values: scaling, threshold check, control decisions, etc.
+// e.g., temperature = (resultBuffer[0] * VREF) / ADC_RESOLUTION
+
+
+
+
+## AUTOSAR SPI Key Concepts
+
     Master                          Slave
     ------                          -----
     SCLK  -----------------------------> SCLK
@@ -1051,71 +984,125 @@ Stop        1-2     1 (HIGH)    End of frame, line returns HIGH
 
     CS pulled LOW by master to select slave.
 
+- **Channel** — Basic data unit. Holds a buffer of data elements to be transferred.
+- **Job** — A sequence of one or more Channels sharing the same CS (Chip Select).
+- **Sequence** — A group of one or more Jobs. Unit of transmission triggered by SW.
+- **EB Buffer** — External Buffer; pointer to user-provided RAM buffer (dynamic).
+- **IB Buffer** — Internal Buffer; statically allocated inside the SPI driver.
+- **Hw Unit** — Physical SPI peripheral (e.g., QSPI0, QSPI2 on AURIX TriCore).
 
 
-## CPP
+### List SPI MODES 
+
+SPI Modes (CPOL + CPHA)
+```
+| Mode | CPOL | CPHA | Clock Idle | Sample On    |
+|------|------|------|------------|--------------|
+|  0   |  0   |  0   |    LOW     | Rising edge  |
+|  1   |  0   |  1   |    LOW     | Falling edge |
+|  2   |  1   |  0   |    HIGH    | Falling edge |
+|  3   |  1   |  1   |    HIGH    | Rising edge  |
+```
+
+## What is SPI Synchronous vs Asynchronous or trnasimission mode?
+    SPI bus is always clocked, hardware sync is not negotiable
+    Sync vs Async is a software architecture choice, not a hardware one
+    DMA frees CPU but driver design decides if SW is truly async
+    Best architecture is async driver as base with sync wrapper on top
+    In RTOS, task pends on semaphore, ISR gives on transfer complete
+    Prefer sync for boot sequences, short commands, and simple debug scenarios
+    Prefer async with DMA for flash bulk ops, frame buffers, and RTOS multitasking
+
+
+## list SPI API
+SPI SW TRIGGERED FLOW
+    Spi_Init(&SpiConfig)
+        |
+        v
+Spi_SetupEB(Channel0, srcBuffer, destBuffer, length)
+// Tells the SPI driver source (TX) and destination (RX) buffers.
+// Links Channel0 to your data arrays in RAM with transfer length.
+        |
+        v
+Spi_EnableJobNotification(Job0)
+// Registers a callback to fire when Job0 transmission completes.
+// Enables interrupt-based notification instead of polling.
+        |
+        v
+Spi_AsyncTransmit(Sequence0)
+// Triggers the SPI hardware to begin transmitting Sequence0.
+// Software initiates the transfer (SW-triggered async mode).
+        |
+        v
+    [HW transmits all channels in Sequence0]
+// SPI hardware shifts out TX bytes and simultaneously captures RX bytes.
+// Handles chip select (CS) assertion/de-assertion automatically per job.
+        |
+        v
+    [Job/Sequence notification callback fires]
+// ISR or callback function is invoked automatically by the driver.
+// Signals application that all Sequence0 bytes are sent and received.
+        |
+        v
+Spi_ReadIB(Channel0, destBuffer)
+// Copies received SPI bytes from driver internal buffer to app buffer.
+// Returns status; destBuffer now holds valid RX data from slave device.
+        |
+        v
+    Use result in application logic
+// Process RX data: parse sensor response, decode register values, etc.
+// e.g., sensorVal = (destBuffer[0] << 8) | destBuffer[1]
+
+## what is SPI Synchronous vs Asynchronous ?
+
+| #  | Point                                                                              |
+|----|------------------------------------------------------------------------------------|
+| 1  | SPI bus is always clocked, hardware sync is not negotiable                         |
+| 2  | Sync vs Async is a software architecture choice, not a hardware one                |
+| 3  | DMA frees CPU but driver design decides if SW is truly async                       |
+| 4  | Best architecture is async driver as base with sync wrapper on top                 |
+| 5  | In RTOS, task pends on semaphore, ISR gives on transfer complete                   |
+| 6  | Prefer sync for boot sequences, short commands, and simple debug scenarios         |
+| 7  | Prefer async with DMA for flash bulk ops, frame buffers, and RTOS multitasking     |
+
+
+## what is inheritance
 Inheritance   = child gets parent's properties and methods
-Polymorphism  = same function name behaves differently based on object type
-
-WHATIS VITUAL FUCNTION
-
 
 ## MCU
-Diffrenc ebetween timer and counter
+Diffrenc between timer and counter
 Timer   = counts internal clock pulses  (measures TIME)
 Counter = counts external event pulses  (measures EVENTS)
 
-## Linux OS Road map
+## what is my Linux OS Road map
 
-        START HERE
-        │
-        ▼
-    ✅ Phase 1 — Synchronization & Processes    (DONE ✅)
-        │
-        │   ✅ lo_mutex.c        ← mutex, threads, race condition
-        │   ✅ lo_semaphore.c    ← semaphore, shared memory, fork
-        │   ✅ lo_process.c      ← fork, wait, waitpid, execvp, exit
-        │   ✅ lo_threads.c      ← pthread_create, join, exit, return value
-        │   ✅ lo_sharedmem.c    ← mmap, sem_init, shared struct
-        │
-        ▼
-    🔜 Phase 2 — IPC (Inter Process Communication)
-        │
-        │   lo_pipe.c       ← start here, connects to fork() you know
-        │   lo_fifo.c
-        │   lo_msqueue.c
-        │   lo_socket.c     ← do this last in phase 2
-        │
-        ▼
-    🔜 Phase 3 — Memory Management
-        │
-        │   lo_malloc.c     ← start here, very practical
-        │   lo_stack_heap.c
-        │   lo_mmap.c
-        │
-        ▼
-    🔜 Phase 4 — File System
-        │
-        │   lo_fileio.c     ← start here, used everywhere
-        │   lo_dirops.c
-        │   lo_filestat.c
-        │
-        ▼
-    🔜 Phase 5 — Signals
-        │
-        │   lo_signals.c    ← start here
-        │   lo_sigaction.c
-        │
-        ▼
-    🔜 Phase 6 — Classic OS Problems
-        │
-        │   lo_prodcons.c   ← uses mutex + semaphore you already know
-        │   lo_readwrite.c
-        │   lo_deadlock.c
-        │   lo_dining.c
-        │
-        ▼
-    🏆 Linux OS / Systems Programming — COMPLETE
+| Phase   | File             | Concepts                                  |
+|---------|------------------|-------------------------------------------|
+| Phase 1 | `lo_mutex.c`     | Mutex, threads, race conditions           |
+| Phase 1 | `lo_semaphore.c` | Semaphore, shared memory, fork            |
+| Phase 1 | `lo_process.c`   | fork, wait, waitpid, execvp, exit         |
+| Phase 1 | `lo_threads.c`   | pthread_create, join, exit, return values |
+| Phase 1 | `lo_sharedmem.c` | mmap, sem_init, shared structures         |
+| Phase 2 | `lo_pipe.c`      | Pipes with fork                           |
+| Phase 2 | `lo_fifo.c`      | Named pipes (FIFO)                        |
+| Phase 2 | `lo_msqueue.c`   | Message queues                            |
+| Phase 2 | `lo_socket.c`    | Sockets (do this last)                    |
+| Phase 3 | `lo_malloc.c`    | malloc/free internals                     |
+| Phase 3 | `lo_stack_heap.c`| Stack vs Heap                             |
+| Phase 3 | `lo_mmap.c`      | Memory-mapped files                       |
+| Phase 4 | `lo_fileio.c`    | File I/O (open, read, write, close)       |
+| Phase 4 | `lo_dirops.c`    | Directory operations                      |
+| Phase 4 | `lo_filestat.c`  | File metadata (stat)                      |
+| Phase 5 | `lo_signals.c`   | Signal basics                             |
+| Phase 5 | `lo_sigaction.c` | sigaction, custom handlers                |
+| Phase 6 | `lo_prodcons.c`  | Producer–Consumer problem                 |
+| Phase 6 | `lo_readwrite.c` | Readers–Writers problem                   |
+| Phase 6 | `lo_deadlock.c`  | Deadlock detection                        |
+| Phase 6 | `lo_dining.c`    | Dining Philosophers problem               |
+
+
+
+
 
 
 
@@ -1140,10 +1127,7 @@ Counter = counts external event pulses  (measures EVENTS)
 8. use UINT8_T FOR SHIFT OPERATION AND USE CHAR ITS EASY
 
 9 for bit operation use | , for logic ||
-
-
-# take care below things
-    uint8_t use all variabls in tmp also if  its rerquired
+10. uint8_t use all variabls in tmp also if  its rerquired
     ledt shift use <<  , seen mistaklnly used only <
 
 ### intrduction about myself
@@ -1155,233 +1139,70 @@ On the tools side, I have worked with LAUTERBACH TRACE32 for software debugging,
 From a quality and compliance perspective, I have experience with ASPICE process requirements and MISRA C coding guidelines,
 
 
-### use this cmd yo copy all to single file toprint 
-# Clear file first (optional)
-> all_code.txt
+### how ro generate final html file
+run this
+@sudheerpaniyur ➜ /workspaces/vscpde_c_practice (main) $ chmod +x generate_html.sh
+@sudheerpaniyur ➜ /workspaces/vscpde_c_practice (main) $ bash generate_html.sh
 
-echo "===== FILE LIST =====" >> all_code.txt
-
-files=( *.md *.c )
-
-# Check if files actually exist
-if [ -e "${files[0]}" ]; then
-    printf "%s\n" "${files[@]}" >> all_code.txt
-else
-    echo "No .md or .c files found" >> all_code.txt
-fi
-
-echo "" >> all_code.txt
-
-# Append contents
-for f in "${files[@]}"; do
-    [ -e "$f" ] || continue
-    echo "" >> all_code.txt
-    echo "===== $f =====" >> all_code.txt
-    echo "" >> all_code.txt
-    cat "$f" >> all_code.txt
-done
-
-
---->html format, looks good
-# Step 1: Add page break before each C file
-awk '/^===== .*\.c =====$/ { print "\f" } { print }' all_code.txt > final.txt
-
-# Step 2: Convert to HTML (print-friendly)
-cat << 'EOF' > final.html
-<html>
-<head>
-<style>
-body {
-    font-family: monospace;
-    white-space: pre;
-    margin: 20mm;
-}
-pre {
-    page-break-inside: avoid;
-}
-</style>
-</head>
-<body>
-<pre>
-EOF
-
-# Step 3: Append your content
-cat final.txt >> final.html
-
-# Step 4: Close HTML
-echo "</pre></body></html>" >> final.html
-
----
 
 
 ##### AI prompt
 The source is HTML content containing:
 ### intrduction about myself
-
 theory
-
-
 Source code files
-
-
-
-
 Use ONLY the provided content.
-
-
 Do NOT generate any new theory, explanations, or code.
-
-
 Do NOT add extra examples.
-
-
 Only format and organize the existing content.
-
-
-
 FORMAT REQUIREMENTS:
-
-
 Page size: A4
-
-
 Color: Strictly black and white (printer-friendly)
-
-
 Fonts:
-
-
 Serif or sans-serif for normal text
-
-
 Monospace for code
-
-
-
-
 Margins: 2.5 cm on all sides
-
-
 Page numbers: Bottom center
-
-
 Optional: Chapter title in header
-
-
-
 COVER PAGE:
-
-
 Title: C Programming Notes & Practice
-
-
 Subtitle: Beginner to Intermediate Guide
-
-
 Author: Sudhir Acharya
-
-
 Center-aligned layout
-
-
 Minimal, clean design
-
-
 Must appear on a separate page
-
-
-
 STRUCTURE:
-
-
 Generate a Table of Contents based only on the provided content
-
-
 Do NOT create or invent new chapters
-
-
 Use file names or sections from README.md as chapter titles
-
-
-
 THEORY SECTIONS (FROM README.md ONLY):
-
-
 Preserve the original text exactly (no rewriting)
-
-
 Maintain headings and formatting
-
-
 Keep bullet points and spacing intact
-
-
 Ensure tables remain aligned and readable
-
-
 Do NOT split tables across pages
-
-
-
 CODE SECTIONS:
-
-
 Each program must start on a new page
-
-
 Do NOT split any program across pages
-
-
 Preserve code exactly (no modifications)
-
-
 Use a monospace font
-
-
 Add a heading:
 Program: <filename>
-
-
 Place code inside a thin bordered box
-
-
-
 PAGE LAYOUT RULES:
-
-
 Avoid awkward page breaks
-
-
 Keep headings with their content
-
-
 Maintain consistent spacing throughout
-
-
 Ensure clean readability for printing
-
-
-
 OUTPUT:
-
-
 A clean, print-ready PDF
-
-
 Structured like a professional textbook or notebook
-
-
 Must strictly use only the provided content (no additions)
-
 ---
 
 
-### Lesson Learnt
- 1. bracket missed
- 2.simple logice not able to answer
- 3. if condition coudl have used
 
- ### list of Questions
+ ### list of future Questions
  Interview Preparation Checklist
 🔢 Array Problems
 Basic
@@ -3122,175 +2943,48 @@ Low Address
 #include <stdio.h>
 #include <stdint.h>
 #include <stdlib.h>
-void printbin(uint8_t n)
-{
-    for(int i =7; i >=0 ; i--)
-    {
-        printf("%d", ((n>>i)&1) ? 1:0);
-    }
 
-}
-void reversearray(int *array, int n)
-{
-    int left=0;
-    int right=n-1;
-    while(left <=right)
-    {
-        int tmp;
-        tmp=array[left];
-        array[left]=array[right];
-        array[right]=tmp;
-        left++;
-        right--;
-
-    }
-
-}
-uint8_t reversebin(uint8_t n)
-{
-    uint8_t tmp=0;
-    for(int i=0; i<8 ;i++)
-    {
-        tmp=tmp<<1;
-        tmp |= (n >>i) &1;
-  
-    }
-    return tmp;
-}
-void revstring_rec(char *s)
-{
-
-    if(*s =='\0')
-    {
-        return;
-    }
-
-    revstring_rec(s+1);
-    putchar(*s);
-    fflush(stdout);
-
-}
-void ascending_order(int *a, int n)
-{
-    for(int i=0; i<n ;i++)
-    {
-        for(int j=i+1; j<n ;j++)
-        {
-            int tmp=0;
-            if(a[i] > a[j])
-            {
-                tmp= a[i];
-                a[i]=a[j];
-                a[j]=tmp;
-            }
-        }
-    }
-}
+//sort 01
 void movezerotoend(int *a, int n)
 {
+
     int left=0;
     int right=0;
     while(right < n)
     {
-        if(a[right] != 0)
+
+        if(a[right] !=0)
         {
             int tmp;
             tmp=a[right];
             a[right]=a[left];
             a[left]=tmp;
             left++;
-        }
-        right++;
-    }
-}
-int removeduplicate(int *a, int n)
-{
-    for(int i=0; i<n ; i++)
-    {
-        for(int j=i+1; j <n; j++)
-        {
-            if(a[i]==a[j])
-            {
-                a[j]=a[n-1];
-                n--;
-                j--;
-            }
-        }
-    }
-    return n;
-}
-//{1,1,0};
-void sort01(int *a, int n)
-{
-    int left=0;
-    int right=0;
-    int tmp;
-    while(right < n)
-    {
-        if(a[left] !=0)
-        {
-            tmp=a[left];
-            a[left]=a[right];
-            a[right]=tmp;
             right++;
-  
+
+            
         }
         else
         {
-            left++;
+            right++;
         }
 
-    }
-}
-
-//int a[]={2,0,1,1,0,1,1,1,1};
-void sort012(int a[], int n)
-{
-    int start=0;
-    int mid=0;
-    int end=n-1;
-while(mid < end)
-{
-    int tmp;
-    if(a[mid] ==0)//0
-    {
-        tmp=a[mid];
-        a[mid]=a[start];
-        a[start]=tmp;
-        start++;
-        mid++;
-
-    }else if(a[mid]==1)//1
-    {
-        mid++;
 
     }
-    else //2
-    {
-        tmp=a[mid];
-        a[mid]=a[end];
-        a[end]=tmp;
-        end--;
-    }
-}
-
 
 }
 int main()
-{  
-     int a[]={0,0,2,1};
+{
+    int a[]={1,0,0,1,0};
     int n=sizeof(a)/sizeof(a[0]);
+    movezerotoend(a, n);
+    for(int i=0;i<n ; i++)
+    {
+        printf("%d", a[i]);
+    }
 
-sort012(a, n);
-
-    for(int i=0; i<n; i++)
-   {
-    printf("%d",a[i]);
-
-   }
-  return 0;
+    return 0;
 }
-
 ===== ptr_array.c =====
 
 #include <stdio.h>
@@ -3327,6 +3021,23 @@ int main(void)
    gpio->a=1;
 
     printf("hello \n");
+}
+===== switch_case.c =====
+
+#include <stdio.h>
+int main() {
+   int day = 3;
+   switch (day) {
+       case 1:
+           printf("Monday");
+           break;
+       case 2:
+           printf("Tuesday");
+           break;
+       default:
+           printf("Invalid day number");
+   }
+   return 0;
 }
 ===== ternary.c =====
 
@@ -3381,6 +3092,36 @@ int main()
 }
 
 
+===== xbmp_2byte_swap.c =====
+
+#include <stdio.h>
+#include <stdint.h>
+
+uint16_t n=0x1234;
+//3412
+int main()
+{
+
+  n= ((n & 0x00ff) << 8)  | (( n & 0xff00 )>> 8);
+
+  printf("0x%x\n",n);
+    
+}
+===== xbmp_4byteswap.c =====
+
+#include <stdio.h>
+#include <stdint.h>
+
+uint32_t n=0x12345678;
+//78563412
+int main()
+{
+
+  n= ((n & 0x000000ff) << 24)  | (( n & 0x0000ff00 ) <<8) | (( n & 0xff000000 ) >> 24) | (( n & 0x00ff0000 ) >> 8);
+
+  printf("0x%x\n",n);
+    
+}
 ===== xbmp_anagram.c =====
 
 #include <stdio.h>
@@ -3452,6 +3193,20 @@ int main()
     printf(" is bit set" %d \n",  IS_BIT_SET(d, 0));
 
     return 0;
+}
+===== xbmp_byteswap.c =====
+
+#include <stdio.h>
+#include <stdint.h>
+
+uint8_t n=0x12;
+int main()
+{
+
+  n= ((n & 0x0f) << 4)  | (( n & 0xf0 )>> 4);
+
+  printf("0x%x\n",n);
+    
 }
 ===== xbmp_cnt_vowel.c =====
 

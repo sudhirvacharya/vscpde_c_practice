@@ -1,5 +1,10 @@
 #!/usr/bin/env bash
 
+### how ro generate final html file, it will generate html file for documenation
+#run this
+#@sudheerpaniyur ➜ /workspaces/vscpde_c_practice (main) $ chmod +x generate_html.sh
+#@sudheerpaniyur ➜ /workspaces/vscpde_c_practice (main) $ bash generate_html.sh
+
 set -e
 
 # ---------- Step 0: Collect files ----------
