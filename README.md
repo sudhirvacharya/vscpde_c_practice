@@ -206,6 +206,16 @@ or any other user-defined element in a program. It’s how you give a meaningful
 | Logical Error     | Testing/Validation | Logic analyser / CANoe| Wrong output                 |
 | Preprocessor Error| Pre-compile        | CPP                   | No .o file generated         |
 
+### what is inline fucntion
+“Inline” Function is a provision or feature provided by the compiler. Inline is a request made to the compiler to replace the inline function call with the function definition.
+
+
+inline void fun(/*fun argument */)
+{
+    /* Function source Code */
+}
+When a normal function call happens function creates its stack in the main stack and initializes all local variables. After completion of function call return value is given back if any and stack is destroyed. Much time is consumed in stack operation. Hence for small functions, Inline function is beneficial as the call is replaced by definition, so no external stack is created and operations are much faster for small, commonly-used functions.
+
 
 ### Inline Function vs Macro
 
@@ -401,6 +411,13 @@ int array[6] = {4, 3, 5, 6, 3, 8};
     Used for: interrupt vector tables, state machines, callbacks.
 
 ### what are the Pointer Types?
+    1.Null pointer
+    2.wild pointer
+    3.dangling pointer
+    4.double pointer
+    5.void pointer
+
+## what is null nul, wild, dangling pointer
 
     NULL Pointer:A pointer that is explicitly assigned NULL.It does not point to any valid memory address.
     int *p = NULL;
@@ -420,6 +437,7 @@ int array[6] = {4, 3, 5, 6, 3, 8};
     *p = 10;      // DANGLING — undefined behavior
     Fix: after free(), always set p = NULL.
 
+### what double, void pointer
     Double Pointer (Pointer to Pointer):
     A pointer that stores the address of another pointer.
     int a = 10;
@@ -549,8 +567,6 @@ int array[6] = {4, 3, 5, 6, 3, 8};
 
 ### Embedded System Startup Flow or reset to main or power on
 
-When an embedded system powers on:
-
 - **Reset Vector**: CPU fetches the reset vector, which points to the startup code (written in assembly).
 - **Startup Code**:
   - Sets up the **stack pointer**.
@@ -677,12 +693,17 @@ in rtos, a semaphore is a syxbronization mechanism used to manage access to shar
 semaphore helps prevent issues like race condtion and deadlock in multi tasking 
 enviranioment by ensuring that only a specified number of task can access a resource at time.
 
+exammple:
+ Parking Lot with N slots Multiple people can enter (up to N slots).  ANY person can signal (release a slot). When slots = 0, everyone WAITS.
+
 ### Mutexes:
     in rtos and multithreadifn environment, a mutex is asyncornization mecanism that prevent multiple task or thread from acess that same shared reosurce at asame trime/
     how mutex works:
     a mutex act like lock.a task must aquire the lock the mutex before access the shared resoucre.
     once the a task finsihed using the resoucrece, it release(unlcok) the mutx allowing other task to acess it.
     if another task tries to aquire the mutex while its locked, it has to wait untill the mutex is relases
+Example:
+Toilet with 1 key 🚽, Only 1 person can enter at a time. The SAME person who locked must unlock.
 
 ### Difference between mutex and semaphore?
 
@@ -705,23 +726,6 @@ enviranioment by ensuring that only a specified number of task can access a reso
     ├── Thread 1 → own stack, PC, registers
     ├── Thread 2 → own stack, PC, registers
     └── Thread 3 → own stack, PC, registers
-
-### What is a semaphore? Give an embedded example.
-
-    Binary semaphore -- like a signal flag between ISR and task.
-
-        SemaphoreHandle_t sem = xSemaphoreCreateBinary();
-
-        void UART_ISR(void) {
-            xSemaphoreGiveFromISR(sem, NULL);   // signal from ISR
-        }
-
-        void uartTask(void *arg) {
-            while (1) {
-                xSemaphoreTake(sem, portMAX_DELAY);  // block until ISR fires
-                processData();
-            }
-        }
 
 ### What is priority inversion? How is it solved?
 
@@ -785,7 +789,7 @@ enviranioment by ensuring that only a specified number of task can access a reso
     P             -     Master          STOP condition
 
 
-#### clock Speed
+#### what is i2c clock Speed
 
     Mode            Speed       Notes
     -----------     --------    ---------------------------
@@ -1093,7 +1097,7 @@ Counter = counts external event pulses  (measures EVENTS)
 | Phase 6 | `lo_deadlock.c`  | Deadlock detection                        |
 | Phase 6 | `lo_dining.c`    | Dining Philosophers problem               |
 
----
+
 
 
 
