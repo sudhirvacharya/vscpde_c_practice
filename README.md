@@ -688,6 +688,25 @@ int array[6] = {4, 3, 5, 6, 3, 8};
     Schedules multiple tasks with deterministic timing.
     Guarantees response within a deadline.
 
+## stack, que, ring buffer
+
+| Property      | Stack                          | Queue                          | Ring Buffer                        |
+|---------------|--------------------------------|--------------------------------|------------------------------------|
+| Concept       | Abstract data structure        | Abstract data structure        | Concrete implementation            |
+| Order         | LIFO - Last In First Out       | FIFO - First In First Out      | FIFO - First In First Out          |
+| Insert        | Push - adds to TOP             | Enqueue - adds to REAR         | Write at head pointer              |
+| Remove        | Pop - removes from TOP         | Dequeue - removes from FRONT   | Read at tail pointer               |
+| Access        | Top only                       | Front only                     | Head and tail pointers             |
+| Size          | Dynamic or fixed               | Dynamic or fixed               | Always fixed                       |
+| When full     | Stack overflow                 | Queue full error               | Overwrites old data                |
+| Memory        | Array or linked list           | Array or linked list           | Fixed array only                   |
+| Wrap around   | No                             | No                             | Yes - index % SIZE                 |
+| Time O(n)     | Push O(1) / Pop O(1)           | Enqueue O(1) / Dequeue O(1)    | Read O(1) / Write O(1)             |
+| Use case      | Function calls, undo, recursion| Task scheduling, BFS           | UART, audio, DMA, sensor logging   |
+| Embedded use  | Call stack, ISR nesting        | Message queues in RTOS         | UART, SPI, CAN buffers in drivers  |
+| RTOS example  | FreeRTOS task stack            | FreeRTOS xQueue                | DMA circular mode, UART ring buf   |
+| Your code     | Implicit call stack in main()  | Concept used in USART IRQ      | rx_buff[] in USART2_IRQHandler     |
+
 ### Sempahore
 in rtos, a semaphore is a syxbronization mechanism used to manage access to shared resource and cororinates task. 
 semaphore helps prevent issues like race condtion and deadlock in multi tasking 
@@ -1061,6 +1080,60 @@ Spi_ReadIB(Channel0, destBuffer)
 | 5  | In RTOS, task pends on semaphore, ISR gives on transfer complete                   |
 | 6  | Prefer sync for boot sequences, short commands, and simple debug scenarios         |
 | 7  | Prefer async with DMA for flash bulk ops, frame buffers, and RTOS multitasking     |
+
+### UART REGISTERS
+```markdown
+## STM32 Register Reference Table
+
+### RCC — Reset & Clock Control
+
+| Register        | Bit Used   | What it does                                      |
+|-----------------|------------|---------------------------------------------------|
+| RCC->AHBENR     | Bit 17     | Enable GPIOA clock (STM32F072)                    |
+| RCC->AHBENR     | Bit 18     | Enable GPIOB clock (STM32F072)                    |
+| RCC->AHBENR     | Bit 19     | Enable GPIOC clock (STM32F072)                    |
+| RCC->IOPENR     | Bit 0      | Enable GPIOA clock (STM32G0xx)                    |
+| RCC->IOPENR     | Bit 1      | Enable GPIOB clock (STM32G0xx)                    |
+| RCC->IOPENR     | Bit 2      | Enable GPIOC clock (STM32G0xx)                    |
+| RCC->APBENR1    | Bit 17     | Enable USART2 peripheral clock                    |
+
+---
+
+### GPIO — General Purpose I/O (GPIOA)
+
+| Register        | Bit Used   | What it does                                      |
+|-----------------|------------|---------------------------------------------------|
+| GPIOA->MODER    | Pin x 2    | Set pin mode: 00=Input 01=Output 10=AltFunc 11=Analog |
+| GPIOA->AFR[0]   | Bit 8      | Set AF1 (USART2 TX) on PA2                        |
+| GPIOA->AFR[0]   | Bit 12     | Set AF1 (USART2 RX) on PA3                        |
+| GPIOA->BSRR     | Bit 5      | Set PA5 HIGH — LED ON                             |
+| GPIOA->BSRR     | Bit 21     | Reset PA5 LOW — LED OFF                           |
+| GPIOA->ODR      | Bit 5      | Toggle PA5 using XOR (commented out)              |
+
+---
+
+### USART2 — Universal Async Receiver Transmitter
+
+| Register        | Bit Used   | What it does                                      |
+|-----------------|------------|---------------------------------------------------|
+| USART2->BRR     | 0x682      | Set baud rate to 9600 @ 16MHz                     |
+| USART2->CR1     | Bit 0      | UE — Enable USART2 peripheral                     |
+| USART2->CR1     | Bit 2      | RE — Enable Receiver                              |
+| USART2->CR1     | Bit 3      | TE — Enable Transmitter                           |
+| USART2->CR1     | Bit 5      | RXNEIE — Enable RX not empty interrupt            |
+| USART2->ISR     | Bit 5      | RXNE flag — 1 = new data received                 |
+| USART2->ISR     | Bit 7      | TXE flag — 1 = TX register empty, ready to send  |
+| USART2->RDR     | —          | Read received byte from here                      |
+| USART2->TDR     | —          | Write byte here to transmit                       |
+
+---
+
+### NVIC — Nested Vector Interrupt Controller
+
+| Register        | Bit Used   | What it does                                      |
+|-----------------|------------|---------------------------------------------------|
+| NVIC->ISER[0]   | Bit 28     | Enable USART2 interrupt in CPU                    |
+```
 
 
 ## what is inheritance
