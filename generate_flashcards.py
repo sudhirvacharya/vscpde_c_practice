@@ -1,17 +1,17 @@
 #!/usr/bin/env python3
 """
 cmd-->this is used for script.google input
-python3 generate_flashcards.py README.md imp.md *.c --out flashcards.js
+python3 generate_flashcards.py README.md imp.md *.c doc/*.svg --out flashcards.js
 generate_flashcards.py
 
 Parses .md, .c and .svg files and generates a JS flashcards array.
 
   .md files  -> ## / ### headings become Q, content below becomes A
   .c files   -> Q: "Write <filename> code?",     A: full source code
-  .svg files -> Q: "Write <filename> SVG code?", A: description + raw SVG code
+  .svg files -> Q: "Explain <filename> diagram?", A: extracted labels + raw SVG
 
 Usage:
-    python3 readme_to_flashcards.py README.md imp.md *.c doc/*.svg --out flashcards.js
+    python3 generate_flashcards.py README.md imp.md *.c doc/*.svg --out flashcards.js
 """
 
 import sys
@@ -76,31 +76,79 @@ def parse_c_file(filename, content):
     return [(question, content.strip())]
 
 
-def parse_svg_file(filename, content):
-    name = os.path.splitext(filename)[0]
-    question = f"Write {name} SVG code?"
+def extract_svg_text_labels(content):
+    """
+    Extract all visible text from <text> and <tspan> elements inside SVG.
+    Handles nested tspans, XML entities, and deduplicates results.
+    Useful for ADC/SPI/DMA block diagrams with signal/pin/block name labels.
+    """
+    # Grab everything between <text ...>...</text> (including nested tspans)
+    text_blocks = re.findall(r'<text[^>]*>(.*?)</text>', content, re.DOTALL | re.IGNORECASE)
 
-    # Try to extract description from SVG metadata
+    labels = []
+    seen = set()
+
+    for block in text_blocks:
+        # Strip any nested tags like <tspan>, keeping only text content
+        raw = re.sub(r'<[^>]+>', ' ', block)
+        # Decode common XML entities
+        raw = (raw.replace('&amp;', '&')
+                  .replace('&lt;', '<')
+                  .replace('&gt;', '>')
+                  .replace('&quot;', '"')
+                  .replace('&#xa;', ' ')
+                  .replace('&#xA;', ' '))
+        # Collapse whitespace
+        clean = re.sub(r'\s+', ' ', raw).strip()
+
+        if clean and len(clean) > 1 and clean not in seen:
+            seen.add(clean)
+            labels.append(clean)
+
+    return labels
+
+
+def parse_svg_file(filename, content):
+    """
+    Parse an SVG diagram file (ADC, SPI, DMA, etc.).
+
+    Question : "Explain <Readable Name> diagram?"
+    Answer   : metadata + extracted signal/pin labels + raw SVG source
+    """
+    name = os.path.splitext(filename)[0]
+    readable_name = name.replace("_", " ").replace("-", " ").title()
+    question = f"Explain {readable_name} diagram?"
+
+    # ── Metadata from SVG tags ──
     title_match = re.search(r'<title[^>]*>(.*?)</title>', content, re.IGNORECASE | re.DOTALL)
     desc_match  = re.search(r'<desc[^>]*>(.*?)</desc>',  content, re.IGNORECASE | re.DOTALL)
 
-    description_parts = []
+    meta_lines = []
     if title_match:
         t = title_match.group(1).strip()
         if t:
-            description_parts.append(f"Title: {t}")
+            meta_lines.append(f"Title: {t}")
     if desc_match:
         d = desc_match.group(1).strip()
         if d:
-            description_parts.append(f"Description: {d}")
+            meta_lines.append(f"Description: {d}")
+    if not meta_lines:
+        meta_lines.append(f"Diagram: {readable_name}")
 
-    # Fallback: readable name from filename
-    if not description_parts:
-        readable = name.replace("_", " ").replace("-", " ").title()
-        description_parts.append(f"Diagram: {readable}")
+    # ── Text labels extracted from diagram blocks ──
+    labels = extract_svg_text_labels(content)
 
-    description = "\n".join(description_parts)
-    answer = f"{description}\n\n{content.strip()}"
+    label_section = ""
+    if labels:
+        label_section = "\nKey Labels / Signals:\n" + "\n".join(f"  - {lbl}" for lbl in labels)
+
+    # ── Compose answer ──
+    answer_parts = ["\n".join(meta_lines)]
+    if label_section:
+        answer_parts.append(label_section)
+    answer_parts.append("\nSVG Source:\n" + content.strip())
+
+    answer = "\n".join(answer_parts)
     return [(question, answer)]
 
 
@@ -125,7 +173,7 @@ def to_js(cards):
 
 def main():
     if len(sys.argv) < 2:
-        print("Usage: python3 readme_to_flashcards.py README.md imp.md *.c doc/*.svg --out flashcards.js", file=sys.stderr)
+        print("Usage: python3 generate_flashcards.py README.md imp.md *.c doc/*.svg --out flashcards.js", file=sys.stderr)
         sys.exit(1)
 
     args = sys.argv[1:]
@@ -178,7 +226,14 @@ def main():
         elif ext == ".svg":
             cards = parse_svg_file(os.path.basename(input_file), content)
             counts[".svg"] += 1
-            print(f"✅ {input_file} (.svg): {cards[0][0]}", file=sys.stderr)
+            labels = extract_svg_text_labels(content)
+            print(f"✅ {input_file} (.svg): '{cards[0][0]}'", file=sys.stderr)
+            if labels:
+                preview = ', '.join(labels[:5])
+                more = f" (+{len(labels)-5} more)" if len(labels) > 5 else ""
+                print(f"   └─ {len(labels)} labels: {preview}{more}", file=sys.stderr)
+            else:
+                print(f"   └─ No <text> labels found; using title/desc only", file=sys.stderr)
 
         else:
             print(f"⚠️  '{input_file}' skipped (unsupported: {ext})", file=sys.stderr)

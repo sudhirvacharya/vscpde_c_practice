@@ -4667,6 +4667,654 @@ int main()
     q: "Write zz_stack code?",
     a: `#inlcude`
   },
+  {
+    q: "Explain 6Chadc1Dma diagram?",
+    a: `Diagram: 6Chadc1Dma
+
+Key Labels / Signals:
+  - 6 ADC Channels — 1 DMA Channel (STM32 Scan Mode)
+  - CH 0 (PA0)
+  - CH 1 (PA1)
+  - CH 2 (PA2)
+  - CH 3 (PA3)
+  - CH 4 (PA4)
+  - CH 5 (PA5)
+  - ADC_DR
+  - One register
+  - overwritten each conv.
+  - DMA req
+  - x6 per sweep
+  - 1x DMA ch
+  - DMA2 Stream0
+  - Channel 0
+  - SRAM buffer
+  - buf[0] CH0
+  - buf[1] CH1
+  - buf[2] CH2
+  - buf[3] CH3
+  - buf[4] CH4
+  - buf[5] CH5
+  - 6 ADC channels → 1 ADC_DR register → 1 DMA channel → 1 buffer array (always)
+  - Key Notes
+  - All 6 channels share a single ADC_DR register — results come out one after another.
+  - Only 1 DMA channel is needed regardless of how many ADC channels are used.
+  - ADC_CR1: set SCAN bit to enable scan mode across all channels in the sequence.
+  - ADC_CR2: set DMA + DDS + CONT bits. DDS is mandatory — without it DMA stops after 1 sweep.
+  - DMA NDTR = NUM_CHANNELS x NUM_SWEEPS (e.g. 6 x 4 = 24).
+  - Use CIRC mode for continuous sampling. Use HT + TC interrupts for double-buffer processing.
+  - Access channel N of sweep S: buf[S * NUM_CH + N] e.g. CH2 sweep3 = buf[20].
+  - STM32 ADC + DMA — Scan Mode Reference
+
+SVG Source:
+<svg width="680" height="560" viewBox="0 0 680 560" xmlns="http://www.w3.org/2000/svg" font-family="Arial, sans-serif">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </marker>
+  </defs>
+  <rect width="680" height="560" fill="#ffffff"/>
+  <text x="340" y="22" text-anchor="middle" font-size="14" font-weight="700" fill="#1a1a1a">6 ADC Channels — 1 DMA Channel (STM32 Scan Mode)</text>
+  <rect x="30" y="36" width="110" height="34" rx="6" fill="#E1F5EE" stroke="#0F6E56" stroke-width="0.8"/>
+  <text x="85" y="57" text-anchor="middle" font-size="12" font-weight="600" fill="#085041">CH 0 (PA0)</text>
+  <rect x="30" y="80" width="110" height="34" rx="6" fill="#E1F5EE" stroke="#0F6E56" stroke-width="0.8"/>
+  <text x="85" y="101" text-anchor="middle" font-size="12" font-weight="600" fill="#085041">CH 1 (PA1)</text>
+  <rect x="30" y="124" width="110" height="34" rx="6" fill="#E1F5EE" stroke="#0F6E56" stroke-width="0.8"/>
+  <text x="85" y="145" text-anchor="middle" font-size="12" font-weight="600" fill="#085041">CH 2 (PA2)</text>
+  <rect x="30" y="168" width="110" height="34" rx="6" fill="#EEEDFE" stroke="#534AB7" stroke-width="0.8"/>
+  <text x="85" y="189" text-anchor="middle" font-size="12" font-weight="600" fill="#3C3489">CH 3 (PA3)</text>
+  <rect x="30" y="212" width="110" height="34" rx="6" fill="#EEEDFE" stroke="#534AB7" stroke-width="0.8"/>
+  <text x="85" y="233" text-anchor="middle" font-size="12" font-weight="600" fill="#3C3489">CH 4 (PA4)</text>
+  <rect x="30" y="256" width="110" height="34" rx="6" fill="#FAECE7" stroke="#993C1D" stroke-width="0.8"/>
+  <text x="85" y="277" text-anchor="middle" font-size="12" font-weight="600" fill="#712B13">CH 5 (PA5)</text>
+  <path d="M140 53  Q215 53  215 162" fill="none" stroke="#1D9E75" stroke-width="1.2" marker-end="url(#arrow)"/>
+  <path d="M140 97  Q215 97  215 166" fill="none" stroke="#1D9E75" stroke-width="1.2" marker-end="url(#arrow)"/>
+  <path d="M140 141 Q215 141 215 170" fill="none" stroke="#1D9E75" stroke-width="1.2" marker-end="url(#arrow)"/>
+  <path d="M140 185 Q215 185 215 178" fill="none" stroke="#534AB7" stroke-width="1.2" marker-end="url(#arrow)"/>
+  <path d="M140 229 Q215 229 215 188" fill="none" stroke="#534AB7" stroke-width="1.2" marker-end="url(#arrow)"/>
+  <path d="M140 273 Q215 273 215 198" fill="none" stroke="#993C1D" stroke-width="1.2" marker-end="url(#arrow)"/>
+  <rect x="200" y="152" width="130" height="58" rx="8" fill="#FAEEDA" stroke="#BA7517" stroke-width="1"/>
+  <text x="265" y="174" text-anchor="middle" font-size="13" font-weight="700" fill="#633806">ADC_DR</text>
+  <text x="265" y="190" text-anchor="middle" font-size="11" fill="#854F0B">One register</text>
+  <text x="265" y="204" text-anchor="middle" font-size="11" fill="#854F0B">overwritten each conv.</text>
+  <line x1="330" y1="181" x2="386" y2="181" stroke="#BA7517" stroke-width="1.4" marker-end="url(#arrow)"/>
+  <text x="358" y="170" text-anchor="middle" font-size="10" fill="#666666">DMA req</text>
+  <text x="358" y="196" text-anchor="middle" font-size="10" fill="#666666">x6 per sweep</text>
+  <rect x="388" y="152" width="130" height="58" rx="8" fill="#E6F1FB" stroke="#185FA5" stroke-width="1"/>
+  <text x="453" y="172" text-anchor="middle" font-size="13" font-weight="700" fill="#0C447C">1x DMA ch</text>
+  <text x="453" y="188" text-anchor="middle" font-size="11" fill="#185FA5">DMA2 Stream0</text>
+  <text x="453" y="202" text-anchor="middle" font-size="11" fill="#185FA5">Channel 0</text>
+  <line x1="518" y1="181" x2="554" y2="181" stroke="#185FA5" stroke-width="1.4" marker-end="url(#arrow)"/>
+  <text x="557" y="146" font-size="11" font-weight="600" fill="#333333">SRAM buffer</text>
+  <rect x="557" y="150" width="98" height="20" rx="3" fill="#E1F5EE" stroke="#0F6E56" stroke-width="0.7"/>
+  <text x="606" y="164" text-anchor="middle" font-size="10" font-weight="600" fill="#085041">buf[0]  CH0</text>
+  <rect x="557" y="172" width="98" height="20" rx="3" fill="#E1F5EE" stroke="#0F6E56" stroke-width="0.7"/>
+  <text x="606" y="186" text-anchor="middle" font-size="10" font-weight="600" fill="#085041">buf[1]  CH1</text>
+  <rect x="557" y="194" width="98" height="20" rx="3" fill="#E1F5EE" stroke="#0F6E56" stroke-width="0.7"/>
+  <text x="606" y="208" text-anchor="middle" font-size="10" font-weight="600" fill="#085041">buf[2]  CH2</text>
+  <rect x="557" y="216" width="98" height="20" rx="3" fill="#EEEDFE" stroke="#534AB7" stroke-width="0.7"/>
+  <text x="606" y="230" text-anchor="middle" font-size="10" font-weight="600" fill="#3C3489">buf[3]  CH3</text>
+  <rect x="557" y="238" width="98" height="20" rx="3" fill="#EEEDFE" stroke="#534AB7" stroke-width="0.7"/>
+  <text x="606" y="252" text-anchor="middle" font-size="10" font-weight="600" fill="#3C3489">buf[4]  CH4</text>
+  <rect x="557" y="260" width="98" height="20" rx="3" fill="#FAECE7" stroke="#993C1D" stroke-width="0.7"/>
+  <text x="606" y="274" text-anchor="middle" font-size="10" font-weight="600" fill="#712B13">buf[5]  CH5</text>
+  <rect x="30" y="308" width="620" height="24" rx="6" fill="#F1EFE8" stroke="#B4B2A9" stroke-width="0.7"/>
+  <text x="340" y="324" text-anchor="middle" font-size="11" fill="#444441">6 ADC channels → 1 ADC_DR register → 1 DMA channel → 1 buffer array (always)</text>
+  <line x1="30" y1="348" x2="650" y2="348" stroke="#cccccc" stroke-width="0.8" stroke-dasharray="5 4"/>
+  <text x="30" y="370" font-size="13" font-weight="700" fill="#1a1a1a">Key Notes</text>
+  <circle cx="42" cy="390" r="3.5" fill="#1D9E75"/>
+  <text x="55" y="394" font-size="12" fill="#222222">All 6 channels share a single ADC_DR register — results come out one after another.</text>
+  <circle cx="42" cy="413" r="3.5" fill="#1D9E75"/>
+  <text x="55" y="417" font-size="12" fill="#222222">Only 1 DMA channel is needed regardless of how many ADC channels are used.</text>
+  <circle cx="42" cy="436" r="3.5" fill="#534AB7"/>
+  <text x="55" y="440" font-size="12" fill="#222222">ADC_CR1: set SCAN bit to enable scan mode across all channels in the sequence.</text>
+  <circle cx="42" cy="459" r="3.5" fill="#534AB7"/>
+  <text x="55" y="463" font-size="12" fill="#222222">ADC_CR2: set DMA + DDS + CONT bits. DDS is mandatory — without it DMA stops after 1 sweep.</text>
+  <circle cx="42" cy="482" r="3.5" fill="#BA7517"/>
+  <text x="55" y="486" font-size="12" fill="#222222">DMA NDTR = NUM_CHANNELS x NUM_SWEEPS (e.g. 6 x 4 = 24).</text>
+  <circle cx="42" cy="505" r="3.5" fill="#BA7517"/>
+  <text x="55" y="509" font-size="12" fill="#222222">Use CIRC mode for continuous sampling. Use HT + TC interrupts for double-buffer processing.</text>
+  <circle cx="42" cy="528" r="3.5" fill="#993C1D"/>
+  <text x="55" y="532" font-size="12" fill="#222222">Access channel N of sweep S: buf[S * NUM_CH + N]  e.g. CH2 sweep3 = buf[20].</text>
+  <text x="340" y="554" text-anchor="middle" font-size="10" fill="#999999">STM32 ADC + DMA — Scan Mode Reference</text>
+</svg>`
+  },
+  {
+    q: "Explain Adc Block Diagram diagram?",
+    a: `Title: AURIX VADC Block Diagram – SW Group and HW Group
+
+Key Labels / Signals:
+  - System PLL
+  - 200 MHz
+  - ÷2
+  - SPB Peripheral Bus
+  - 100 MHz
+  - ÷5
+  - ADC module clock
+  - fADC = 20 MHz
+  - Conversion time
+  - ~1 µs / channel (12-bit)
+  - GTM clock
+  - GTM TOM0 – PWM
+  - 20 kHz | T = 50 µs
+  - HW trigger (ADCTrig0)
+  - at midpoint 25 µs → 40 kHz
+  - VADC Group 0 – AUTOSAR ADC Groups
+  - VADC Group 0
+  - 20 MHz | 5 channels
+  - AdcGroup_0 – SW group
+  - Continuous | Low priority
+  - CH0 / CH1 / CH2
+  - Phase A / B / C NTC sensor
+  - VAREF = 5 V | 12-bit | 0–4095
+  - Adc_StartGroupConversion()
+  - SW trigger – once at startup
+  - loops
+  - auto
+  - Adc_Temp_GroupNotify()
+  - Adc_ReadGroup() → TempResultBuf
+  - TempDataReady = TRUE
+  - 10 ms thermal task
+  - NTC lookup → °C | fault check
+  - AdcGroup_1 – HW group
+  - One-shot | High priority
+  - GTM trigger
+  - CH3 / CH4
+  - Phase A / B current (shunt amp)
+  - HW trigger – ADCTrig0
+  - rising edge every 25 µs (PWM mid)
+  - one-shot per trigger, no loop
+  - Adc_Current_GroupNotify()
+  - Adc_ReadGroup() → CurrentResultBuf
+  - FOC_UpdateCurrentFeedback()
+  - 50 µs FOC ISR context
+  - Phase A & B current feedback
+  - KEY EXPLANATION POINTS
+  - 🕐 Clock Hierarchy
+  - ▸ PLL 200 MHz → SPB 100 MHz
+  - → ADC 20 MHz (÷5)
+  - ▸ ~1 µs per 12-bit channel
+  - at fADC = 20 MHz
+  - ▸ GTM ref: 100 MHz for PWM
+  - timing & ADC triggering
+  - 🌡 SW Group – Temperature
+  - ▸ Continuous scan of 3 NTC
+  - sensors (Phase A / B / C)
+  - ▸ Low priority, SW triggered
+  - once at startup
+  - ▸ 10 ms task: raw 12-bit →
+  - °C via NTC LUT + fault check
+  - ⚡ HW Group – Current
+  - ▸ High-priority one-shot:
+  - Phase A/B shunt amp
+  - ▸ GTM PWM midpoint trigger
+  - @ 40 kHz (every 25 µs)
+  - ▸ Runs inside 50 µs FOC ISR
+  - for real-time current control
+
+SVG Source:
+<svg width="100%" viewBox="0 0 680 1020" role="img" xmlns="http://www.w3.org/2000/svg" style="background:white">
+  <title>AURIX VADC Block Diagram – SW Group and HW Group</title>
+  <rect width="680" height="1020" fill="white"/>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </marker>
+  </defs>
+
+  <!-- CLOCK DOMAIN -->
+  <rect x="240" y="20" width="200" height="44" rx="8" fill="#EEEDFE" stroke="#534AB7" stroke-width="0.5"/>
+  <text font-family="sans-serif" font-size="14" font-weight="500" fill="#3C3489" x="340" y="37" text-anchor="middle" dominant-baseline="central">System PLL</text>
+  <text font-family="sans-serif" font-size="12" fill="#534AB7" x="340" y="55" text-anchor="middle" dominant-baseline="central">200 MHz</text>
+
+  <line x1="340" y1="64" x2="340" y2="90" stroke="#888780" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <text font-family="sans-serif" font-size="12" fill="#888780" x="350" y="81" dominant-baseline="central">÷2</text>
+
+  <rect x="200" y="90" width="280" height="44" rx="8" fill="#F1EFE8" stroke="#5F5E5A" stroke-width="0.5"/>
+  <text font-family="sans-serif" font-size="14" font-weight="500" fill="#444441" x="340" y="107" text-anchor="middle" dominant-baseline="central">SPB Peripheral Bus</text>
+  <text font-family="sans-serif" font-size="12" fill="#5F5E5A" x="340" y="125" text-anchor="middle" dominant-baseline="central">100 MHz</text>
+
+  <line x1="270" y1="134" x2="220" y2="160" stroke="#888780" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <text font-family="sans-serif" font-size="12" fill="#888780" x="216" y="151" text-anchor="end" dominant-baseline="central">÷5</text>
+  <line x1="410" y1="134" x2="470" y2="160" stroke="#888780" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <!-- ADC Clock -->
+  <rect x="100" y="160" width="200" height="44" rx="8" fill="#E1F5EE" stroke="#0F6E56" stroke-width="0.5"/>
+  <text font-family="sans-serif" font-size="14" font-weight="500" fill="#085041" x="200" y="177" text-anchor="middle" dominant-baseline="central">ADC module clock</text>
+  <text font-family="sans-serif" font-size="12" fill="#0F6E56" x="200" y="195" text-anchor="middle" dominant-baseline="central">fADC = 20 MHz</text>
+
+  <line x1="200" y1="204" x2="200" y2="228" stroke="#888780" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <rect x="100" y="228" width="200" height="44" rx="8" fill="#E1F5EE" stroke="#0F6E56" stroke-width="0.5"/>
+  <text font-family="sans-serif" font-size="14" font-weight="500" fill="#085041" x="200" y="245" text-anchor="middle" dominant-baseline="central">Conversion time</text>
+  <text font-family="sans-serif" font-size="12" fill="#0F6E56" x="200" y="263" text-anchor="middle" dominant-baseline="central">~1 µs / channel (12-bit)</text>
+
+  <!-- GTM Clock -->
+  <rect x="380" y="160" width="200" height="44" rx="8" fill="#FAEEDA" stroke="#854F0B" stroke-width="0.5"/>
+  <text font-family="sans-serif" font-size="14" font-weight="500" fill="#633806" x="480" y="177" text-anchor="middle" dominant-baseline="central">GTM clock</text>
+  <text font-family="sans-serif" font-size="12" fill="#854F0B" x="480" y="195" text-anchor="middle" dominant-baseline="central">100 MHz</text>
+
+  <line x1="480" y1="204" x2="480" y2="228" stroke="#888780" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <rect x="380" y="228" width="200" height="44" rx="8" fill="#FAEEDA" stroke="#854F0B" stroke-width="0.5"/>
+  <text font-family="sans-serif" font-size="14" font-weight="500" fill="#633806" x="480" y="245" text-anchor="middle" dominant-baseline="central">GTM TOM0 – PWM</text>
+  <text font-family="sans-serif" font-size="12" fill="#854F0B" x="480" y="263" text-anchor="middle" dominant-baseline="central">20 kHz  |  T = 50 µs</text>
+
+  <line x1="480" y1="272" x2="480" y2="296" stroke="#888780" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <rect x="380" y="296" width="200" height="44" rx="8" fill="#FAEEDA" stroke="#854F0B" stroke-width="0.5"/>
+  <text font-family="sans-serif" font-size="14" font-weight="500" fill="#633806" x="480" y="313" text-anchor="middle" dominant-baseline="central">HW trigger (ADCTrig0)</text>
+  <text font-family="sans-serif" font-size="12" fill="#854F0B" x="480" y="331" text-anchor="middle" dominant-baseline="central">at midpoint  25 µs  →  40 kHz</text>
+
+  <!-- Divider -->
+  <line x1="40" y1="360" x2="640" y2="360" stroke="#B4B2A9" stroke-width="0.8" stroke-dasharray="6 4"/>
+  <text font-family="sans-serif" font-size="12" fill="#888780" x="340" y="372" text-anchor="middle">VADC Group 0  –  AUTOSAR ADC Groups</text>
+
+  <!-- VADC Group 0 box -->
+  <line x1="200" y1="272" x2="200" y2="310" stroke="#888780" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <rect x="100" y="310" width="200" height="36" rx="8" fill="#E1F5EE" stroke="#0F6E56" stroke-width="0.5"/>
+  <text font-family="sans-serif" font-size="14" font-weight="500" fill="#085041" x="200" y="323" text-anchor="middle" dominant-baseline="central">VADC Group 0</text>
+  <text font-family="sans-serif" font-size="12" fill="#0F6E56" x="200" y="339" text-anchor="middle" dominant-baseline="central">20 MHz  |  5 channels</text>
+
+  <line x1="200" y1="346" x2="170" y2="384" stroke="#888780" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <line x1="270" y1="328" x2="420" y2="380" stroke="#888780" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <!-- SW GROUP -->
+  <rect x="30" y="384" width="280" height="44" rx="8" fill="#E1F5EE" stroke="#0F6E56" stroke-width="0.5"/>
+  <text font-family="sans-serif" font-size="14" font-weight="500" fill="#085041" x="170" y="401" text-anchor="middle" dominant-baseline="central">AdcGroup_0  –  SW group</text>
+  <text font-family="sans-serif" font-size="12" fill="#0F6E56" x="170" y="419" text-anchor="middle" dominant-baseline="central">Continuous  |  Low priority</text>
+
+  <rect x="30" y="440" width="280" height="56" rx="8" fill="#E1F5EE" stroke="#0F6E56" stroke-width="0.5"/>
+  <text font-family="sans-serif" font-size="14" font-weight="500" fill="#085041" x="170" y="458" text-anchor="middle" dominant-baseline="central">CH0 / CH1 / CH2</text>
+  <text font-family="sans-serif" font-size="12" fill="#0F6E56" x="170" y="474" text-anchor="middle" dominant-baseline="central">Phase A / B / C NTC sensor</text>
+  <text font-family="sans-serif" font-size="12" fill="#0F6E56" x="170" y="488" text-anchor="middle" dominant-baseline="central">VAREF = 5 V  |  12-bit  |  0–4095</text>
+
+  <line x1="170" y1="496" x2="170" y2="520" stroke="#888780" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <rect x="30" y="520" width="280" height="44" rx="8" fill="#F1EFE8" stroke="#5F5E5A" stroke-width="0.5"/>
+  <text font-family="sans-serif" font-size="14" font-weight="500" fill="#444441" x="170" y="537" text-anchor="middle" dominant-baseline="central">Adc_StartGroupConversion()</text>
+  <text font-family="sans-serif" font-size="12" fill="#5F5E5A" x="170" y="555" text-anchor="middle" dominant-baseline="central">SW trigger – once at startup</text>
+
+  <path d="M310 542 Q340 542 340 590 Q340 638 310 638" fill="none" stroke="#888780" stroke-width="0.8" stroke-dasharray="4 3" marker-end="url(#arrow)"/>
+  <text font-family="sans-serif" font-size="12" fill="#888780" x="348" y="594" dominant-baseline="central">loops</text>
+  <text font-family="sans-serif" font-size="12" fill="#888780" x="348" y="608" dominant-baseline="central">auto</text>
+
+  <line x1="170" y1="564" x2="170" y2="588" stroke="#888780" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <rect x="30" y="588" width="280" height="56" rx="8" fill="#E1F5EE" stroke="#0F6E56" stroke-width="0.5"/>
+  <text font-family="sans-serif" font-size="14" font-weight="500" fill="#085041" x="170" y="606" text-anchor="middle" dominant-baseline="central">Adc_Temp_GroupNotify()</text>
+  <text font-family="sans-serif" font-size="12" fill="#0F6E56" x="170" y="622" text-anchor="middle" dominant-baseline="central">Adc_ReadGroup() → TempResultBuf</text>
+  <text font-family="sans-serif" font-size="12" fill="#0F6E56" x="170" y="636" text-anchor="middle" dominant-baseline="central">TempDataReady = TRUE</text>
+
+  <line x1="170" y1="644" x2="170" y2="668" stroke="#888780" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <rect x="30" y="668" width="280" height="44" rx="8" fill="#F1EFE8" stroke="#5F5E5A" stroke-width="0.5"/>
+  <text font-family="sans-serif" font-size="14" font-weight="500" fill="#444441" x="170" y="685" text-anchor="middle" dominant-baseline="central">10 ms thermal task</text>
+  <text font-family="sans-serif" font-size="12" fill="#5F5E5A" x="170" y="703" text-anchor="middle" dominant-baseline="central">NTC lookup → °C  |  fault check</text>
+
+  <!-- HW GROUP -->
+  <rect x="370" y="384" width="280" height="44" rx="8" fill="#FAECE7" stroke="#993C1D" stroke-width="0.5"/>
+  <text font-family="sans-serif" font-size="14" font-weight="500" fill="#712B13" x="510" y="401" text-anchor="middle" dominant-baseline="central">AdcGroup_1  –  HW group</text>
+  <text font-family="sans-serif" font-size="12" fill="#993C1D" x="510" y="419" text-anchor="middle" dominant-baseline="central">One-shot  |  High priority</text>
+
+  <path d="M480 340 L480 350 L510 350 L510 384" fill="none" stroke="#888780" stroke-width="1" marker-end="url(#arrow)"/>
+  <text font-family="sans-serif" font-size="12" fill="#888780" x="508" y="370" text-anchor="middle" dominant-baseline="central">GTM trigger</text>
+
+  <rect x="370" y="440" width="280" height="56" rx="8" fill="#FAECE7" stroke="#993C1D" stroke-width="0.5"/>
+  <text font-family="sans-serif" font-size="14" font-weight="500" fill="#712B13" x="510" y="458" text-anchor="middle" dominant-baseline="central">CH3 / CH4</text>
+  <text font-family="sans-serif" font-size="12" fill="#993C1D" x="510" y="474" text-anchor="middle" dominant-baseline="central">Phase A / B current (shunt amp)</text>
+  <text font-family="sans-serif" font-size="12" fill="#993C1D" x="510" y="488" text-anchor="middle" dominant-baseline="central">VAREF = 5 V  |  12-bit  |  0–4095</text>
+
+  <line x1="510" y1="496" x2="510" y2="520" stroke="#888780" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <rect x="370" y="520" width="280" height="44" rx="8" fill="#F1EFE8" stroke="#5F5E5A" stroke-width="0.5"/>
+  <text font-family="sans-serif" font-size="14" font-weight="500" fill="#444441" x="510" y="537" text-anchor="middle" dominant-baseline="central">HW trigger – ADCTrig0</text>
+  <text font-family="sans-serif" font-size="12" fill="#5F5E5A" x="510" y="555" text-anchor="middle" dominant-baseline="central">rising edge every 25 µs (PWM mid)</text>
+
+  <text font-family="sans-serif" font-size="12" fill="#888780" x="510" y="578" text-anchor="middle">one-shot per trigger, no loop</text>
+
+  <line x1="510" y1="588" x2="510" y2="600" stroke="#888780" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <rect x="370" y="600" width="280" height="56" rx="8" fill="#FAECE7" stroke="#993C1D" stroke-width="0.5"/>
+  <text font-family="sans-serif" font-size="14" font-weight="500" fill="#712B13" x="510" y="618" text-anchor="middle" dominant-baseline="central">Adc_Current_GroupNotify()</text>
+  <text font-family="sans-serif" font-size="12" fill="#993C1D" x="510" y="634" text-anchor="middle" dominant-baseline="central">Adc_ReadGroup() → CurrentResultBuf</text>
+  <text font-family="sans-serif" font-size="12" fill="#993C1D" x="510" y="648" text-anchor="middle" dominant-baseline="central">FOC_UpdateCurrentFeedback()</text>
+
+  <line x1="510" y1="656" x2="510" y2="680" stroke="#888780" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <rect x="370" y="680" width="280" height="44" rx="8" fill="#F1EFE8" stroke="#5F5E5A" stroke-width="0.5"/>
+  <text font-family="sans-serif" font-size="14" font-weight="500" fill="#444441" x="510" y="697" text-anchor="middle" dominant-baseline="central">50 µs FOC ISR context</text>
+  <text font-family="sans-serif" font-size="12" fill="#5F5E5A" x="510" y="715" text-anchor="middle" dominant-baseline="central">Phase A &amp; B current feedback</text>
+
+  <!-- EXPLANATION SECTION -->
+  <line x1="20" y1="738" x2="660" y2="738" stroke="#B4B2A9" stroke-width="1" stroke-dasharray="6 4"/>
+  <rect x="20" y="748" width="640" height="258" rx="10" fill="#F8F8F8" stroke="#DDDDDD" stroke-width="0.8"/>
+
+  <text font-family="sans-serif" font-size="13" font-weight="700" fill="#222222" x="340" y="768" text-anchor="middle" dominant-baseline="central">KEY EXPLANATION POINTS</text>
+
+  <!-- Col 1: Clock Hierarchy -->
+  <rect x="30" y="782" width="190" height="16" rx="3" fill="#EEEDFE"/>
+  <text font-family="sans-serif" font-size="11" font-weight="700" fill="#3C3489" x="38" y="790" dominant-baseline="central">🕐 Clock Hierarchy</text>
+  <text font-family="sans-serif" font-size="10.5" fill="#333333" x="38" y="810" dominant-baseline="central">▸ PLL 200 MHz → SPB 100 MHz</text>
+  <text font-family="sans-serif" font-size="10.5" fill="#333333" x="48" y="826" dominant-baseline="central">→ ADC 20 MHz (÷5)</text>
+  <text font-family="sans-serif" font-size="10.5" fill="#333333" x="38" y="844" dominant-baseline="central">▸ ~1 µs per 12-bit channel</text>
+  <text font-family="sans-serif" font-size="10.5" fill="#333333" x="48" y="860" dominant-baseline="central">at fADC = 20 MHz</text>
+  <text font-family="sans-serif" font-size="10.5" fill="#333333" x="38" y="878" dominant-baseline="central">▸ GTM ref: 100 MHz for PWM</text>
+  <text font-family="sans-serif" font-size="10.5" fill="#333333" x="48" y="894" dominant-baseline="central">timing &amp; ADC triggering</text>
+
+  <!-- Col 2: SW Group -->
+  <rect x="240" y="782" width="190" height="16" rx="3" fill="#E1F5EE"/>
+  <text font-family="sans-serif" font-size="11" font-weight="700" fill="#085041" x="248" y="790" dominant-baseline="central">🌡 SW Group – Temperature</text>
+  <text font-family="sans-serif" font-size="10.5" fill="#333333" x="248" y="810" dominant-baseline="central">▸ Continuous scan of 3 NTC</text>
+  <text font-family="sans-serif" font-size="10.5" fill="#333333" x="258" y="826" dominant-baseline="central">sensors (Phase A / B / C)</text>
+  <text font-family="sans-serif" font-size="10.5" fill="#333333" x="248" y="844" dominant-baseline="central">▸ Low priority, SW triggered</text>
+  <text font-family="sans-serif" font-size="10.5" fill="#333333" x="258" y="860" dominant-baseline="central">once at startup</text>
+  <text font-family="sans-serif" font-size="10.5" fill="#333333" x="248" y="878" dominant-baseline="central">▸ 10 ms task: raw 12-bit →</text>
+  <text font-family="sans-serif" font-size="10.5" fill="#333333" x="258" y="894" dominant-baseline="central">°C via NTC LUT + fault check</text>
+
+  <!-- Col 3: HW Group -->
+  <rect x="450" y="782" width="190" height="16" rx="3" fill="#FAECE7"/>
+  <text font-family="sans-serif" font-size="11" font-weight="700" fill="#712B13" x="458" y="790" dominant-baseline="central">⚡ HW Group – Current</text>
+  <text font-family="sans-serif" font-size="10.5" fill="#333333" x="458" y="810" dominant-baseline="central">▸ High-priority one-shot:</text>
+  <text font-family="sans-serif" font-size="10.5" fill="#333333" x="468" y="826" dominant-baseline="central">Phase A/B shunt amp</text>
+  <text font-family="sans-serif" font-size="10.5" fill="#333333" x="458" y="844" dominant-baseline="central">▸ GTM PWM midpoint trigger</text>
+  <text font-family="sans-serif" font-size="10.5" fill="#333333" x="468" y="860" dominant-baseline="central">@ 40 kHz (every 25 µs)</text>
+  <text font-family="sans-serif" font-size="10.5" fill="#333333" x="458" y="878" dominant-baseline="central">▸ Runs inside 50 µs FOC ISR</text>
+  <text font-family="sans-serif" font-size="10.5" fill="#333333" x="468" y="894" dominant-baseline="central">for real-time current control</text>
+
+  <!-- Column dividers -->
+  <line x1="235" y1="780" x2="235" y2="990" stroke="#DDDDDD" stroke-width="0.8"/>
+  <line x1="445" y1="780" x2="445" y2="990" stroke="#DDDDDD" stroke-width="0.8"/>
+
+</svg>`
+  },
+  {
+    q: "Explain Qspi diagram?",
+    a: `Diagram: Qspi
+
+Key Labels / Signals:
+  - AURIX TC2xx – QSPI Clock Chain & Key Parameters
+  - Clock chain: fOSC → PLL → fCPU → fSPB → fQSPI → fSCLK (baud)
+  - Crystal Oscillator
+  - fOSC = 20 MHz (typical external)
+  - x N (PLL multiply)
+  - System PLL (fPLL)
+  - up to 300 MHz (TC27x / TC29x)
+  - ÷ k
+  - CPU Clock (fCPU)
+  - up to 200 MHz (TC27x)
+  - SRI Bus (fSRI)
+  - up to 200 MHz | core interconnect
+  - SPB Bus (fSPB)
+  - up to 100 MHz | peripheral bus
+  - ÷ 1..4 (QSPI prescaler)
+  - QSPI Module Clock (fQSPI)
+  - up to 100 MHz = fSPB / prescaler
+  - ÷ (Q+1) (baud divider)
+  - QSPI Baud Rate (fSCLK)
+  - fQSPI / (Q+1) | max 50 MHz SCK
+  - e.g. 100 MHz / 2 = 50 MHz SCK
+  - QSPI 0
+  - master/slave | 50 Mbit/s max
+  - FIFO 16x TX / 16x RX
+  - QSPI 1 / 2
+  - QSPI 3
+  - Key Parameters Reference – AURIX TC2xx QSPI
+  - Parameter
+  - Value / Range
+  - fOSC – crystal oscillator
+  - 20 MHz (typical external quartz crystal)
+  - fPLL – system PLL output
+  - up to 300 MHz (TC27x / TC29x variants)
+  - fCPU – CPU core clock
+  - up to 200 MHz (TC27x), up to 300 MHz (TC29x)
+  - fSRI – system resource bus
+  - up to 200 MHz | CPU-to-memory interconnect
+  - fSPB – peripheral bus clock
+  - up to 100 MHz = fCPU / 2 (typical config)
+  - fQSPI – QSPI module clock
+  - fSPB / prescaler(1..4) → up to 100 MHz
+  - fSCLK – SPI baud rate (SCK pin)
+  - fQSPI / (Q+1) | max 50 MHz on wire
+  - QSPI instances
+  - 4 modules: QSPI0, QSPI1, QSPI2, QSPI3 (TC27x)
+  - TX / RX FIFO depth
+  - 16 entries each per QSPI module
+  - CS lines (SLSO)
+  - up to 15 HW chip selects per QSPI module
+  - Data frame width
+  - 2 – 32 bits per frame (configurable per Job)
+  - SPI modes
+  - CPOL/CPHA → Mode 0, 1, 2, 3 (all supported)
+  - DMA support
+  - DMA request triggered on TX/RX FIFO level threshold
+  - Async handler modes
+  - Interrupt / Polling (Spi_MainFunction) / DMA
+  - Buffer type
+  - IB (Internal, fixed size) / EB (External, runtime ptr)
+  - Baud Rate Calculation Formula
+  - Formula:
+  - fSCLK = fQSPI / (Q + 1) = fSPB / prescaler / (Q + 1)
+  - Example A (max speed):
+  - 100 MHz (fSPB) / 1 (prescaler) / 2 (Q+1) = 50 MHz SCK
+  - Example B (lower speed):
+  - 100 MHz / 1 / 4 = 25 MHz SCK
+  - Clock Chain – Explanation
+  - 1. fOSC – Crystal Oscillator (20 MHz)
+  - The on-board quartz crystal provides a stable 20 MHz reference clock to the PLL. This is the root of the entire
+  - clock tree. The exact frequency depends on the board crystal chosen.
+  - 2. fPLL – System PLL (up to 300 MHz)
+  - The PLL multiplies fOSC to generate the high-speed system clock. On TC27x max is 300 MHz. Configured via
+  - SCU_PLLCON registers (NDIV, PDIV, KDIV).
+  - 3. fCPU → fSRI / fSPB split
+  - fCPU feeds two buses: the SRI bus (same speed, for CPU-to-SRAM/Flash) and the SPB peripheral bus (half speed,
+  - 100 MHz max), which clocks all peripherals including QSPI.
+  - 4. fQSPI – QSPI Module Clock | 5. fSCLK – Actual SPI Baud Rate
+  - The QSPI prescaler (div 1–4) divides fSPB to give fQSPI. The baud divider register (Q) then gives the final SCK
+  - frequency on the physical SCLK pin. Maximum SCK = 50 MHz. Each Job can have a different baud setting.
+  - AURIX TC2xx | AUTOSAR SPI / QSPI | Clock Chain Reference
+
+SVG Source:
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="1600" viewBox="0 0 900 1600" font-family="Arial, Helvetica, sans-serif">
+
+  <!-- Background -->
+  <rect width="900" height="1600" fill="#ffffff"/>
+
+  <!-- Title -->
+  <rect x="0" y="0" width="900" height="52" fill="#26215C"/>
+  <text x="450" y="33" text-anchor="middle" font-size="18" font-weight="bold" fill="#ffffff">AURIX TC2xx – QSPI Clock Chain &amp; Key Parameters</text>
+
+  <defs>
+    <marker id="arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M2 1L8 5L2 9" fill="none" stroke="#888780" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </marker>
+  </defs>
+
+  <text x="450" y="80" text-anchor="middle" font-size="12" fill="#888780">Clock chain: fOSC → PLL → fCPU → fSPB → fQSPI → fSCLK (baud)</text>
+
+  <!-- Crystal Oscillator -->
+  <rect x="300" y="92" width="300" height="48" rx="8" fill="#F1EFE8" stroke="#5F5E5A" stroke-width="1"/>
+  <text x="450" y="112" text-anchor="middle" font-size="13" font-weight="bold" fill="#444441">Crystal Oscillator</text>
+  <text x="450" y="129" text-anchor="middle" font-size="11" fill="#5F5E5A">fOSC = 20 MHz (typical external)</text>
+
+  <line x1="450" y1="140" x2="450" y2="162" stroke="#888780" stroke-width="1.5" marker-end="url(#arr)"/>
+  <text x="462" y="155" font-size="10" fill="#888780">x N  (PLL multiply)</text>
+
+  <!-- System PLL -->
+  <rect x="300" y="162" width="300" height="48" rx="8" fill="#EEEDFE" stroke="#534AB7" stroke-width="1"/>
+  <text x="450" y="182" text-anchor="middle" font-size="13" font-weight="bold" fill="#3C3489">System PLL  (fPLL)</text>
+  <text x="450" y="199" text-anchor="middle" font-size="11" fill="#534AB7">up to 300 MHz  (TC27x / TC29x)</text>
+
+  <line x1="450" y1="210" x2="450" y2="232" stroke="#888780" stroke-width="1.5" marker-end="url(#arr)"/>
+  <text x="462" y="226" font-size="10" fill="#888780">÷ k</text>
+
+  <!-- fCPU -->
+  <rect x="300" y="232" width="300" height="48" rx="8" fill="#EEEDFE" stroke="#534AB7" stroke-width="1"/>
+  <text x="450" y="252" text-anchor="middle" font-size="13" font-weight="bold" fill="#3C3489">CPU Clock  (fCPU)</text>
+  <text x="450" y="269" text-anchor="middle" font-size="11" fill="#534AB7">up to 200 MHz  (TC27x)</text>
+
+  <path d="M390 280 L260 304" fill="none" stroke="#888780" stroke-width="1.5" marker-end="url(#arr)"/>
+  <path d="M510 280 L640 304" fill="none" stroke="#888780" stroke-width="1.5" marker-end="url(#arr)"/>
+
+  <!-- fSRI -->
+  <rect x="110" y="304" width="260" height="48" rx="8" fill="#EEEDFE" stroke="#534AB7" stroke-width="1"/>
+  <text x="240" y="324" text-anchor="middle" font-size="13" font-weight="bold" fill="#3C3489">SRI Bus  (fSRI)</text>
+  <text x="240" y="341" text-anchor="middle" font-size="11" fill="#534AB7">up to 200 MHz  |  core interconnect</text>
+
+  <!-- fSPB -->
+  <rect x="530" y="304" width="260" height="48" rx="8" fill="#EEEDFE" stroke="#534AB7" stroke-width="1"/>
+  <text x="660" y="324" text-anchor="middle" font-size="13" font-weight="bold" fill="#3C3489">SPB Bus  (fSPB)</text>
+  <text x="660" y="341" text-anchor="middle" font-size="11" fill="#534AB7">up to 100 MHz  |  peripheral bus</text>
+
+  <line x1="660" y1="352" x2="660" y2="370" stroke="#888780" stroke-width="1.5"/>
+  <path d="M660 370 L510 394" fill="none" stroke="#888780" stroke-width="1.5" marker-end="url(#arr)"/>
+  <text x="662" y="386" font-size="10" fill="#888780">÷ 1..4  (QSPI prescaler)</text>
+
+  <!-- fQSPI -->
+  <rect x="300" y="394" width="300" height="48" rx="8" fill="#FAEEDA" stroke="#854F0B" stroke-width="1"/>
+  <text x="450" y="414" text-anchor="middle" font-size="13" font-weight="bold" fill="#633806">QSPI Module Clock  (fQSPI)</text>
+  <text x="450" y="431" text-anchor="middle" font-size="11" fill="#854F0B">up to 100 MHz  =  fSPB / prescaler</text>
+
+  <line x1="450" y1="442" x2="450" y2="464" stroke="#888780" stroke-width="1.5" marker-end="url(#arr)"/>
+  <text x="462" y="458" font-size="10" fill="#888780">÷ (Q+1)  (baud divider)</text>
+
+  <!-- fSCLK -->
+  <rect x="300" y="464" width="300" height="60" rx="8" fill="#FAEEDA" stroke="#854F0B" stroke-width="1.5"/>
+  <text x="450" y="484" text-anchor="middle" font-size="13" font-weight="bold" fill="#633806">QSPI Baud Rate  (fSCLK)</text>
+  <text x="450" y="501" text-anchor="middle" font-size="11" fill="#854F0B">fQSPI / (Q+1)  |  max 50 MHz SCK</text>
+  <text x="450" y="516" text-anchor="middle" font-size="11" fill="#854F0B">e.g.  100 MHz / 2  =  50 MHz SCK</text>
+
+  <line x1="450" y1="524" x2="450" y2="546" stroke="#888780" stroke-width="1.5" marker-end="url(#arr)"/>
+
+  <!-- QSPI HW modules -->
+  <rect x="60" y="546" width="240" height="60" rx="8" fill="#E1F5EE" stroke="#0F6E56" stroke-width="1"/>
+  <text x="180" y="568" text-anchor="middle" font-size="13" font-weight="bold" fill="#085041">QSPI 0</text>
+  <text x="180" y="585" text-anchor="middle" font-size="11" fill="#0F6E56">master/slave  |  50 Mbit/s max</text>
+  <text x="180" y="599" text-anchor="middle" font-size="10" fill="#0F6E56">FIFO 16x TX / 16x RX</text>
+
+  <rect x="330" y="546" width="240" height="60" rx="8" fill="#E1F5EE" stroke="#0F6E56" stroke-width="1"/>
+  <text x="450" y="568" text-anchor="middle" font-size="13" font-weight="bold" fill="#085041">QSPI 1 / 2</text>
+  <text x="450" y="585" text-anchor="middle" font-size="11" fill="#0F6E56">master/slave  |  50 Mbit/s max</text>
+  <text x="450" y="599" text-anchor="middle" font-size="10" fill="#0F6E56">FIFO 16x TX / 16x RX</text>
+
+  <rect x="600" y="546" width="240" height="60" rx="8" fill="#E1F5EE" stroke="#0F6E56" stroke-width="1"/>
+  <text x="720" y="568" text-anchor="middle" font-size="13" font-weight="bold" fill="#085041">QSPI 3</text>
+  <text x="720" y="585" text-anchor="middle" font-size="11" fill="#0F6E56">master/slave  |  50 Mbit/s max</text>
+  <text x="720" y="599" text-anchor="middle" font-size="10" fill="#0F6E56">FIFO 16x TX / 16x RX</text>
+
+  <path d="M390 524 L180 546" fill="none" stroke="#888780" stroke-width="1" stroke-dasharray="4 3"/>
+  <path d="M450 524 L450 546" fill="none" stroke="#888780" stroke-width="1" stroke-dasharray="4 3"/>
+  <path d="M510 524 L720 546" fill="none" stroke="#888780" stroke-width="1" stroke-dasharray="4 3"/>
+
+  <!-- Divider -->
+  <line x1="40" y1="628" x2="860" y2="628" stroke="#D3D1C7" stroke-width="1.5" stroke-dasharray="6 4"/>
+  <text x="450" y="648" text-anchor="middle" font-size="13" font-weight="bold" fill="#26215C">Key Parameters Reference – AURIX TC2xx QSPI</text>
+
+  <!-- Table header -->
+  <rect x="40" y="658" width="280" height="30" rx="4" fill="#26215C"/>
+  <rect x="326" y="658" width="534" height="30" rx="4" fill="#26215C"/>
+  <text x="180" y="678" text-anchor="middle" font-size="12" font-weight="bold" fill="#ffffff">Parameter</text>
+  <text x="593" y="678" text-anchor="middle" font-size="12" font-weight="bold" fill="#ffffff">Value / Range</text>
+
+  <rect x="40" y="688" width="280" height="30" fill="#F1EFE8" stroke="#D3D1C7" stroke-width="0.5"/>
+  <rect x="326" y="688" width="534" height="30" fill="#F1EFE8" stroke="#D3D1C7" stroke-width="0.5"/>
+  <text x="55" y="708" font-size="11" font-weight="bold" fill="#3C3489">fOSC – crystal oscillator</text>
+  <text x="341" y="708" font-size="11" fill="#444441">20 MHz (typical external quartz crystal)</text>
+
+  <rect x="40" y="718" width="280" height="30" fill="#ffffff" stroke="#D3D1C7" stroke-width="0.5"/>
+  <rect x="326" y="718" width="534" height="30" fill="#ffffff" stroke="#D3D1C7" stroke-width="0.5"/>
+  <text x="55" y="738" font-size="11" font-weight="bold" fill="#3C3489">fPLL – system PLL output</text>
+  <text x="341" y="738" font-size="11" fill="#444441">up to 300 MHz  (TC27x / TC29x variants)</text>
+
+  <rect x="40" y="748" width="280" height="30" fill="#F1EFE8" stroke="#D3D1C7" stroke-width="0.5"/>
+  <rect x="326" y="748" width="534" height="30" fill="#F1EFE8" stroke="#D3D1C7" stroke-width="0.5"/>
+  <text x="55" y="768" font-size="11" font-weight="bold" fill="#3C3489">fCPU – CPU core clock</text>
+  <text x="341" y="768" font-size="11" fill="#444441">up to 200 MHz  (TC27x),  up to 300 MHz (TC29x)</text>
+
+  <rect x="40" y="778" width="280" height="30" fill="#ffffff" stroke="#D3D1C7" stroke-width="0.5"/>
+  <rect x="326" y="778" width="534" height="30" fill="#ffffff" stroke="#D3D1C7" stroke-width="0.5"/>
+  <text x="55" y="798" font-size="11" font-weight="bold" fill="#3C3489">fSRI – system resource bus</text>
+  <text x="341" y="798" font-size="11" fill="#444441">up to 200 MHz  |  CPU-to-memory interconnect</text>
+
+  <rect x="40" y="808" width="280" height="30" fill="#F1EFE8" stroke="#D3D1C7" stroke-width="0.5"/>
+  <rect x="326" y="808" width="534" height="30" fill="#F1EFE8" stroke="#D3D1C7" stroke-width="0.5"/>
+  <text x="55" y="828" font-size="11" font-weight="bold" fill="#3C3489">fSPB – peripheral bus clock</text>
+  <text x="341" y="828" font-size="11" fill="#444441">up to 100 MHz  =  fCPU / 2  (typical config)</text>
+
+  <rect x="40" y="838" width="280" height="30" fill="#ffffff" stroke="#D3D1C7" stroke-width="0.5"/>
+  <rect x="326" y="838" width="534" height="30" fill="#ffffff" stroke="#D3D1C7" stroke-width="0.5"/>
+  <text x="55" y="858" font-size="11" font-weight="bold" fill="#633806">fQSPI – QSPI module clock</text>
+  <text x="341" y="858" font-size="11" fill="#444441">fSPB / prescaler(1..4)  →  up to 100 MHz</text>
+
+  <rect x="40" y="868" width="280" height="30" fill="#F1EFE8" stroke="#D3D1C7" stroke-width="0.5"/>
+  <rect x="326" y="868" width="534" height="30" fill="#F1EFE8" stroke="#D3D1C7" stroke-width="0.5"/>
+  <text x="55" y="888" font-size="11" font-weight="bold" fill="#633806">fSCLK – SPI baud rate (SCK pin)</text>
+  <text x="341" y="888" font-size="11" fill="#444441">fQSPI / (Q+1)  |  max 50 MHz on wire</text>
+
+  <rect x="40" y="898" width="280" height="30" fill="#ffffff" stroke="#D3D1C7" stroke-width="0.5"/>
+  <rect x="326" y="898" width="534" height="30" fill="#ffffff" stroke="#D3D1C7" stroke-width="0.5"/>
+  <text x="55" y="918" font-size="11" font-weight="bold" fill="#085041">QSPI instances</text>
+  <text x="341" y="918" font-size="11" fill="#444441">4 modules: QSPI0, QSPI1, QSPI2, QSPI3  (TC27x)</text>
+
+  <rect x="40" y="928" width="280" height="30" fill="#F1EFE8" stroke="#D3D1C7" stroke-width="0.5"/>
+  <rect x="326" y="928" width="534" height="30" fill="#F1EFE8" stroke="#D3D1C7" stroke-width="0.5"/>
+  <text x="55" y="948" font-size="11" font-weight="bold" fill="#085041">TX / RX FIFO depth</text>
+  <text x="341" y="948" font-size="11" fill="#444441">16 entries each per QSPI module</text>
+
+  <rect x="40" y="958" width="280" height="30" fill="#ffffff" stroke="#D3D1C7" stroke-width="0.5"/>
+  <rect x="326" y="958" width="534" height="30" fill="#ffffff" stroke="#D3D1C7" stroke-width="0.5"/>
+  <text x="55" y="978" font-size="11" font-weight="bold" fill="#085041">CS lines (SLSO)</text>
+  <text x="341" y="978" font-size="11" fill="#444441">up to 15 HW chip selects per QSPI module</text>
+
+  <rect x="40" y="988" width="280" height="30" fill="#F1EFE8" stroke="#D3D1C7" stroke-width="0.5"/>
+  <rect x="326" y="988" width="534" height="30" fill="#F1EFE8" stroke="#D3D1C7" stroke-width="0.5"/>
+  <text x="55" y="1008" font-size="11" font-weight="bold" fill="#085041">Data frame width</text>
+  <text x="341" y="1008" font-size="11" fill="#444441">2 – 32 bits per frame  (configurable per Job)</text>
+
+  <rect x="40" y="1018" width="280" height="30" fill="#ffffff" stroke="#D3D1C7" stroke-width="0.5"/>
+  <rect x="326" y="1018" width="534" height="30" fill="#ffffff" stroke="#D3D1C7" stroke-width="0.5"/>
+  <text x="55" y="1038" font-size="11" font-weight="bold" fill="#085041">SPI modes</text>
+  <text x="341" y="1038" font-size="11" fill="#444441">CPOL/CPHA → Mode 0, 1, 2, 3  (all supported)</text>
+
+  <rect x="40" y="1048" width="280" height="30" fill="#F1EFE8" stroke="#D3D1C7" stroke-width="0.5"/>
+  <rect x="326" y="1048" width="534" height="30" fill="#F1EFE8" stroke="#D3D1C7" stroke-width="0.5"/>
+  <text x="55" y="1068" font-size="11" font-weight="bold" fill="#085041">DMA support</text>
+  <text x="341" y="1068" font-size="11" fill="#444441">DMA request triggered on TX/RX FIFO level threshold</text>
+
+  <rect x="40" y="1078" width="280" height="30" fill="#ffffff" stroke="#D3D1C7" stroke-width="0.5"/>
+  <rect x="326" y="1078" width="534" height="30" fill="#ffffff" stroke="#D3D1C7" stroke-width="0.5"/>
+  <text x="55" y="1098" font-size="11" font-weight="bold" fill="#444441">Async handler modes</text>
+  <text x="341" y="1098" font-size="11" fill="#444441">Interrupt  /  Polling (Spi_MainFunction)  /  DMA</text>
+
+  <rect x="40" y="1108" width="280" height="30" fill="#F1EFE8" stroke="#D3D1C7" stroke-width="0.5"/>
+  <rect x="326" y="1108" width="534" height="30" fill="#F1EFE8" stroke="#D3D1C7" stroke-width="0.5"/>
+  <text x="55" y="1128" font-size="11" font-weight="bold" fill="#444441">Buffer type</text>
+  <text x="341" y="1128" font-size="11" fill="#444441">IB (Internal, fixed size)  /  EB (External, runtime ptr)</text>
+
+  <!-- Baud rate formula -->
+  <line x1="40" y1="1152" x2="860" y2="1152" stroke="#D3D1C7" stroke-width="1.5" stroke-dasharray="6 4"/>
+  <text x="450" y="1172" text-anchor="middle" font-size="13" font-weight="bold" fill="#26215C">Baud Rate Calculation Formula</text>
+  <rect x="40" y="1182" width="820" height="110" rx="10" fill="#EEEDFE" stroke="#534AB7" stroke-width="1"/>
+  <text x="60" y="1206" font-size="12" font-weight="bold" fill="#3C3489">Formula:</text>
+  <text x="60" y="1224" font-size="12" font-family="Courier New, monospace" fill="#26215C">  fSCLK  =  fQSPI / (Q + 1)  =  fSPB / prescaler / (Q + 1)</text>
+  <text x="60" y="1248" font-size="12" font-weight="bold" fill="#3C3489">Example A  (max speed):</text>
+  <text x="60" y="1265" font-size="12" font-family="Courier New, monospace" fill="#26215C">  100 MHz (fSPB) / 1 (prescaler) / 2 (Q+1)  =  50 MHz SCK</text>
+  <text x="460" y="1248" font-size="12" font-weight="bold" fill="#3C3489">Example B  (lower speed):</text>
+  <text x="460" y="1265" font-size="12" font-family="Courier New, monospace" fill="#26215C">  100 MHz / 1 / 4  =  25 MHz SCK</text>
+
+  <!-- Explanation -->
+  <line x1="40" y1="1308" x2="860" y2="1308" stroke="#D3D1C7" stroke-width="1.5" stroke-dasharray="6 4"/>
+  <text x="450" y="1328" text-anchor="middle" font-size="13" font-weight="bold" fill="#26215C">Clock Chain – Explanation</text>
+  <rect x="40" y="1338" width="820" height="220" rx="10" fill="#F1EFE8" stroke="#B4B2A9" stroke-width="1"/>
+  <text x="60" y="1360" font-size="12" font-weight="bold" fill="#26215C">1. fOSC – Crystal Oscillator (20 MHz)</text>
+  <text x="60" y="1378" font-size="11" fill="#444441">  The on-board quartz crystal provides a stable 20 MHz reference clock to the PLL. This is the root of the entire</text>
+  <text x="60" y="1393" font-size="11" fill="#444441">  clock tree. The exact frequency depends on the board crystal chosen.</text>
+  <text x="60" y="1413" font-size="12" font-weight="bold" fill="#26215C">2. fPLL – System PLL (up to 300 MHz)</text>
+  <text x="60" y="1431" font-size="11" fill="#444441">  The PLL multiplies fOSC to generate the high-speed system clock. On TC27x max is 300 MHz. Configured via</text>
+  <text x="60" y="1446" font-size="11" fill="#444441">  SCU_PLLCON registers (NDIV, PDIV, KDIV).</text>
+  <text x="60" y="1466" font-size="12" font-weight="bold" fill="#26215C">3. fCPU → fSRI / fSPB split</text>
+  <text x="60" y="1484" font-size="11" fill="#444441">  fCPU feeds two buses: the SRI bus (same speed, for CPU-to-SRAM/Flash) and the SPB peripheral bus (half speed,</text>
+  <text x="60" y="1499" font-size="11" fill="#444441">  100 MHz max), which clocks all peripherals including QSPI.</text>
+  <text x="60" y="1519" font-size="12" font-weight="bold" fill="#26215C">4. fQSPI – QSPI Module Clock  |  5. fSCLK – Actual SPI Baud Rate</text>
+  <text x="60" y="1537" font-size="11" fill="#444441">  The QSPI prescaler (div 1–4) divides fSPB to give fQSPI. The baud divider register (Q) then gives the final SCK</text>
+  <text x="60" y="1552" font-size="11" fill="#444441">  frequency on the physical SCLK pin. Maximum SCK = 50 MHz. Each Job can have a different baud setting.</text>
+
+  <!-- Footer -->
+  <rect x="0" y="1580" width="900" height="20" fill="#26215C"/>
+  <text x="450" y="1594" text-anchor="middle" font-size="10" fill="#AFA9EC">AURIX TC2xx  |  AUTOSAR SPI / QSPI  |  Clock Chain Reference</text>
+
+</svg>`
+  },
 ];
 
-// Total: 146 flashcards
+// Total: 149 flashcards
