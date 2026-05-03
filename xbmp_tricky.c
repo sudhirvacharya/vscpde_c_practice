@@ -43,3 +43,16 @@ int main()
 return 0;
    }
 #endif
+
+#if 0
+int main() {
+    int x = 3, y = 2;
+
+    if (x-- > 3)
+        printf("Hello\n");
+    else
+        printf("Bye\n"); //bye wiil print
+
+    return 0;
+}
+#endif
