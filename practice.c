@@ -1,66 +1,70 @@
 #include <stdio.h>
 #include <stdint.h>
 #include <stdlib.h>
-// ciruclar buffer
 
-//fifo first in first out
+// stack - FILO (First In Last Out)
+
 #define BUFF 8
+
 typedef struct
 {
     int data[BUFF];
-    int head;
-    int tail;
-    int cnt;
-}cb_t;
+    // top = -1 means empty, 0 to BUFF-1 are valid positions
+    int top;
+} stack_t;
 
-cb_t *cb=NULL;
+stack_t *stack = NULL;
 
-void initcb()
+void initstack()
 {
-    cb= malloc(sizeof(cb_t));
-    cb->cnt=0;
-    cb->head=0;
-    cb->tail=0;
+    // allocate memory for stack
+    stack = malloc(sizeof(stack_t));
+    // -1 means stack is empty
+    stack->top = -1;
 }
+
 void push(int data)
 {
-    if(cb->cnt < BUFF)
+    // check if space is available (max index is BUFF-1)
+    if (stack->top < BUFF - 1)
     {
-
-
-    cb->data[cb->head]=data;
-    cb->cnt++;
-    cb->head= (cb->head +1) % BUFF;
+        // increment top first, then write
+        stack->top++;
+        stack->data[stack->top] = data;
     }
     else
     {
-
-        printf( buf is full)
+        // stack is full, cannot push
+        printf("stack is full\n");
     }
-
 }
+
 void pop()
 {
     int tmp;
-    if(cb->cnt > 0)
+    // check if stack has data (top >= 0 means not empty)
+    if (stack->top >= 0)
     {
-   tmp= cb->data[cb->tail];
-    cb->cnt--;
-    cb->tail =(cb->tail +1) % BUFF;
+        // read from top
+        tmp = stack->data[stack->top];
+        // print popped value
+        printf("pop %d\n", tmp);
+        // move top down
+        stack->top--;
     }
     else
-    prinf(buf i sempty)
-
+    {
+        // stack is empty, nothing to pop
+        printf("stack is empty\n");
+    }
 }
+
 int main()
 {
-    initcb();
-    push(20);
-    pushs(30);
-    pop();
-    pop();
-
-
+    initstack();
+    push(20);   // top=0, data[0]=20
+    push(30);   // top=1, data[1]=30
+    pop();      // prints: pop 30  (FILO - last in, first out)
+    pop();      // prints: pop 20
     return 0;
 }
-
