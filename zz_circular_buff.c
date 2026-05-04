@@ -1,105 +1,66 @@
+#include <stdint.h>
 #include <stdio.h>
-#include <stdlib.h>
+#include <stdbool.h>
 
-#define MAX_BUFF 6
+#define BUF_SIZE 8
 
-typedef struct
+typedef struct {
+    uint8_t  data[BUF_SIZE];
+    uint32_t head;    /* write index (push) */
+    uint32_t tail;    /* read index  (pop)  */
+    uint32_t count;
+} CircBuf_t;
+
+void cb_init(CircBuf_t *cb)
 {
-    char data[MAX_BUFF];
-    int  head;
-    int  tail;
-    int  count;
-} ring_buff;
-
-ring_buff *rb = NULL;
-
-void enqueue(char tmp)
-{
-    if (rb->count == MAX_BUFF)
-    {
-        printf("buffer full, drop %d\n", tmp);
-        return;
-    }
-
-    rb->data[rb->head] = tmp;
-    printf("enqueue: %d at head: %d\n", rb->data[rb->head], rb->head);
-    rb->head = (rb->head + 1) % MAX_BUFF;
-    rb->count++;
+    cb->head  = 0;
+    cb->tail  = 0;
+    cb->count = 0;
 }
 
-void dequeue(void)
+/* push: write at head, overwrite oldest if full */
+void cb_push(CircBuf_t *cb, uint8_t byte)
 {
-    char tmp;
+    cb->data[cb->head] = byte;
+    cb->head = (cb->head + 1) % BUF_SIZE;
 
-    if (rb->count == 0)
-    {
-        printf("buffer empty\n");
-        return;
+    if (cb->count == BUF_SIZE) {
+        /* full: advance tail, oldest byte lost */
+        cb->tail = (cb->tail + 1) % BUF_SIZE;
+    } else {
+        cb->count++;
     }
-
-    tmp = rb->data[rb->tail];
-    printf("dequeue: %d from tail: %d\n", tmp, rb->tail);
-    rb->tail = (rb->tail + 1) % MAX_BUFF;
-    rb->count--;
 }
 
-int is_full(void)
+/* pop: read from tail */
+bool cb_pop(CircBuf_t *cb, uint8_t *out)
 {
-    return rb->count == MAX_BUFF;
-}
-
-int is_empty(void)
-{
-    return rb->count == 0;
-}
-
-void print_buffer(void)
-{
-    int i;
-    int idx;
-
-    if (is_empty())
-    {
-        printf("buffer empty\n");
-        return;
+    if (cb->count == 0) {
+        return false;
     }
-
-    printf("buffer [count=%d]: ", rb->count);
-    for (i = 0; i < rb->count; i++)
-    {
-        idx = (rb->tail + i) % MAX_BUFF;
-        printf("%d ", rb->data[idx]);
-    }
-    printf("\n");
+    *out = cb->data[cb->tail];
+    cb->tail  = (cb->tail + 1) % BUF_SIZE;
+    cb->count--;
+    return true;
 }
 
 int main(void)
 {
-    rb = malloc(sizeof(ring_buff));
-    rb->head  = 0;
-    rb->tail  = 0;
-    rb->count = 0;
+    CircBuf_t cb;
+    uint8_t   val;
 
-    enqueue(10);
-    enqueue(20);
-    enqueue(30);
-    enqueue(40);
-    enqueue(50);
-    enqueue(60);
-    enqueue(70);    /* buffer full — dropped */
+    cb_init(&cb);
 
-    print_buffer();
+    /* push 10 bytes into size-8 buf -> bytes 1,2 overwritten */
+    for (uint8_t i = 1; i <= 10; i++) {
+        cb_push(&cb, i);
+        printf("push %2d | count=%u\n", i, cb.count);
+    }
 
-    dequeue();
-    dequeue();
+    printf("\n--- pop ---\n");
+    while (cb_pop(&cb, &val)) {
+        printf("pop: %d\n", val);
+    }
 
-    print_buffer();
-
-    enqueue(70);
-    enqueue(80);
-
-    print_buffer();
-
-    free(rb);
     return 0;
 }
