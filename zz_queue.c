@@ -1,113 +1,115 @@
 #include <stdio.h>
 #include <stdint.h>
+#include <stdlib.h>
 
-#define QUEUE_SIZE 5
+/* ============================================================
+ *  CIRCULAR QUEUE  (FIFO - First In First Out)
+ * ============================================================
+ *
+ *  WHY CIRCULAR?
+ *  -------------
+ *  In a linear queue, once rear reaches BUFF it stops,
+ *  even if front has moved forward and slots are free.
+ *
+ *  Circular queue fixes this by wrapping rear back to 0
+ *  using the modulo (%) operator.
+ *
+ *  HOW % BUFF WORKS  (BUFF = 8):
+ *  --------------------------------
+ *  que->rear | que->rear + 1 | % 8 | Result
+ *  ----------|---------------|-----|-------
+ *      0     |       1       | 1%8 |   1
+ *      1     |       2       | 2%8 |   2
+ *      2     |       3       | 3%8 |   3
+ *      3     |       4       | 4%8 |   4
+ *      4     |       5       | 5%8 |   5
+ *      5     |       6       | 6%8 |   6
+ *      6     |       7       | 7%8 |   7
+ *      7     |       8       | 8%8 |   0  <-- wraps back to start!
+ *
+ *  So instead of stopping at index 7, rear goes back to 0
+ *  and reuses freed slots. Same logic applies to front.
+ *
+ *  VISUAL:
+ *          [0]
+ *      [7]     [1]
+ *    [6]           [2]
+ *      [5]     [3]
+ *          [4]
+ *
+ *  rear keeps moving around the circle forever.
+ * ============================================================ */
 
-// Queue structure
-typedef struct {
-    int data[QUEUE_SIZE];
-    int front;
-    int rear;
-    int count;
-} Queue;
+#define BUFF 8
 
-// Initialize queue
-void queue_init(Queue *q) {
-    q->front = 0;
-    q->rear  = 0;
-    q->count = 0;
+typedef struct
+{
+    int data[BUFF];
+    int front;  /* index of next item to dequeue */
+    int rear;   /* index where next item will be enqueued */
+    int cnt;    /* number of items currently in queue */
+} que_t;
+
+que_t *que = NULL;
+
+/* ------------------------------------------------------------
+ * initque: allocate memory and reset queue to empty state
+ * ------------------------------------------------------------ */
+void initque()
+{
+    que = malloc(sizeof(que_t));
+    que->front = 0;
+    que->rear  = 0;
+    que->cnt   = 0;  /* 0 = empty, BUFF = full */
 }
 
-// Check if queue is full
-int is_full(Queue *q) {
-    return q->count == QUEUE_SIZE;
-}
-
-// Check if queue is empty
-int is_empty(Queue *q) {
-    return q->count == 0;
-}
-
-// Add element to rear
-void enqueue(Queue *q, int value) {
-    if (is_full(q)) {
-        printf("Queue is FULL! Cannot add %d\n", value);
-        return;
+/* ------------------------------------------------------------
+ * enque: add item to rear of queue
+ *
+ *  rear = (rear + 1) % BUFF  -- moves rear forward, wraps at 7->0
+ * ------------------------------------------------------------ */
+void enque(int data)
+{
+    if (que->cnt < BUFF)               /* queue not full? */
+    {
+        que->data[que->rear] = data;
+        que->rear = (que->rear + 1) % BUFF;  /* circular wrap */
+        que->cnt++;
     }
-    q->data[q->rear] = value;
-    q->rear  = (q->rear + 1) % QUEUE_SIZE;
-    q->count++;
-    printf("Enqueued: %d\n", value);
+    else
+    {
+        printf("buff is full\n");
+    }
 }
 
-// Remove element from front
-int dequeue(Queue *q) {
-    if (is_empty(q)) {
-        printf("Queue is EMPTY!\n");
-        return -1;
+/* ------------------------------------------------------------
+ * deque: remove item from front of queue
+ *
+ *  front = (front + 1) % BUFF  -- moves front forward, wraps at 7->0
+ * ------------------------------------------------------------ */
+void deque()
+{
+    if (que->cnt > 0)                  /* queue not empty? */
+    {
+        int tmp = que->data[que->front];
+        printf("deque %d\n", tmp);
+        que->front = (que->front + 1) % BUFF;  /* circular wrap */
+        que->cnt--;
     }
-    int value = q->data[q->front];
-    q->front = (q->front + 1) % QUEUE_SIZE;
-    q->count--;
-    printf("Dequeued: %d\n", value);
-    return value;
+    else
+    {
+        printf("que is empty\n");
+    }
 }
 
-// Peek front element
-int peek(Queue *q) {
-    if (is_empty(q)) {
-        printf("Queue is EMPTY!\n");
-        return -1;
-    }
-    return q->data[q->front];
-}
-
-// Print all elements
-void print_queue(Queue *q) {
-    if (is_empty(q)) {
-        printf("Queue is EMPTY!\n");
-        return;
-    }
-    printf("Queue: ");
-    for (int i = 0; i < q->count; i++) {
-        int idx = (q->front + i) % QUEUE_SIZE;
-        printf("%d ", q->data[idx]);
-    }
-    printf("\n");
-}
-
-int main(void) {
-    Queue q;
-    queue_init(&q);
-
-    // Add elements
-    enqueue(&q, 10);
-    enqueue(&q, 20);
-    enqueue(&q, 30);
-    enqueue(&q, 40);
-    enqueue(&q, 50);
-
-    // Try adding when full
-    enqueue(&q, 60);
-
-    // Print queue
-    print_queue(&q);
-
-    // Peek front
-    printf("Front element: %d\n", peek(&q));
-
-    // Remove elements
-    dequeue(&q);
-    dequeue(&q);
-
-    // Print after dequeue
-    print_queue(&q);
-
-    // Add more after dequeue
-    enqueue(&q, 60);
-    enqueue(&q, 70);
-
-    print_queue(&q);
+int main()
+{
+    initque();
+    enque(20);
+    enque(30);
+    deque();        /* prints: deque 20 */
+    deque();        /* prints: deque 30 */
+    deque();        /* prints: que is empty */
 
     return 0;
 }

@@ -1,45 +1,64 @@
 #include <stdio.h>
 #include <stdint.h>
 #include <stdlib.h>
+// write queue
 
-//sort 01
-void movezerotoend(int *a, int n)
+//QUEUE IS FIFO -> FIRST IN FIRST OUT
+
+#define BUFF 8
+typedef struct 
+{
+    int data[BUFF];
+    int front;
+    int rear;
+    int cnt;
+   
+}que_t;
+que_t *que =NULL;
+ void initque()
+ {
+    que= malloc(sizeof(que_t));
+    que->front=0;
+    que->rear=0;
+    que->cnt=0;
+ }
+
+void enque(int data)
+{
+    if(que->cnt < BUFF)
+    {
+        que->data[que->rear]=data;
+        que->rear++;
+        que->cnt++;
+    }
+    else
+    {
+        printf("buff is full");
+    }
+    
+}
+
+void deque()
 {
 
-    int left=0;
-    int right=0;
-    while(right < n)
-    {
-
-        if(a[right] !=0)
-        {
-            int tmp;
-            tmp=a[right];
-            a[right]=a[left];
-            a[left]=tmp;
-            left++;
-            right++;
-
-            
-        }
-        else
-        {
-            right++;
-        }
-
-
-    }
-
+    int tmp;
+   if( que->cnt > 0)
+   {
+    tmp=que->data[que->front];
+    printf("deque %d",tmp);
+    que->front++;
+    que->cnt--;
+   }
+   else
+   printf("que is empty")
 }
 int main()
 {
-    int a[]={1,0,0,1,0};
-    int n=sizeof(a)/sizeof(a[0]);
-    movezerotoend(a, n);
-    for(int i=0;i<n ; i++)
-    {
-        printf("%d", a[i]);
-    }
+    initque();
+    enque(20);
+    enque(30);
+    deque();
+    deque();
 
     return 0;
 }
