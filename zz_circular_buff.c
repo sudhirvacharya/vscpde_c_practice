@@ -1,66 +1,85 @@
-#include <stdint.h>
 #include <stdio.h>
-#include <stdbool.h>
+#include <stdint.h>
+#include <stdlib.h>
 
-#define BUF_SIZE 8
+#define BUFF 8
 
-typedef struct {
-    uint8_t  data[BUF_SIZE];
-    uint32_t head;    /* write index (push) */
-    uint32_t tail;    /* read index  (pop)  */
-    uint32_t count;
-} CircBuf_t;
-
-void cb_init(CircBuf_t *cb)
+typedef struct
 {
-    cb->head  = 0;
-    cb->tail  = 0;
-    cb->count = 0;
+    int data[BUFF];
+    // head moves forward on every push (write pointer)
+    int head;
+    // tail moves forward on every pop (read pointer)
+    int tail;
+    // cnt tracks how many items are currently in the buffer
+    int cnt;
+} cb_t;
+
+cb_t *cb = NULL;
+
+void initcb()
+{
+    // allocate memory for the circular buffer
+    cb = malloc(sizeof(cb_t));
+    // start with empty buffer
+    cb->cnt  = 0;
+    cb->head = 0;
+    cb->tail = 0;
 }
 
-/* push: write at head, overwrite oldest if full */
-void cb_push(CircBuf_t *cb, uint8_t byte)
+void push(int data)
 {
-    cb->data[cb->head] = byte;
-    cb->head = (cb->head + 1) % BUF_SIZE;
-
-    if (cb->count == BUF_SIZE) {
-        /* full: advance tail, oldest byte lost */
-        cb->tail = (cb->tail + 1) % BUF_SIZE;
-    } else {
-        cb->count++;
+    // check if buffer has space before writing
+    if (cb->cnt < BUFF)
+    {
+        // write data at current head position
+        cb->data[cb->head] = data;
+        // increment item count
+        cb->cnt++;
+        // move head forward, wrap around to 0 if it reaches BUFF
+        cb->head = (cb->head + 1) % BUFF;
+    }
+    else
+    {
+        // buffer is full, cannot push
+        printf("buf is full\n");
     }
 }
 
-/* pop: read from tail */
-bool cb_pop(CircBuf_t *cb, uint8_t *out)
+void pop()
 {
-    if (cb->count == 0) {
-        return false;
+    int tmp;
+    // check if buffer has data before reading
+    if (cb->cnt > 0)
+    {
+        // read data from current tail position
+        tmp = cb->data[cb->tail];
+        // print the popped value
+        printf("pop %d\n", tmp);
+        // decrement item count
+        cb->cnt--;
+        // move tail forward, wrap around to 0 if it reaches BUFF
+        cb->tail = (cb->tail + 1) % BUFF;
     }
-    *out = cb->data[cb->tail];
-    cb->tail  = (cb->tail + 1) % BUF_SIZE;
-    cb->count--;
-    return true;
+    else
+    {
+        // buffer is empty, nothing to pop
+        printf("buf is empty\n");
+    }
 }
 
-int main(void)
+int main()
 {
-    CircBuf_t cb;
-    uint8_t   val;
-
-    cb_init(&cb);
-
-    /* push 10 bytes into size-8 buf -> bytes 1,2 overwritten */
-    for (uint8_t i = 1; i <= 10; i++) {
-        cb_push(&cb, i);
-        printf("push %2d | count=%u\n", i, cb.count);
-    }
-
-    printf("\n--- pop ---\n");
-    while (cb_pop(&cb, &val)) {
-        printf("pop: %d\n", val);
-    }
+    // initialize the circular buffer
+    initcb();
+    // push 20 into buffer  → head=1, cnt=1
+    push(20);
+    // push 30 into buffer  → head=2, cnt=2
+    push(30);
+    // pop from buffer → prints 20, tail=1, cnt=1
+    pop();
+    // pop from buffer → prints 30, tail=2, cnt=0
+    pop();
 
     return 0;
 }

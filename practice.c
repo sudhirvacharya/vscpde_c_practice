@@ -1,64 +1,66 @@
 #include <stdio.h>
 #include <stdint.h>
 #include <stdlib.h>
-// write queue
+// ciruclar buffer
 
-//QUEUE IS FIFO -> FIRST IN FIRST OUT
-
+//fifo first in first out
 #define BUFF 8
-typedef struct 
+typedef struct
 {
     int data[BUFF];
-    int front;
-    int rear;
+    int head;
+    int tail;
     int cnt;
-   
-}que_t;
-que_t *que =NULL;
- void initque()
- {
-    que= malloc(sizeof(que_t));
-    que->front=0;
-    que->rear=0;
-    que->cnt=0;
- }
+}cb_t;
 
-void enque(int data)
+cb_t *cb=NULL;
+
+void initcb()
 {
-    if(que->cnt < BUFF)
+    cb= malloc(sizeof(cb_t));
+    cb->cnt=0;
+    cb->head=0;
+    cb->tail=0;
+}
+void push(int data)
+{
+    if(cb->cnt < BUFF)
     {
-        que->data[que->rear]=data;
-        que->rear++;
-        que->cnt++;
+
+
+    cb->data[cb->head]=data;
+    cb->cnt++;
+    cb->head= (cb->head +1) % BUFF;
     }
     else
     {
-        printf("buff is full");
+
+        printf( buf is full)
     }
-    
+
 }
-
-void deque()
+void pop()
 {
-
     int tmp;
-   if( que->cnt > 0)
-   {
-    tmp=que->data[que->front];
-    printf("deque %d",tmp);
-    que->front++;
-    que->cnt--;
-   }
-   else
-   printf("que is empty")
+    if(cb->cnt > 0)
+    {
+   tmp= cb->data[cb->tail];
+    cb->cnt--;
+    cb->tail =(cb->tail +1) % BUFF;
+    }
+    else
+    prinf(buf i sempty)
+
 }
 int main()
 {
-    initque();
-    enque(20);
-    enque(30);
-    deque();
-    deque();
+    initcb();
+    push(20);
+    pushs(30);
+    pop();
+    pop();
+
 
     return 0;
 }
+
