@@ -6,6 +6,10 @@
 #define TOGGLE(N, POS) ( N ^=( 1 <<POS ))
 #define IS_BIT_SET(n, pos) ((n) & (1U << (pos)))
 
+
+// toggle mulptle bit 
+(1 <<POS ) | (1 <<POS1 ) | (1 <<POS2 ) | 
+
 int main()
 {
     int a=0;

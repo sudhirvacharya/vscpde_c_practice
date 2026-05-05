@@ -14,6 +14,15 @@
 // In assembly, without inline you will see push/pop instructions for the function call.
 // With inline, those push/pop operations disappear since the function body is inserted directly.
 
+
+///reduce fucntion call over head , no push and pop operation
+// its exapnd fucntion suppoer ur fucntion inside main
+        ^
+        |
+        main
+        |
+        
+
 inline int add(int a, int b) __attribute__((always_inline));
 
 
