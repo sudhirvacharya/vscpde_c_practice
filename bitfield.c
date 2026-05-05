@@ -1,14 +1,14 @@
 #include <stdio.h>
 #include <stdint.h>
 
-struct EngineStatus {
+typedef struct  {
     uint8_t engine_on   : 1;   /* bit 0 — 0 or 1 */
     uint8_t gear        : 3;   /* bits 1-3 — 0 to 7 */
     uint8_t error_code  : 4;   /* bits 4-7 — 0 to 15 */
-};
+}EngineStatus;
 
 int main() {
-    struct EngineStatus status = {0};
+    EngineStatus status = {0};
 
     status.engine_on  = 1;
     status.gear       = 5;
