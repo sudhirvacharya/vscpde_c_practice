@@ -20,3 +20,14 @@ int main()
     return 0;
 
 }
+
+/*
+function pointer example
+
+void (*fnptr)(void)
+void (*fnptr)(int, int)
+int (*fnptr)(int, int)
+
+
+
+*/
