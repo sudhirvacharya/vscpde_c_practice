@@ -153,6 +153,53 @@ or any other user-defined element in a program. It’s how you give a meaningful
     
     example:
     const volatile int  var
+
+# Declaration vs Definition in C
+
+> **Key rule:** Every definition is also a declaration, but not every declaration is a definition.
+
+| Aspect | Declaration | Definition |
+|--------|-------------|------------|
+| **What it does** | Tells the compiler the name and type — no memory allocated | Actually creates the entity — memory is allocated |
+| **Memory** | No storage allocated | Storage allocated |
+| **Can repeat?** | Yes — multiple declarations are fine | No — only one definition per translation unit (ODR) |
+| **Variable** | `extern int x;` | `int x = 5;` or `int x;` |
+| **Function** | `int add(int a, int b);` (prototype) | `int add(int a, int b) { return a+b; }` |
+| **Struct** | `struct Point;` (forward decl) | `struct Point { int x; int y; };` |
+| **Typical location** | Header file `.h` | Source file `.c` |
+| **Linker sees?** | No — compiler only | Yes — linker resolves symbols to this |
+| **typedef** | `typedef struct Node Node;` | `typedef struct { int val; } Node;` |
+| **Key rule** | Declaration is a promise to the compiler | Definition is the fulfillment of that promise |
+
+---
+
+## Edge Cases
+
+- `int x;` at file scope is **both** a declaration and a definition (implicit `= 0`).
+- `extern int x;` is purely a declaration — if no `.c` file defines `x`, you get a linker error.
+- Function prototypes in headers are declarations; the body in `.c` is the definition.
+- `struct Point;` is a forward declaration — useful to break circular header dependencies.
+
+---
+
+## Quick Example
+
+```c
+/* header: foo.h */
+extern int counter;          /* declaration only */
+int add(int a, int b);       /* function declaration (prototype) */
+struct Node;                 /* forward declaration */
+
+/* source: foo.c */
+int counter = 0;             /* definition — memory allocated */
+int add(int a, int b) {      /* function definition */
+    return a + b;
+}
+struct Node {                /* struct definition */
+    int val;
+    struct Node *next;
+};
+```
     
 ## What is  directrives in C
     pre-prcoessor directive: #include, #ifdef
