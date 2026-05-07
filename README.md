@@ -770,6 +770,26 @@ Toilet with 1 key 🚽, Only 1 person can enter at a time. The SAME person who l
     - Temporarily boost low-priority task to match high-priority waiter
     - FreeRTOS mutexes support this automatically
 
+    preempts : higher-priority task immediately interrupts and takes over the CPU from a lower-priority task.
+
+    Timeline:
+
+    L  = Low  priority task   (holds mutex)
+    M  = Mid  priority task   (CPU hog)
+    H  = High priority task   (waiting for mutex)
+
+    Time ──────────────────────────────────────────────►
+
+    L runs, takes mutex
+    │
+    └── H wakes up, preempts L, tries to take mutex → BLOCKED
+                    │
+                    └── M wakes up, preempts L (H is blocked)
+                        M runs forever...
+                        H is stuck waiting — even though H > L > M
+                                ▲
+                                └── THIS is priority inversion
+
 
 ###  What is a deadlock? How to avoid it?
 
