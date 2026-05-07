@@ -462,6 +462,18 @@ int array[6] = {4, 3, 5, 6, 3, 8};
     | Memory seg  | Stack / Heap / BSS     | .text segment            |
     | Operation   | Read / write the value | Call / execute only      |
     | Arithmetic  | Valid                  | Not meaningful           |
+### array vs pointer
+| Aspect              | Case 1: Pointer + malloc        | Case 2: Fixed Array        |
+|---------------------|---------------------------------|-----------------------------|
+| Declaration         | `int *a = NULL;`                | `int a[] = {20};`           |
+| Memory location     | Heap (dynamic allocation)       | Stack (automatic allocation)|
+| Allocation          | `malloc(sizeof(int))` → manual | Compiler allocates automatically |
+| Size                | Decided at runtime (here 1 int) | Fixed at compile time (here 1 int) |
+| Initialization      | Must assign after malloc        | Initialized with `{20}`     |
+| Flexibility         | Can allocate any size, resize   | Size fixed, cannot change   |
+| Cleanup             | Must call `free(a)`             | No manual cleanup needed    |
+| Lifetime            | Persists until `free()` or program ends | Persists until function scope ends |
+| Syntax for access   | `a[0]` via pointer arithmetic   | `a[0]` via direct indexing  |
 
 ### what is the diffrence *a[10] vs (*a)[10]
     *a[10]   -> [] first, array of pointers
