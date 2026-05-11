@@ -375,6 +375,7 @@ When a normal function call happens function creates its stack in the main stack
         int a[] = {1, 2, 3};
         int *p = a;
         printf("%d", *(p + 2));
+         printf("%d", p[2]);
         return 0;
     }
 
