@@ -20,6 +20,8 @@
 10. uint8_t use all variabls in tmp also if  its rerquired
     ledt shift use <<  , seen mistaklnly used only <
 
+11. if(x == 0) instead forgot and writing if(x=0)
+
 ### intrduction about myself
 "Hi, I am Sudhir Acharya. 
 I have over 11 years of experience in Embedded C, with a strong focus on the Automotive domain — specifically in the MCAL layer.
