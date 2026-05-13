@@ -1,6 +1,17 @@
 #include <stdio.h>
 #include <stdlib.h>
+/*
+start adress is  ptr= malloc()
+end adress       node->next
+new_node
+   |
+   v
++-------+-------+
+| data  | next  |
+|  20   | NULL  |
++-------+-------+
 
+*/
 typedef struct node
 {
     int data;
@@ -11,7 +22,7 @@ typedef struct node
 void insertend(node **head, int data)
 {
     // Allocate memory for new node
-    node *new_node= malloc(sizeof(node));
+    node *new_node= malloc(sizeof(node));// new_node stores address of allocated node
     new_node->data=data;
     new_node->next=NULL;
 
@@ -19,10 +30,10 @@ void insertend(node **head, int data)
     //its compared same as how declared in main
     if(*head == NULL)
         {
-                *head=new_node;
+                *head=new_node;///*head=NULL
                         return;
-                            }
-                            
+        }
+                 
       // Use a temporary pointer to traverse the list
     node *tmp=*head; // don't move *head itself!
     while(tmp->next != NULL)// move until last node
