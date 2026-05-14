@@ -253,6 +253,9 @@ struct Node {                /* struct definition */
 | Logical Error     | Testing/Validation | Logic analyser / CANoe| Wrong output                 |
 | Preprocessor Error| Pre-compile        | CPP                   | No .o file generated         |
 
+segmentaion fault:
+Access memory you don't own — NULL deref, out-of-bounds array, stack overflow, use-after-free
+
 ### what is inline fucntion
 “Inline” Function is a provision or feature provided by the compiler. Inline is a request made to the compiler to replace the inline function call with the function definition.
 
@@ -262,6 +265,28 @@ inline void fun(/*fun argument */)
     /* Function source Code */
 }
 When a normal function call happens function creates its stack in the main stack and initializes all local variables. After completion of function call return value is given back if any and stack is destroyed. Much time is consumed in stack operation. Hence for small functions, Inline function is beneficial as the call is replaced by definition, so no external stack is created and operations are much faster for small, commonly-used functions.
+
+### Undefined Behavior in C
+
+Undefined Behavior (UB) refers to program operations for which the C standard imposes **no requirements**.  
+When UB occurs, the compiler is free to do anything: produce correct output, wrong output, crash, or even behave unpredictably.  
+The standard literally says: *"anything can happen."*
+
+#### Causes and Examples
+
+| **[Cause](ca://s?q=Causes_of_Undefined_Behavior_in_C)** | **Example Code** |
+|-----------------|------------------|
+| **[Null pointer dereference](ca://s?q=Null_pointer_dereference_in_C)** | `int *p = NULL; *p = 5;` |
+| **[Out-of-bounds array access](ca://s?q=Out_of_bounds_array_access_in_C)** | `int a[3]; a[5] = 1;` |
+| **[Use of uninitialized variable](ca://s?q=Uninitialized_variable_in_C)** | `int x; printf("%d", x);` |
+| **[Signed integer overflow](ca://s?q=Signed_integer_overflow_in_C)** | `int x = INT_MAX; x++;` |
+| **[Multiple modifications without sequence point](ca://s?q=Sequence_point_in_C)** | `i = i++ + ++i;` |
+| **[Dereferencing freed memory](ca://s?q=Dereferencing_freed_memory_in_C)** | `free(p); *p = 1;` |
+| **[Returning pointer to local variable](ca://s?q=Returning_pointer_to_local_variable_in_C)** | `int* f() { int x=1; return &x; }` |
+| **[Strict aliasing violation](ca://s?q=Strict_aliasing_violation_in_C)** | `float *f; int *i = (int*)f; printf("%d", *i);` |
+| **[Invalid shift operations](ca://s?q=Invalid_shift_operations_in_C)** | `x = 1 << 32; // on 32-bit int` |
+| **[Stack overflow](ca://s?q=Stack_overflow_in_C)** | Deep recursion or very large local arrays |
+
 
 
 ### Inline Function vs Macro
