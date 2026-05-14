@@ -1,70 +1,50 @@
 #include <stdio.h>
-#include <stdint.h>
-#include <stdlib.h>
 
-// stack - FILO (First In Last Out)
+typedef struct Char4 {
+    char data[5];
+} char4_t;
 
-#define BUFF 8
+//Function that receives a char4_t and returns it encrypted according to specified instructions
+char4_t encryptText(char4_t input) {
+    char4_t  output; //Output will be input encrypted
 
-typedef struct
-{
-    int data[BUFF];
-    // top = -1 means empty, 0 to BUFF-1 are valid positions
-    int top;
-} stack_t;
+    //For loop that processes each character of input individually
+    for (int i = 0; i < sizeof(input.data)-1; i++) {
+        int digit = input.data[i] - '0'; //Converting character to int to perform arithmetic operations
+        printf("Digit %d before encryption: %d\n", i, digit);
+        digit += 7;
+        digit %= 10;
+        printf("Digit %d after encryption: %d\n", i, digit);
+        output.data[i] = (char) digit; //HERE WE HAVE A PROBLEM
+        printf("output.data[%d]: %c\n", i, output.data[i]);
+    } //for
 
-stack_t *stack = NULL;
+    printf("\n");
 
-void initstack()
-{
-    // allocate memory for stack
-    stack = malloc(sizeof(stack_t));
-    // -1 means stack is empty
-    stack->top = -1;
-}
+    /*After arithmetic operations, instructions state to swap
+    first character with fourth and second with third*/
+    char buffer = output.data[0];
+    output.data[0] = output.data[2];
+    output.data[2] = buffer;
+    buffer = output.data[1];
+    output.data[1] = output.data[3];
+    output.data[3] = buffer;
 
-void push(int data)
-{
-    // check if space is available (max index is BUFF-1)
-    if (stack->top < BUFF - 1)
-    {
-        // increment top first, then write
-        stack->top++;
-        stack->data[stack->top] = data;
-    }
-    else
-    {
-        // stack is full, cannot push
-        printf("stack is full\n");
-    }
-}
+    return output;
+} //encryptText
 
-void pop()
-{
-    int tmp;
-    // check if stack has data (top >= 0 means not empty)
-    if (stack->top >= 0)
-    {
-        // read from top
-        tmp = stack->data[stack->top];
-        // print popped value
-        printf("pop %d\n", tmp);
-        // move top down
-        stack->top--;
-    }
-    else
-    {
-        // stack is empty, nothing to pop
-        printf("stack is empty\n");
-    }
-}
+int main(void) {
+    char4_t text;
+    text.data[0]='0';
+     text.data[1]='1';
+      text.data[2]='2';
+       text.data[3]='3';
+  
+    char4_t encrypted;
 
-int main()
-{
-    initstack();
-    push(20);   // top=0, data[0]=20
-    push(30);   // top=1, data[1]=30
-    pop();      // prints: pop 30  (FILO - last in, first out)
-    pop();      // prints: pop 20
-    return 0;
-}
+    printf("Introduce text to encrypt: ");
+    //fgets(text.data, sizeof(text.data), stdin);
+
+    encrypted = encryptText(text);
+    return 1;
+} //main
