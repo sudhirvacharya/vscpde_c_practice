@@ -698,6 +698,33 @@ int array[6] = {4, 3, 5, 6, 3, 8};
         uint8_t pool[NUM_BUFS][BUF_SIZE];
         uint8_t inUse[NUM_BUFS] = {0};
 
+### what are the MISRA-C Violations
+
+1.  Recursion                   --> not allowed (Rule 17.2)
+                                    unbounded stack usage, unpredictable depth
+
+2.  Dynamic memory allocation   --> not allowed (Rule 21.3)
+    malloc / calloc / realloc      heap fragmentation, non-deterministic timing
+    free                           use static arrays or memory pools instead
+
+3.  Unbounded loops             --> not allowed (Rule 15.4)
+    while(1), for(;;)              every loop must have a fixed upper bound
+                                    so termination can be proven
+
+
+5.  Multiple return             --> not allowed (Rule 15.5)
+    (multiple return in func)      one entry, one exit per function
+
+6.  Pointer arithmetic          --> restricted (Rule 18.4)
+    ptr++, ptr+n                   use array indexing [] instead
+
+
+
+8.  Union                       --> restricted (Rule 19.2)
+                                    undefined behaviour on type-punning
+
+9.  Implicit type conversion    --> not allowed (Rule 10.1 / 10.3)
+    int + char, etc                always cast explicitly
 
 ### What is interrupt latency?
     Time from interrupt signal assertion to first ISR instruction executing.
