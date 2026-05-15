@@ -75,6 +75,12 @@ void print_list(node *head)
 /// Delete a node by value using double pointer
 // head: pointer to the head pointer (so we can change the head if needed)
 // data: the value we want to delete from the list
+
+// [[a]prev | next] --> [[a]curr | next] 
+// [[a]prev | next] --> [[a]curr | next] 
+
+        // head --> [[a]curr | next] --> [[a]curr | next] -->[[a]curr | next] --> NULL -->[[n]curr | next[n]] -->
+        //               20                40                60
 void delete_node(node **head, int data)
 {
     node *curr = *head;  // curr starts at the first node
