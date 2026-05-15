@@ -761,6 +761,22 @@ int array[6] = {4, 3, 5, 6, 3, 8};
         NVIC_SetPriority(UART1_IRQn, 1);   // high priority
         NVIC_SetPriority(TIM2_IRQn,  5);   // lower priority
 
+### What is a string literal and example?",
+int main()
+
+    // This is a string literal
+    // Stored in read-only memory
+    // You cannot modify it
+
+    char *p = "hello";
+
+    // Undefined behavior (modifying string literal)
+    p[0] = 'y';
+    p[5] = 'w';
+
+    std::cout << p;
+}
+
 ## Whats is NVIC Table
 
     | Letter | Full Word  | What It Does                                           |
