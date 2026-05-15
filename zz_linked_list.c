@@ -37,6 +37,10 @@ void insertend(node **head, int data)
                  
       // Use a temporary pointer to traverse the list
     node *tmp=*head; // don't move *head itself!
+
+
+// head --> [[a]tmp | next] --> [[a]tmp | next] -->[[a]tmp | next] --> NULL -->[[null]tmp | next[null]] -->
+//                20                40                60
     while(tmp->next != NULL)// move until last node
         tmp=tmp->next;
 
@@ -47,6 +51,9 @@ void insertend(node **head, int data)
 
 }
 
+// head --> [[a]tmp | next] --> [[a]tmp | next] -->[[a]tmp | next] --> NULL -->[[null]tmp | next[null]] -->
+//                20                40                60
+  
 void print_list(node *head)
 {
     node *tempp = head;
@@ -107,9 +114,9 @@ void delete_node(node **head, int data)
 int main()
 {
     node *head=NULL;
-    insertend(&head, 10);
     insertend(&head, 20);
-    insertend(&head, 30);
+    insertend(&head, 40);
+    insertend(&head, 60);
     print_list(head);
 
     delete_node(&head, 20);
