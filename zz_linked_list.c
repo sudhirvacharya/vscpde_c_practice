@@ -12,8 +12,7 @@ new_node
 +-------+-------+
 
 */
-
-// head --> [data | next] --> [data | next] --> NULL
+// head --> [[a]addrdata | next] --> [[a]data | next] --> NULL
 typedef struct node
 {
     int data;
