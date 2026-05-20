@@ -777,6 +777,22 @@ int main()
     std::cout << p;
 }
 
+
+# C Constants — Decision Table
+	const int var =5
+	#define var 5
+	ennum{ var =5}
+
+| Need | Use |
+|------|-----|
+| Pass a pointer | `static const` (1) |
+| Array dimension (global/static scope) | `#define` or `enum` |
+| Switch case / static initializer | `#define` or `enum` |
+| Debugger symbol visibility | `static const` or `enum` |
+| `#ifdef` / preprocessor detection | `#define` only |
+| Avoid macro side-effects | `static const` or `enum` |
+
+
 ## Whats is NVIC Table
 
     | Letter | Full Word  | What It Does                                           |
