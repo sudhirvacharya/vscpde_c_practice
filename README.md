@@ -851,6 +851,24 @@ int main()
 | RTOS example  | FreeRTOS task stack            | FreeRTOS xQueue                | DMA circular mode, UART ring buf   |
 | Your code     | Implicit call stack in main()  | Concept used in USART IRQ      | rx_buff[] in USART2_IRQHandler     |
 
+### type castr, protmotion
+| Expression               | Result    | Rule                        | Reason                                                              |
+|--------------------------|-----------|-----------------------------|---------------------------------------------------------------------|
+| `1 > 0`                  | 1 (true)  | basic                       | straightforward signed comparison                                   |
+| `1U > -1`                | 0 (false) | unsigned wins               | -1 cast to unsigned → UINT_MAX, so 1U > UINT_MAX is false          |
+| `(unsigned short)1 > -1` | 1 (true)  | integer promotion           | unsigned short fits in signed int → both sides signed → 1 > -1 true|
+| `-1L > 1U` (x86-64)      | 0 (false) | long > int, promote to long | uint fits in long → signed compare → -1L > 1L is false             |
+| `-1L > 1U` (x86)         | 1 (true)  | long == int, no promotion   | uint cannot promote → unsigned compare → UINT_MAX > 1U is true     |
+| `SCHAR_MAX == CHAR_MAX`  | 1 (true)  | impl-defined                | x86/x86-64 ABI defines char as signed; not guaranteed by standard  |
+| `UINT_MAX + 1`           | 0         | unsigned wraparound         | defined by C standard, always wraps mod 2^N                        |
+| `INT_MAX + 1`            | UB        | signed overflow             | signed overflow is undefined behavior, compiler can do anything    |
+| `-INT_MIN`               | UB        | signed overflow             | two's complement has no representable positive inverse for INT_MIN |
+| `INT_MIN % -1`           | UB        | signed overflow             | result would be INT_MAX+1 which overflows                          |
+| `x << 0` (x negative)   | UB        | left shift rule             | negative values cannot be left-shifted even by zero                |
+| `x << 1` (large x)      | UB        | left shift rule             | shifting 1 into or past sign bit is UB in C99                      |
+| `x << 31` (x != 0)      | UB        | left shift rule             | only x=0 is safe; any other value risks hitting sign bit           |
+| `x << 32`               | UB        | left shift rule             | shift amount >= bit width of promoted type is always UB            |
+
 ### Sempahore
 in rtos, a semaphore is a syxbronization mechanism used to manage access to shared resource and cororinates task. 
 semaphore helps prevent issues like race condtion and deadlock in multi tasking 
