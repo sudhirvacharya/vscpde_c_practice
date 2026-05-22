@@ -1,17 +1,5 @@
 # AUTOSAR MCAL SPI Driver Configuration in EB TRESOS
 
-A step-by-step guide covering every key parameter — from global settings down to channels, jobs, and sequences.
-
----
-
-## Prerequisites
-
-- EB TRESOS Studio installed with your AUTOSAR platform loaded
-- A project with the MCAL SPI module added
-- Basic familiarity with AUTOSAR layering (MCAL, ECU Abstraction, RTE)
-
----
-
 ## Step 1: Open the SPI Module Configuration
 
 1. In TRESOS Studio's **Project Explorer**, expand your ECU Configuration.
@@ -144,10 +132,7 @@ Notifications allow upper layers to react when transfers finish.
 ---
 
 ## Step 8: Validate & Generate
-
-1. Click **Validate Configuration** (green check icon) to catch missing IDs or mismatches.
-2. Resolve any errors/warnings in the **Problems** view.
-3. Select **Generate Code** — the following files are produced:
+1. Select **Generate Code** — the following files are produced:
    - `Spi.h`
    - `Spi_Cfg.h`
    - `Spi_Cfg.c`
@@ -172,11 +157,3 @@ Spi_AsyncTransceive(SequenceId_ReadSensor, RxBuffer);
 Verify correct behavior with a **logic analyzer or oscilloscope** — check SCLK, MOSI, MISO, and CS signals.
 
 ---
-
-## Summary
-
-By following this guide in EB TRESOS, you will:
-
-- Understand every MCAL SPI parameter and its purpose
-- Ensure deterministic, portable SPI behavior across platforms
-- Leverage notifications and error handling for robust Software Components
