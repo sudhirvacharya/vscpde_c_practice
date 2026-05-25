@@ -1,4 +1,5 @@
-
+#include <stdio.h>
+#include <stdint.h>
 #define SETBIT(N, POS1, POS2)      ((N) |=  ((1 << (POS1)) | (1 << (POS2))))
 #define CLEARBIT(N, POS1, POS2)    ((N) &= ~((1 << (POS1)) | (1 << (POS2))))
 #define TOGGLE(N, POS1, POS2)      ((N) ^=  ((1 << (POS1)) | (1 << (POS2))))

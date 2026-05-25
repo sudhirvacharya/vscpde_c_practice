@@ -761,6 +761,22 @@ int array[6] = {4, 3, 5, 6, 3, 8};
         NVIC_SetPriority(UART1_IRQn, 1);   // high priority
         NVIC_SetPriority(TIM2_IRQn,  5);   // lower priority
 
+
+### divide and multiply
+x = x >> 1;   // x / 2
+x = x >> 2;   // x / 4
+x = x >> 3;   // x / 8
+x = x >> 4;   // x / 16
+x = x >> n;   // x / 2^n
+
+
+x = x << 1;   // x * 2
+x = x << 2;   // x * 4
+x = x << 3;   // x * 8
+x = x << 4;   // x * 16
+x = x << n;   // x * 2^n
+
+
 ### What is a string literal and example?",
 int main()
 
