@@ -316,7 +316,3 @@ And two access levels:
 
 ---
 
-*Now that we are acquainted with the internal aspects of the operating system and our
-hardware, we can jump right into creating our own project and start building our scheduler.*
-
-*Author: Jayvik Desai*
