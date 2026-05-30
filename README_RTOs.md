@@ -1,6 +1,3 @@
-# RTOS Concepts
-*By Sanjay Adhikari / November 20, 2019*
-
 Before we go on to dig deep into the internal working of the Real time operating systems
 let us first go over some fundamental concepts one needs to understand to go about
 building their own RTOS. We are going to test and debug our custom RTOS on a
@@ -163,10 +160,6 @@ Next, what is the critical section problem?
 The part of the program which tries to access any kind of shared resource is known as
 the critical section. These resources may be any resource in a computer like a memory
 
-# RTOS Concepts - Page 2
-*By Sanjay Adhikari / November 20, 2019*
-
----
 
 ## Which controller can I use that support RTOS?
 
