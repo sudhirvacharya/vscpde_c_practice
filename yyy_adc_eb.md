@@ -1,6 +1,6 @@
 # AUTOSAR MCAL ADC Driver Configuration in EB TRESOS
 
-A step-by-step guide to configuring the AUTOSAR MCAL ADC driver in the EB TRESOS environment — covering every key parameter from global settings down to channel groups, channels, and notifications.
+A step-by-step guide to configuring the AUTOSAR MCAL ADC driver in the EB TRESOS environment
 
 ---
 
@@ -12,7 +12,18 @@ A step-by-step guide to configuring the AUTOSAR MCAL ADC driver in the EB TRESOS
 - Knowledge of the target MCU's ADC hardware (resolution, reference voltage, clock)
 
 ---
+## Step 1: Open the ADC Module Configuration
+## Step 2: Set Global ADC Parameters (`AdcGeneral`)
+## Step 3: Configure the ADC Hardware Unit (`AdcHwUnit`)
+## Step 4: Define ADC Channels (`AdcChannel`)
+## Step 5: Configure Channel Groups (`AdcChannelGroup`)
+## Step 6: Configure Notifications
 
+## Step 7: Result Buffer Setup
+## Step 8: Validate & Generate
+
+## Step 9: Integrate & Test
+## Step 10: Common Pitfalls
 ## Step 1: Open the ADC Module Configuration
 
 1. In TRESOS Studio's **Project Explorer**, expand your ECU Configuration.

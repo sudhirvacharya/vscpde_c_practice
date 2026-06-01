@@ -58,7 +58,7 @@ Normal Execution
 ## 4. Key Concepts
 
 | Term | Description |
-|---|---|
+|---|---| Forerunner 165?
 | **IRQ** | Interrupt Request — hardware signal to CPU |
 | **ISR** | Interrupt Service Routine — handler function |
 | **Vector Table** | Memory table holding ISR addresses |
