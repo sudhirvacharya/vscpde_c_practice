@@ -1,4 +1,4 @@
-# Interrupt Notes — General & ARM MCU
+# ARM Cortex-M Interrupt Notes
 
 ---
 
@@ -58,7 +58,7 @@ Normal Execution
 ## 4. Key Concepts
 
 | Term | Description |
-|---|---| Forerunner 165?
+|---|---|
 | **IRQ** | Interrupt Request — hardware signal to CPU |
 | **ISR** | Interrupt Service Routine — handler function |
 | **Vector Table** | Memory table holding ISR addresses |
@@ -76,7 +76,8 @@ Normal Execution
 
 - Each interrupt source is assigned a **priority level**.
 - Lower priority ISRs can be preempted by higher priority ones.
-- Priority levels vary by architecture (e.g., ARM Cortex-M has 8–256 levels).
+- ARM Cortex-M has 8–256 configurable priority levels.
+- **Lower number = Higher priority on ARM** (priority 2 beats priority 5).
 
 ---
 
@@ -85,8 +86,7 @@ Normal Execution
 Masking disables specific (or all) interrupts temporarily:
 
 ```c
-// Generic pattern (ARM Cortex-M)
-__disable_irq();   // Disable all interrupts (set PRIMASK)
+__disable_irq();   // Disable all interrupts (sets PRIMASK)
 // Critical section code here
 __enable_irq();    // Re-enable interrupts
 ```
@@ -168,7 +168,7 @@ Address     | Content
 
 ### 8.4 Context Saving on ARM Cortex-M
 
-On interrupt, hardware **automatically pushes** to stack:
+On interrupt, hardware **automatically pushes** these 8 registers to stack:
 
 ```
 Stack Frame (pushed by hardware):
@@ -182,9 +182,10 @@ Stack Frame (pushed by hardware):
   R0
 ```
 
-> Registers R4–R11 are **not** automatically saved — the ISR must save them if needed.
+> ⚠️ Registers **R4–R11 are NOT automatically saved** — the ISR must save them if needed.
+> Each nested level adds one full frame (32 bytes). Deep nesting with small stacks = stack overflow.
 
-### 8.5 NVIC Registers (Cortex-M)
+### 8.5 NVIC Registers
 
 | Register | Address | Purpose |
 |---|---|---|
@@ -198,22 +199,13 @@ Stack Frame (pushed by hardware):
 ### 8.6 NVIC Configuration (CMSIS)
 
 ```c
-#include "stm32f4xx.h"   // Or device-specific header
+#include "stm32f4xx.h"
 
-// Enable IRQ
-NVIC_EnableIRQ(USART1_IRQn);
-
-// Set Priority (lower number = higher priority)
-NVIC_SetPriority(USART1_IRQn, 2);
-
-// Disable IRQ
-NVIC_DisableIRQ(USART1_IRQn);
-
-// Set Pending (software trigger)
-NVIC_SetPendingIRQ(USART1_IRQn);
-
-// Clear Pending
-NVIC_ClearPendingIRQ(USART1_IRQn);
+NVIC_EnableIRQ(USART1_IRQn);           // Enable IRQ
+NVIC_SetPriority(USART1_IRQn, 2);      // Set priority (lower = higher priority)
+NVIC_DisableIRQ(USART1_IRQn);          // Disable IRQ
+NVIC_SetPendingIRQ(USART1_IRQn);       // Software trigger
+NVIC_ClearPendingIRQ(USART1_IRQn);     // Clear pending
 ```
 
 ---
@@ -223,10 +215,7 @@ NVIC_ClearPendingIRQ(USART1_IRQn);
 ARM Cortex-M supports splitting the priority byte into **preemption priority** and **sub-priority** bits.
 
 ```c
-// Set priority grouping: 4 bits preemption, 0 bits sub-priority
-NVIC_SetPriorityGrouping(4);
-
-// Encode priority: group 4, preemption=2, sub=0
+NVIC_SetPriorityGrouping(4);   // 4 bits preemption, 0 bits sub-priority
 uint32_t priority = NVIC_EncodePriority(4, 2, 0);
 NVIC_SetPriority(USART1_IRQn, priority);
 ```
@@ -249,7 +238,6 @@ NVIC_SetPriority(USART1_IRQn, priority);
 | `CONTROL` | Selects privileged/unprivileged mode and stack pointer |
 
 ```c
-// Using BASEPRI to mask low-priority interrupts
 __set_BASEPRI(0x50);   // Mask priority >= 5 (depends on priority bits)
 // Critical section
 __set_BASEPRI(0);      // Restore
@@ -257,36 +245,75 @@ __set_BASEPRI(0);      // Restore
 
 ---
 
-## 11. SysTick — System Tick Timer
+## 11. Nested Interrupts
 
-SysTick is a 24-bit countdown timer built into Cortex-M, used for RTOS ticks and delays.
+### How Nesting Works
+
+```
+Main code running
+  → IRQ A fires  (priority 5)  — CPU saves context, jumps to IRQ A handler
+      → IRQ B fires (priority 2)  — higher priority! CPU saves context again, jumps to IRQ B
+          → IRQ B finishes, EXC_RETURN restores IRQ A context
+      → IRQ A resumes and finishes, EXC_RETURN restores main context
+  → Main code resumes
+```
+
+### Priority Rules
 
 ```c
-// Configure SysTick for 1ms interrupt (assuming 72 MHz clock)
-SysTick_Config(72000);   // 72000 ticks = 1ms
-
-void SysTick_Handler(void) {
-    system_tick++;   // Increment tick counter
-}
+NVIC_SetPriority(UART_IRQn,  5);   // low priority
+NVIC_SetPriority(TIMER_IRQn, 2);   // high priority — can preempt UART handler
+NVIC_SetPriority(ADC_IRQn,   5);   // same as UART — cannot preempt each other
 ```
+
+- **Different priority**: Higher priority always wins; lower one pends and waits.
+- **Same priority**: No preemption — they queue and execute one after another.
+
+### EXC_RETURN Values (LR on exception entry)
+
+| EXC_RETURN Value | Meaning |
+|---|---|
+| `0xFFFFFFF9` | Return to Thread mode, use MSP |
+| `0xFFFFFFFD` | Return to Thread mode, use PSP |
+| `0xFFFFFFF1` | Return to Handler mode, use MSP **(nested interrupt)** |
+
+### ARM Optimizations
+
+**Tail-Chaining** — When a second interrupt is pending when the first finishes, ARM skips the pop + push cycle and jumps directly to the next handler, reusing the same stack frame. Saves ~12 cycles.
+
+```
+Normal:      pop 8 regs → push 8 regs → IRQ B handler   (wasteful)
+Tail-chain:  skip pop/push            → IRQ B handler    (optimized ✅)
+```
+
+**Late Arrival** — If a high-priority IRQ fires while the CPU is still stacking for a lower-priority IRQ, the CPU redirects to the high-priority handler immediately after stacking completes. The stacking work is reused, not repeated.
 
 ---
 
-## 12. PendSV and SVC
+## 12. SysTick, PendSV, and SVC
+
+### SysTick
+24-bit countdown timer built into Cortex-M, used for RTOS ticks and delays.
+
+```c
+SysTick_Config(72000);   // 1ms interrupt @ 72 MHz
+
+void SysTick_Handler(void) {
+    system_tick++;
+}
+```
 
 ### PendSV
 Used by RTOS for **context switching**. Set to lowest priority so it runs after all other ISRs.
 
 ```c
-// Trigger PendSV from software
-SCB->ICSR |= SCB_ICSR_PENDSVSET_Msk;
+SCB->ICSR |= SCB_ICSR_PENDSVSET_Msk;   // Trigger PendSV from software
 ```
 
 ### SVC (Supervisor Call)
-Software interrupt for **OS system calls** or switching from unprivileged to privileged mode.
+Software interrupt for OS system calls or switching from unprivileged to privileged mode.
 
 ```c
-// ARM Assembly SVC call
 __asm("SVC #0");
 ```
 
@@ -295,7 +322,7 @@ __asm("SVC #0");
 ## 13. Interrupt-Driven UART Example (STM32)
 
 ```c
-// Enable UART RX interrupt
+// Setup
 USART1->CR1 |= USART_CR1_RXNEIE;
 NVIC_EnableIRQ(USART1_IRQn);
 NVIC_SetPriority(USART1_IRQn, 1);
@@ -311,39 +338,57 @@ void USART1_IRQHandler(void) {
 
 ---
 
-## 14. Interrupt Latency Factors
+## 14. Interrupt Latency
 
-- **Pipeline flush** after branch to ISR
-- **Context save** time (hardware stacking)
-- **Memory wait states**
-- **Interrupt priority** and queuing
-- **Tail-chaining optimization** (ARM) reduces re-stacking between back-to-back ISRs
+Factors affecting latency:
+- Pipeline flush after branch to ISR
+- Context save time (hardware stacking)
+- Memory wait states
+- Interrupt priority and queuing
+- Tail-chaining optimization reduces re-stacking between back-to-back ISRs
 
-Typical ARM Cortex-M latency: **12–16 cycles** from interrupt assertion to first ISR instruction.
+**Typical ARM Cortex-M latency: 12–16 cycles** from interrupt assertion to first ISR instruction.
 
 ---
 
 ## 15. Common Mistakes
 
-- Forgetting to **clear interrupt flag** in ISR → endless loop
+- Forgetting to **clear interrupt flag** in ISR → endless re-triggering
 - Not declaring shared variables as `volatile` → compiler caches stale value
 - Too much work inside ISR → increased latency for other interrupts
 - Incorrect **priority configuration** → unexpected preemption behavior
 - Re-entrant ISR issues without proper guarding
-- Stack overflow due to deeply nested interrupts
+- Stack overflow due to deeply nested interrupts (each level = 32 bytes minimum)
 
 ---
 
-## 16. Quick Reference — ARM Cortex-M Interrupt Setup Checklist
+## 16. Setup Checklist
 
-- [ ] Configure peripheral to generate interrupt (e.g., UART RXNEIE bit)
+- [ ] Configure peripheral to generate interrupt (e.g., UART `RXNEIE` bit)
 - [ ] Set ISR priority with `NVIC_SetPriority()`
 - [ ] Enable IRQ with `NVIC_EnableIRQ()`
 - [ ] Write ISR function with correct name (matches vector table)
 - [ ] Clear interrupt flag inside ISR
 - [ ] Declare shared variables as `volatile`
+- [ ] Verify stack size accounts for maximum nesting depth
 - [ ] Test with both normal and edge-case conditions
 
 ---
 
-*Notes compiled for ARM Cortex-M architecture (M0/M0+/M3/M4/M7) and general embedded interrupt concepts.*
+## 17. Interview Quick-Fire Answers
+
+**Q: What happens if two interrupts fire simultaneously?**
+> Same priority → lower IRQ number wins (NVIC arbitration).
+> Different priority → higher priority wins, lower one pends.
+
+**Q: How does the CPU know it's in a nested interrupt?**
+> LR contains `0xFFFFFFF1` (EXC_RETURN value for Handler mode return).
+
+**Q: Why does stack size matter for nested interrupts?**
+> Each nesting level pushes one 8-register frame (32 bytes). 4 levels deep = 128 bytes minimum just for stacking, before any local variables.
+
+**Q: What is tail-chaining?**
+> Hardware optimization that skips unnecessary pop/push between back-to-back interrupt handlers, saving ~12 cycles.
+
+**Q: Which registers are NOT auto-saved on interrupt entry?**
+> R4–R11. The ISR must save these manually if it uses them.

@@ -895,6 +895,19 @@ Diffrenc between timer and counter
 Timer   = counts internal clock pulses  (measures TIME)
 Counter = counts external event pulses  (measures EVENTS)
 
+### Embedded systems worst practices?
+Uninitialized exception vectors (you know, for the ones that "will never be reached")
+Say it with me: Global variables. Especially ones shared between ISRs and tasks (or foreground loops) without protection.
+Failure to use "volatile" where necessary.
+Having routines that DisableInterrupts() and then EnableInterrupts() paired up. Got that? Not RestoreInterrupts(), but ENABLE. Yeah, nesting.
+No GPIOs to toggle when testing.
+No testpoints on board.
+No LEDs or serial port for viewing run-time system status.
+No measurement of how busy/idle the CPU is.
+Use of inline assembly for all but the most dire of cases. Write a quick callout.
+Using for (i = 0; i < 1000; i++) { } to "delay a bit". Yeah, that's not gonna bite you in a hundred different ways....
+Not using const everywhere possible to preserve RAM and reduce boot time (no copying / init of variables)
+
 
 
 
