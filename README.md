@@ -444,7 +444,21 @@ int array[6] = {4, 3, 5, 6, 3, 8};
 |                       |                &array[3], &array[4], &array[5]};                     |
 +-----------------------+----------------------------------------------------------------------+
 
+### VIP Pinter question"
+1.typedef char *charp;
+const charp *p;  // which one is const here?
+	const charp *p` → rewrites to `char * const p` — the **ADDRESS** is const, not the `char`
+	typedef` is not text substitution
 
+
+2.int *ptr1, ptr2; // what does this mean?
+		 `ptr1` is pointer to `int`, `ptr2` is plain `int`
+		 
+3.typedef char *charp;
+  charp p1, p2;    // are both pointers?
+	`charp p1, p2` — yes, both are `char*`
+	typedef` carries pointer-ness to all variables
+    
 ### what is the Difference between *ptr++, (*ptr)++, and *++ptr?
 
     int arr[] = {10, 20, 30};
