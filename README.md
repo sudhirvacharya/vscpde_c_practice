@@ -1076,6 +1076,42 @@ Why fastest:
   - Critical in embedded/bare-metal where no hardware multiplier exists
 
 
+## Debugging code
+1. Using SW debugger
+   - Put breakpoints
+   - Watch global variable, local variable
+   - Call stack inspection (check function call chain)
+   - Register view (PC, SP, LR, xPSR — confirm boot landed correctly)
+   - Memory view (check .data/.bss region in SRAM live)
+   - Fault analyser (HardFault — read HFSR, CFSR registers)
+   - Analyse map file
+
+2. Load .mot/.srec/.hex file to hex viewer
+   - Confirm vector table at offset 0x0000 (MSP, Reset_Handler addr)
+   - Confirm .data initialisation values present in Flash
+
+3. WDG using oscilloscope / logic analyser and observe waveform
+   - UART/SPI/I2C protocol decode
+   - Timing violations (setup/hold, clock stretch)
+   - GPIO toggle as execution marker (poor man's profiler)
+
+4. Probe into TP on board and check voltage
+   - Check expected / accepted voltage levels
+   - Power rail sequencing (3.3V, 1.8V — order matters)
+   - Current consumption spike at boot (inrush)
+
+5. Printf / semihosting / RTT
+   - ITM SWO printf (no UART needed, via SWD)
+   - Segger RTT (non-intrusive, no timing impact)
+   - UART printf (simplest but blocks if not async)
+
+6. Static analysis
+   - Compiler warnings (-Wall -Wextra) treated as errors
+   - Stack usage report (gcc -fstack-usage)
+   - Map file: confirm no section overflow, check symbol sizes
+```
+
+
 
 
 
