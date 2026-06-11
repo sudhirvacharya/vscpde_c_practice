@@ -922,6 +922,161 @@ Use of inline assembly for all but the most dire of cases. Write a quick callout
 Using for (i = 0; i < 1000; i++) { } to "delay a bit". Yeah, that's not gonna bite you in a hundred different ways....
 Not using const everywhere possible to preserve RAM and reduce boot time (no copying / init of variables)
 
+### difference between macro function and inline function",
+a:`Category          | Macro Function                                                                                                                                      | Inline Function
+------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------|---------------------------------------------------------
+Compile-time      | Macro functions are expanded by the preprocessor at the compile time.                                                                               | Inline functions are expanded by the compiler.
+expansion         |                                                                                                                                                     |
+Argument          | Expressions passed to the Macro functions might get evaluated more than once.                                                                        | Expressions passed to Inline functions get evaluated once.
+Evaluation        |                                                                                                                                                     |
+Parameter         | Macro functions do not follow strict parameter data type checking.                                                                                   | Inline functions follow strict data type checking of the parameters.
+Checking          |                                                                                                                                                     |
+Ease of           | Macro functions are hard to debug because it is replaced by the preprocessor as a textual representation which is not visible in the source code.   | Easier to debug inline functions which is why it is recommended to be used over macro functions.
+debugging         |                                                                                                                                                     |`
+### Is it possible to declare a static variable in a header file?
+Variables defined with static are initialized once and persists until the end of the
+program and are local only to the block it is defined. A static variables declaration
+requires definition. It can be defined in a header file. But if we do so, a private copy of
+the variable of the header file will be present in each source file the header is
+included. This is not preferred and hence it is not recommended to use static
+variables in a header file.
+
+## pre decremtn and post decrement 
+What do you understand by the pre-decrement and postdecrement
+operators?
+
+#include < stdio.h >
+int main(){
+int x = 100, y;
+y = --x; //pre-decrememt operators -- first decrements the value and then it is
+printf("y = %d\n", y); // Prints 99
+printf("x = %d\n", x); // Prints 99
+return 0;
+}
+
+### What are the reasons for segmentation fault in Embedded c?
+While trying to dereference NULL pointers.
+While trying to write or update the read-only memory or non-existent memory
+not accessible by the program such as code segment, kernel structures, etc.
+While trying to dereference an uninitialized pointer that might have been
+pointing to invalid memory.
+While trying to dereference a pointer that was recently freed using the free
+function.
+While accessing the array beyond the boundary.
+Some of the ways where we can avoid Segmentation fault are:
+Initializing Pointer Properly: Assign addresses to the pointers properly. For
+instance:
+We can also assign the address of the matrix, vectors or using functions like
+calloc, malloc etc.
+Only important thing is to assign value to the pointer before accessing it.
+
+### What is the issue with the following piece of code?
+int square (volatile int *p){
+return (*p) * (*p) ;
+}
+From the code given, it appears that the function intends to return the square of the
+values pointed by the pointer p. But, since we have the pointer point to a volatile
+integer, the compiler generates code as below:
+
+int square ( volatile int *p){
+int x , y;
+x = *p ;
+y = *p ;
+return x * y ;
+}
+
+Since the pointer can be changed to point to other locations, it might be possible
+that the values of the x and y would be different which might not even result in the
+square of the numbers. Hence, the correct way for achieving the square of the
+number is by coding as below:
+
+long square (volatile int *p ){
+int x ;
+x = *p ;
+return x*x;
+}
+
+
+### The following piece of code uses `__interrupt` keyword to define an ISR. Comment on the correctness of the code.
+
+```c
+__interrupt double calculate_circle_area (double radius){
+    double circle_area = PI * radius * radius;
+    printf("Area = %f", circle_area);
+    return circle_area;
+}
+```
+
+Following things are wrong with the given piece of code:
+
+1. ISRs are not supposed to return any value. The given code returns a value of datatype `double`.
+
+2. It is not possible to pass parameters to ISRs. Here, we are passing a parameter to the ISR which is wrong.
+
+3. It is not advisable to have `printf` inside the ISR as they are non-reentrant and thereby it impacts the performance.
+
+
+## What is the result of the below code?",
+
+void demo(void){
+unsigned int x = 10 ;
+int y = −40;
+if(x+y > 10) {
+printf("Greater than 10");
+} else {
+printf("Less than or equals 10");
+}
+}
+In Embedded C, we need to know a fact that when expressions are having signed and
+unsigned operand types, then every operand will be promoted to an unsigned type.
+Herem the -40 will be promoted to unsigned type thereby making it a very large value
+when compared
+
+### What are the reasons for Interrupt Latency and how to
+reduce it?
+Following are the various causes of Interrupt Latency:
+Hardware: Whenever an interrupt occurs, the signal has to be synchronized with
+the CPU clock cycles. Depending on the hardware of the processor and the logic
+of synchronization, it can take up to 3 CPU cycles before the interrupt signal has
+reached the processor for processing.
+Pipeline: Most of the modern CPUs have instructions pipelined. Execution
+happens when the instruction has reached the last stage of the pipeline. Once
+the execution of an instruction is done, it would require some extra CPU cycles
+to refill the pipeline with instructions. This contributes to the latency.
+Interrupt latency can be reduced by ensuring that the ISR routines are short. When a
+lower priority interrupt gets triggered while a higher priority interrupt is getting
+executed, then the lower priority interrupt would get delayed resulting in increased
+latency. In such cases, having smaller ISR routines for lower priority interrupts would
+help to reduce the delay.
+Also, better scheduling and synchronization algorithms in the processor CPU would
+help minimize the ISR latency.
+
+
+
+### Write an Embedded C program to multiply any number by 9 in the fastest manner.
+Use bit manipulation (shift left) instead of multiplication operator.
+
+Key concept:
+  1 left shift  = ×2
+  2 left shifts = ×4
+  3 left shifts = ×8
+
+So:  num × 9  =  (num × 8) + (num × 1)
+             =  (num << 3) + num
+
+Program:
+  int num;
+  printf("Enter number: ");
+  scanf("%d", &num);
+  printf("%d", (num << 3) + num);
+
+Why fastest:
+  - Shift and add are single-cycle CPU instructions
+  - Avoids costlier MUL instruction
+  - Critical in embedded/bare-metal where no hardware multiplier exists
+
+
+
 
 
 
