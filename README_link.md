@@ -12,3 +12,16 @@ https://www.kernel.org/doc/Documentation/
 
 4. solve math problem
     https://projecteuler.net/archives
+
+blog
+https://eli.thegreenplace.net/archives/all
+
+linux
+https://tartanllama.xyz/posts/
+
+
+compiler design:
+https://norasandler.com/2017/11/29/Write-a-Compiler.html
+
+Project based lenraning:
+https://github.com/practical-tutorials/project-based-learning/blob/master/README.md#cc
