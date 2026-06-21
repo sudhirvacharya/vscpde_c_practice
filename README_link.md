@@ -9,4 +9,6 @@ https://www.kernel.org/doc/Documentation/
 
 3. c learning:
     https://github.com/oz123/awesome-c#learning-reference-and-tutorials
-    
+
+4. solve math problem
+    https://projecteuler.net/archives

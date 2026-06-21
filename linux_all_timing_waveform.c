@@ -4,28 +4,43 @@
 #include <unistd.h>
 #include <semaphore.h>
 #include <string.h>
-
-//steps
-//run this cmd
-//gcc -Wall -o linux_all_timing_waveform linux_all_timing_waveform.c -lpthread && ./linux_all_timing_waveform
-//it will generate trace.json
-//import this and analize  https://ui.perfetto.dev/#!/viewer?local_cache_key=00000000-0000-0000-4907-90da9561b115
+#include <stdlib.h>
 
 /* ══════════════════════════════════════════
    SELECT EXPERIMENT — set one to 1, rest 0
    ══════════════════════════════════════════ */
-#define EXP_ROUND_ROBIN       0
+#define EXP_ROUND_ROBIN        0
 #define EXP_PRIORITY_INVERSION 0
-#define EXP_DEADLOCK          0
-#define EXP_SEMAPHORE_PC      1   /* ← currently active */
-#define EXP_COUNTING_SEM      0
-#define EXP_SPINLOCK_VS_MUTEX 0
-#define EXP_THREAD_POOL       0
+#define EXP_DEADLOCK           0
+#define EXP_SEMAPHORE_PC       0
+#define EXP_COUNTING_SEM       0
+#define EXP_SPINLOCK_VS_MUTEX  0
+#define EXP_THREAD_POOL        0
+#define EXP_SCHEDULER          1   /* ← currently active */
+
+/* ══════════════════════════════════════════
+   SCHEDULER TASK PERIODS (microseconds)
+   Modify these to change timing
+   ══════════════════════════════════════════ */
+#define TASK_1MS_PERIOD    1000
+#define TASK_2MS_PERIOD    2000
+#define TASK_5MS_PERIOD    5000
+#define TASK_10MS_PERIOD  10000
+
+#define TASK_1MS_EXEC      400    /* execution time 0.4ms  */
+#define TASK_2MS_EXEC      800    /* execution time 0.8ms  */
+#define TASK_5MS_EXEC     2000    /* execution time 2ms    */
+#define TASK_10MS_EXEC    4000    /* execution time 4ms    */
+
+#define SCHED_RUNTIME_MS   10   /* total run = 100ms     */
+#define SCHED_ITERATIONS    5   /* max loop iterations   */
 
 /* ── globals ── */
 FILE            *f;
 pthread_mutex_t  file_mutex;
 
+/* ── add this global flag (near other globals) ── */
+volatile int spi_wants_cpu = 0;  /* SPI sets this before running */
 /* ══════════════════════════════════════════
    TRACE HELPERS — do not modify
    ══════════════════════════════════════════ */
@@ -110,7 +125,7 @@ void *LowPriorityTask(void *arg) {
 }
 
 void *MedPriorityTask(void *arg) {
-    usleep(3000);   /* starts at 3ms */
+    usleep(3000);
     trace_begin("MED_running_free", 2);
     printf("[MED]  running freely — delays LOW further\n");
     usleep(5000);
@@ -119,10 +134,10 @@ void *MedPriorityTask(void *arg) {
 }
 
 void *HighPriorityTask(void *arg) {
-    usleep(2000);   /* starts at 2ms */
+    usleep(2000);
     printf("[HIGH] wants mutex — blocking now\n");
     trace_begin("HIGH_blocked_on_mutex", 3);
-    pthread_mutex_lock(&shared_mutex);   /* blocks here */
+    pthread_mutex_lock(&shared_mutex);
     trace_end("HIGH_blocked_on_mutex", 3);
     trace_begin("HIGH_running", 3);
     printf("[HIGH] got mutex — finally running\n");
@@ -164,7 +179,7 @@ void *TaskA(void *arg) {
     trace_begin("A_holds_M1", 1);
     usleep(2000);
     printf("[A] wants mutex2 — will deadlock\n");
-    pthread_mutex_lock(&mutex2);   /* DEADLOCK */
+    pthread_mutex_lock(&mutex2);
     trace_end("A_holds_M1", 1);
     pthread_mutex_unlock(&mutex2);
     pthread_mutex_unlock(&mutex1);
@@ -177,7 +192,7 @@ void *TaskB(void *arg) {
     trace_begin("B_holds_M2", 2);
     usleep(2000);
     printf("[B] wants mutex1 — will deadlock\n");
-    pthread_mutex_lock(&mutex1);   /* DEADLOCK */
+    pthread_mutex_lock(&mutex1);
     trace_end("B_holds_M2", 2);
     pthread_mutex_unlock(&mutex1);
     pthread_mutex_unlock(&mutex2);
@@ -190,7 +205,7 @@ void run_experiment(void) {
     pthread_t t1, t2;
     pthread_create(&t1, NULL, TaskA, NULL);
     pthread_create(&t2, NULL, TaskB, NULL);
-    pthread_join(t1, NULL);   /* hangs here */
+    pthread_join(t1, NULL);
     pthread_join(t2, NULL);
     pthread_mutex_destroy(&mutex1);
     pthread_mutex_destroy(&mutex2);
@@ -229,7 +244,7 @@ void *Consumer(void *arg) {
     for (int i = 0; i < 10; i++) {
         trace_begin("sem_wait_blocking", 2);
         printf("[C] waiting for item %d\n", i);
-        sem_wait(&data_ready);          /* blocks until post */
+        sem_wait(&data_ready);
         trace_end("sem_wait_blocking", 2);
 
         trace_begin("consuming", 2);
@@ -268,7 +283,7 @@ sem_t slots_used;
 void *CountProducer(void *arg) {
     for (int i = 0; i < 12; i++) {
         trace_begin("wait_free_slot", 1);
-        sem_wait(&slots_free);          /* stall if buffer full */
+        sem_wait(&slots_free);
         trace_end("wait_free_slot", 1);
 
         trace_begin("write_buffer", 1);
@@ -284,12 +299,12 @@ void *CountProducer(void *arg) {
 void *CountConsumer(void *arg) {
     for (int i = 0; i < 12; i++) {
         trace_begin("wait_used_slot", 2);
-        sem_wait(&slots_used);          /* stall if buffer empty */
+        sem_wait(&slots_used);
         trace_end("wait_used_slot", 2);
 
         trace_begin("read_buffer", 2);
         printf("[C] reading item %d\n", i);
-        usleep(3000);                   /* slow consumer */
+        usleep(3000);
         trace_end("read_buffer", 2);
 
         sem_post(&slots_free);
@@ -315,7 +330,7 @@ void run_experiment(void) {
    EXP 6 — SPINLOCK VS MUTEX
    Spinlock burns CPU while waiting
    Mutex sleeps and yields CPU
-   Perfetto: spinlock = no gap, mutex = gap
+   Perfetto: spinlock=no gap, mutex=gap
    ══════════════════════════════════════════ */
 #if EXP_SPINLOCK_VS_MUTEX
 
@@ -336,7 +351,7 @@ void *SpinWaiter(void *arg) {
     usleep(1000);
     trace_begin("spin_waiter_burning_cpu", 2);
     printf("[SPIN-W] spinning — burning CPU\n");
-    pthread_spin_lock(&spinlock);   /* busy waits */
+    pthread_spin_lock(&spinlock);
     trace_end("spin_waiter_burning_cpu", 2);
     trace_begin("spin_waiter_critical", 2);
     usleep(1000);
@@ -359,7 +374,7 @@ void *MutexWaiter(void *arg) {
     usleep(1000);
     trace_begin("mutex_waiter_sleeping", 4);
     printf("[MTX-W] sleeping — yields CPU\n");
-    pthread_mutex_lock(&slp_mutex);  /* sleeps */
+    pthread_mutex_lock(&slp_mutex);
     trace_end("mutex_waiter_sleeping", 4);
     trace_begin("mutex_waiter_critical", 4);
     usleep(1000);
@@ -415,7 +430,7 @@ void *Worker(void *arg) {
         pthread_mutex_unlock(&queue_mutex);
 
         trace_begin(name, id);
-        printf("[W%d] running job %d (%d ms)\n", id, job, job);
+        printf("[W%d] running job %d (%dms)\n", id, job, job);
         usleep(job * 1000);
         trace_end(name, id);
     }
@@ -424,10 +439,8 @@ void *Worker(void *arg) {
 
 void run_experiment(void) {
     pthread_mutex_init(&queue_mutex, NULL);
-
-    /* fill job queue with varying durations 1..20ms */
     for (int i = 0; i < JOBS; i++)
-        job_queue[i] = (i % 5 + 1) * 2;   /* 2,4,6,8,10ms pattern */
+        job_queue[i] = (i % 5 + 1) * 2;
 
     pthread_t threads[WORKERS];
     int       ids[WORKERS];
@@ -442,6 +455,196 @@ void run_experiment(void) {
 }
 
 #endif /* EXP_THREAD_POOL */
+
+/* ══════════════════════════════════════════
+   EXP 8 — MULTI-PERIOD SCHEDULER
+   Simulates 4 periodic RTOS tasks:
+
+   Task      Period   Exec    Maps to
+   ────────  ───────  ──────  ─────────────────
+   1ms_task   1ms     0.4ms   ADC read / sensor
+   2ms_task   2ms     0.8ms   SPI comm / filter
+   5ms_task   5ms     2.0ms   CAN tx / control
+   10ms_task  10ms    4.0ms   UART log / diag
+
+   Each task fires at its period using
+   absolute deadline tracking — same as
+   vTaskDelayUntil() in FreeRTOS
+
+   Perfetto: 4 rows, see preemption,
+   deadline miss if exec > period
+   ══════════════════════════════════════════ */
+/* ══════════════════════════════════════════
+   EXP 8 — MULTI-PERIOD SCHEDULER
+   UART (10ms) sliced — yields every 2ms to SPI
+   ══════════════════════════════════════════ */
+#if EXP_SCHEDULER
+
+/* UART slice size = SPI period so SPI always preempts cleanly */
+#define UART_SLICE_US   TASK_2MS_PERIOD   /* 2000us per UART slice */
+
+pthread_mutex_t spi_mutex;   /* UART holds this while in a slice  */
+pthread_cond_t  spi_done;    /* SPI signals UART after each run   */
+volatile int    spi_running; /* flag: 1=SPI wants CPU, 0=idle     */
+
+void adc_read_task(void)    { printf("[1ms ] ADC read\n"); }
+void spi_filter_task(void)  { printf("[2ms ] SPI comm + filter\n"); }
+void can_control_task(void) { printf("[5ms ] CAN tx + control loop\n"); }
+void uart_diag_task(void)   { printf("[10ms] UART log + diagnostics\n"); }
+
+static long now_us(void) {
+    struct timespec ts;
+    clock_gettime(CLOCK_MONOTONIC, &ts);
+    return ts.tv_sec * 1000000L + ts.tv_nsec / 1000;
+}
+
+/* ── ADC: unchanged periodic task ── */
+void *task_adc(void *arg) {
+    long next = now_us();
+    int  max  = 10;
+    for (int i = 0; i < max; i++) {
+        long n = now_us();
+        if (next > n) usleep((useconds_t)(next - n));
+
+        if (now_us() > next + 100) {
+            trace_begin("1ms_ADC_DEADLINE_MISS", 1);
+            trace_end  ("1ms_ADC_DEADLINE_MISS", 1);
+        }
+        trace_begin("1ms_ADC", 1);
+        adc_read_task();
+        usleep(TASK_1MS_EXEC);
+        trace_end("1ms_ADC", 1);
+
+        next += TASK_1MS_PERIOD;
+    }
+    return NULL;
+}
+
+void *task_spi(void *arg) {
+    long next = now_us();
+    int  max  = 5;
+
+    for (int i = 0; i < max; i++) {
+        long n = now_us();
+        if (next > n) usleep((useconds_t)(next - n));
+
+        if (now_us() > next + 100) {
+            trace_begin("2ms_SPI_DEADLINE_MISS", 2);
+            trace_end  ("2ms_SPI_DEADLINE_MISS", 2);
+        }
+
+        /* signal UART to pause */
+        spi_wants_cpu = 1;
+        usleep(50);   /* small gap — let UART notice the flag */
+
+        trace_begin("2ms_SPI", 2);
+        spi_filter_task();
+        usleep(TASK_2MS_EXEC);
+        trace_end("2ms_SPI", 2);
+
+        /* signal UART to resume */
+        spi_wants_cpu = 0;
+
+        next += TASK_2MS_PERIOD;
+    }
+    return NULL;
+}
+
+void *task_uart(void *arg) {
+    long next = now_us();
+    int  max  = 1;
+
+    for (int i = 0; i < max; i++) {
+        long n = now_us();
+        if (next > n) usleep((useconds_t)(next - n));
+
+        if (now_us() > next + 100) {
+            trace_begin("10ms_UART_DEADLINE_MISS", 4);
+            trace_end  ("10ms_UART_DEADLINE_MISS", 4);
+        }
+
+        uart_diag_task();
+
+        int remaining_us = TASK_10MS_EXEC;  /* 4000us total */
+
+        while (remaining_us > 0) {
+
+            /* ── pause if SPI wants CPU ── */
+            if (spi_wants_cpu) {
+                trace_begin("10ms_UART_WAITING", 4);
+                while (spi_wants_cpu)
+                    usleep(100);   /* spin-wait until SPI clears flag */
+                trace_end("10ms_UART_WAITING", 4);
+            }
+
+            /* ── run one 2ms slice ── */
+            int slice = (remaining_us < UART_SLICE_US)
+                        ? remaining_us : UART_SLICE_US;
+
+            trace_begin("10ms_UART", 4);
+            usleep((useconds_t)slice);
+            trace_end("10ms_UART", 4);
+
+            remaining_us -= slice;
+        }
+
+        next += TASK_10MS_PERIOD;
+    }
+    return NULL;
+}
+
+/* ── CAN: unchanged periodic task ── */
+void *task_can(void *arg) {
+    long next = now_us();
+    int  max  = 2;
+    for (int i = 0; i < max; i++) {
+        long n = now_us();
+        if (next > n) usleep((useconds_t)(next - n));
+
+        if (now_us() > next + 100) {
+            trace_begin("5ms_CAN_DEADLINE_MISS", 3);
+            trace_end  ("5ms_CAN_DEADLINE_MISS", 3);
+        }
+        trace_begin("5ms_CAN", 3);
+        can_control_task();
+        usleep(TASK_5MS_EXEC);
+        trace_end("5ms_CAN", 3);
+
+        next += TASK_5MS_PERIOD;
+    }
+    return NULL;
+}
+
+
+
+void run_experiment(void) {
+    pthread_mutex_init(&spi_mutex, NULL);
+    pthread_cond_init (&spi_done,  NULL);
+    spi_running = 0;
+
+    pthread_t t1, t2, t3, t4;
+printf("=== Sliced Scheduler started ===\n");
+printf("UART sliced every %dus, preempted by SPI\n\n", UART_SLICE_US);
+
+    pthread_create(&t1, NULL, task_adc,  NULL);
+    pthread_create(&t2, NULL, task_spi,  NULL);
+    pthread_create(&t3, NULL, task_can,  NULL);
+    pthread_create(&t4, NULL, task_uart, NULL);
+
+    pthread_join(t1, NULL);
+    pthread_join(t2, NULL);
+    pthread_join(t3, NULL);
+    pthread_join(t4, NULL);
+
+    pthread_mutex_destroy(&spi_mutex);
+    pthread_cond_destroy (&spi_done);
+    printf("\n=== Scheduler done ===\n");
+}
+
+#endif /* EXP_SCHEDULER */
+
+
+
 
 /* ══════════════════════════════════════════
    MAIN — do not modify
