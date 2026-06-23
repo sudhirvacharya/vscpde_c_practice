@@ -25,3 +25,6 @@ https://norasandler.com/2017/11/29/Write-a-Compiler.html
 
 Project based lenraning:
 https://github.com/practical-tutorials/project-based-learning/blob/master/README.md#cc
+
+Linux torvad, linux device driver
+  https://github.com/torvalds/linux
