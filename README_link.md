@@ -80,3 +80,7 @@ https://hamberg.no/erlend/posts/2013-02-18-static-array-indices.html
   
   pthread linux tutorial
   https://hpc-tutorials.llnl.gov/posix/#note-this-tutorial-is-no-longer-supported-it-remains-for-archival-purposes
+
+  Linux device driver alone
+  https://lwn.net/Kernel/LDD3/
+  
