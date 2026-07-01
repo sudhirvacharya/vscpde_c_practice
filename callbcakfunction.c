@@ -1,17 +1,20 @@
 #include <stdio.h>
 #include <stdlib.h>
-
-void add(int a, int b)
+int result;
+int *add(int a, int b)
 {
-    int c=a+b;
-    printf("addition :%d \n", c);
+    result=a+b;
+  
+    return &result;
 }
 
 
 //(*xyz)(int, int) --> function pointer
-void calulcate(int a, int b, void (*xyz)(int, int))
+void calulcate(int a, int b, int* (*xyz)(int, int))
 {
-    xyz(a,b);
+    int tmp;
+    tmp=*xyz(a,b);
+    printf("addition :%d \n", tmp);
 
 }
 
