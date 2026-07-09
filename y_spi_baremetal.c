@@ -16,6 +16,8 @@
  * Requires CMSIS device header from your STM32CubeIDE project
  * (adjust the include below if your project uses stm32g070xx.h directly).
  */
+//youtube link
+//https://www.youtube.com/watch?v=hcQhlORvdIE
 
 #include <stdint.h>
 #include <stdbool.h>
