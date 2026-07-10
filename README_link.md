@@ -83,4 +83,18 @@ https://hamberg.no/erlend/posts/2013-02-18-static-array-indices.html
 
   Linux device driver alone
   https://lwn.net/Kernel/LDD3/
+
+
+  ## ARM official document
+    
+    arm7--> cortexm4,m3,m7 architecture ref manula
+    arm-->advanced risc mahine
+    https://drive.google.com/file/d/1wfHFlP7NW0RT3-PEO-R9n95xQk9e0Hze/view?usp=drive_link
+
+    arm6-->cortx m0, m1, m0+  architecture ref manula
+    arm-->advanced risc mahine
+    https://drive.google.com/file/d/1naI4BeotUmmojRBf9r87xJTI2U1UcyL1/view?usp=drive_link
+
+    stm document
+    https://drive.google.com/drive/folders/1wWPlGM6eqSIx8viLpjw2aNj4K85sERCt
   
