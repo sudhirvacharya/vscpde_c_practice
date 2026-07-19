@@ -1109,7 +1109,18 @@ Why fastest:
    - Compiler warnings (-Wall -Wextra) treated as errors
    - Stack usage report (gcc -fstack-usage)
    - Map file: confirm no section overflow, check symbol sizes
-```
+
+
+### what is the diffrec and give with example` `array+1` and `&array+1 
+The core difference
+
+array + 1 → pointer to the next element (steps by sizeof(element))
+&array + 1 → pointer to the next whole array (steps by sizeof(array))
+
+    printf("array        = %p\n", (void*)array);
+    printf("array + 1    = %p\n", (void*)(array + 1));
+    printf("&array       = %p\n", (void*)(&array));
+    printf("&array + 1   = %p\n", (void*)(&array + 1));
 
 
 
