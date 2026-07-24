@@ -1,19 +1,19 @@
 # ADC BASICS
-    $$D = \frac{V_{in}}{V_{ref}} \times 2^n$$
+$$D = \frac{V_{in}}{V_{ref}} \times 2^n$$
 
-    This gives you the digital code, not an analog voltage — worth keeping the naming straight since "Vout" implies an analog signal.
+This gives you the digital code, not an analog voltage — worth keeping the naming straight since "Vout" implies an analog signal.
 
-    **Resolution (step size):**
+**Resolution (step size):**
 
-    $$Resolution = \frac{V_{ref}}{2^n - 1}$$
+$$Resolution = \frac{V_{ref}}{2^n - 1}$$
 
-    This part you had right.
+This part you had right.
 
-    **Powers of 2 — these have errors:**
+**Powers of 2 — these have errors:**
 
-    - $2^8 = 256$ (you wrote 1000 — that's actually $10^3$)
-    - $2^{10} = 1024$ ✓ correct
-    - $2^{12} = 4096$ (you wrote 4095, which is actually $2^{12} - 1$ — the max *code* value, not $2^{12}$ itself)
+- $2^8 = 256$ (you wrote 1000 — that's actually $10^3$)
+- $2^{10} = 1024$ ✓ correct
+- $2^{12} = 4096$ (you wrote 4095, which is actually $2^{12} - 1$ — the max *code* value, not $2^{12}$ itself)
 
 
 
