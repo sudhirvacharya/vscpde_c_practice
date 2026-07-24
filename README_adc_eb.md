@@ -15,7 +15,16 @@ This part you had right.
 - $2^{10} = 1024$ ✓ correct
 - $2^{12} = 4096$ (you wrote 4095, which is actually $2^{12} - 1$ — the max *code* value, not $2^{12}$ itself)
 
+---
 
+---
+# ADC TYPES
+Flash ADC  ( analog input->conoarator-->priority encoder)
+SAR ADC    ( vin->comparator-->sar reg -->DAC)
+                        ^
+                        |(DAC in)
+Delta signam adc
+---
 
 # AUTOSAR MCAL ADC Driver Configuration in EB TRESOS
 
