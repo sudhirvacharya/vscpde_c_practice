@@ -1,23 +1,17 @@
 #include <stdio.h>
-#include <stdint.h>
-// enter date of birth and print
-int getnum()
-{
-    int num;
-    int value = 0;
-
-    do {
-        num = getchar();
-        if (num >= '0' && num <= '9') {
-            value = value * 10 + (num - '0');
-        }
-    } while (num != '\n' && num != EOF);// EOF END OF FILE
-
-    return value;
-}
 
 int main()
 {
-    printf("dob %d\n", getnum());
+    int n, result = 0;
+
+    while ((n = getchar()) != '\n' && n != EOF) {
+        if (n < '0' || n > '9') {
+            continue; // skip non-digit characters
+        }
+        result = (result * 10) + (n - '0');
+    }
+
+    printf("%d\n", result);
+
     return 0;
 }
