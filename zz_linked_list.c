@@ -117,6 +117,21 @@ void delete_node(node **head, int data)
     // If we reach here, the value was not found in the list
     // (the function just exits quietly — no deletion happened)
 }
+void reverselist(node_t **head)
+{
+    node_t *prev = NULL;
+    node_t *cur = *head;
+    node_t *next = NULL;
+
+    while (cur != NULL)
+    {
+        next = cur->next;   // save next before overwriting
+        cur->next = prev;   // reverse the link
+        prev = cur;         // advance prev
+        cur = next;         // advance cur
+    }
+    *head = prev;            // prev is the new head
+}
 int main()
 {
     node *head=NULL;
@@ -128,5 +143,9 @@ int main()
     delete_node(&head, 20);
     printf("After delete: ");
     print_list(head);
+
+   //reverse list
+   reverselist(&head);
+printlist(head);
     return 0;
 }
