@@ -40,6 +40,50 @@ Levels: **QM → A → B → C → D** (D most rigorous). Determined in **HARA**
 - **ASIL decomposition** (Part 9): split a requirement into redundant, *independent* elements (D → B(D)+B(D), or C(D)+A(D)); independence proven via DFA.
 - ASIL ≠ SIL (IEC 61508).
 
+### 2.1 Exposure (E) scale
+E = how often / how long the vehicle is in the situation where the hazard can occur.
+
+| Level | Meaning | Approx. duration / frequency | Example |
+|---|---|---|---|
+| E0 | Incredibly unlikely | Not rated | Exotic situations |
+| E1 | Very low probability | Very rare | Towing, unusual road conditions |
+| E2 | Low probability | < 1% of operating time | Reversing out of a steep driveway |
+| E3 | Medium probability | 1–10% of operating time | Overtaking, heavy rain |
+| E4 | High probability | > 10% of operating time / almost every drive | Normal driving, braking, turning |
+
+(Percentages are approximate guidance from ISO 26262-3; check the standard for exact wording.)
+
+### 2.2 ASIL lookup table (S × E × C)
+| | | E1 | E2 | E3 | E4 |
+|---|---|---|---|---|---|
+| **S1** | C1 | QM | QM | QM | QM |
+| | C2 | QM | QM | QM | A |
+| | C3 | QM | QM | A | B |
+| **S2** | C1 | QM | QM | QM | A |
+| | C2 | QM | QM | A | B |
+| | C3 | QM | A | B | C |
+| **S3** | C1 | QM | QM | A | B |
+| | C2 | QM | A | B | C |
+| | C3 | A | B | C | D |
+
+**Shortcut:** S + E + C = 10 → D, 9 → C, 8 → B, 7 → A, ≤ 6 → QM. Example: S3 + E4 + C3 = 10 → ASIL D (brake-by-wire: severe, always exposed, driver can't control).
+
+### 2.3 HARA vs TARA
+**HARA** (ISO 26262-3, safety): define item → identify malfunctions/hazards → define operating situations → rate S/E/C → ASIL → safety goals with safe state and FTTI.
+**TARA** (ISO/SAE 21434 clause 15, security): identify assets and security properties (C/I/A) → damage scenarios → threat scenarios (e.g. STRIDE) → attack paths and feasibility → risk value → treatment (avoid, reduce, share, retain) → cybersecurity goals/claims.
+
+| | HARA | TARA |
+|---|---|---|
+| Standard | ISO 26262-3 | ISO/SAE 21434 |
+| Concern | Safety (random / systematic faults) | Security (intentional attacks) |
+| Cause | Malfunction | Malicious actor |
+| Rating | S × E × C | Impact × attack feasibility |
+| Result | ASIL A–D | Risk value / CAL |
+| Output | Safety goals | Cybersecurity goals |
+
+**Link:** an attack can cause a hazard, so the two are coordinated. **E2E** protects against random faults/corruption (safety); **SecOC** (MAC + freshness) protects against tampering (security). E2E alone doesn't stop an attacker who can recompute the CRC.
+> "Safety asks what if it fails; security asks what if someone attacks it."
+
 ---
 
 ## 3. V-Model and Software Lifecycle
@@ -405,7 +449,7 @@ HSI (Hardware-Software Interface), FMEA/DFA, safety case, tool qualification (Pa
 
 ## 15. Infineon AURIX (TC2xx / TC3xx) — Equivalent Safety Blocks
 
-Your platform counterpart to the NXP MPC575x section (§11). Names differ by vendor; confirm in the device Safety Manual.
+Your platform counterpart to the NXP MPC575x section (§11). Names differ by vendor; confirm in the device Safety Manual. SMU details and startup flow: see §18.
 
 | Function | NXP MPC57xx | Infineon AURIX |
 |---|---|---|
@@ -459,7 +503,100 @@ Example phrasing:
 
 ---
 
-## 18. One-Minute Answer Templates
+## 18. AURIX Startup, SMU, OS Protection and Watchdog — Interview Q&A
+
+*Written for AURIX TC2xx/TC3xx + AUTOSAR. Register, state and alarm names vary by device — confirm in the User Manual and Safety Manual.*
+
+### 18.1 SMU driver initialization
+SMU (Safety Management Unit) collects alarms from hardware safety mechanisms and drives the reaction. Typical `Smu_Init(config)`:
+1. Check state: after reset the SMU is in **START**, where configuration is allowed.
+2. **Unlock** config registers (key sequence: config lock / peripheral lock).
+3. **Configure each alarm group**: reaction = none / interrupt / NMI / reset (system or application), and whether it activates the **FSP**.
+4. Configure the **Fault Signaling Protocol** (error pin mode, e.g. bi-stable, dual-rail, time-switching) and recovery timers.
+5. Log, then clear stale alarm status from the previous run.
+6. **Lock** the configuration against accidental change.
+7. Issue the **RUN** command (START → RUN).
+Do it early, before safety functions are enabled, usually after MBIST / startup self-test.
+
+### 18.2 Startup and NVM
+**How do you initialize startup?** Reset → SSW/boot firmware → startup code (CRT0) → `main`:
+1. Set stack pointers, CSA (context save areas), small-data base registers.
+2. Init caches and **RAM ECC** (write RAM once so ECC bits are valid).
+3. Copy `.data` flash → RAM, zero `.bss`.
+4. Configure PLL/clocks and watchdogs (ENDINIT-protected).
+5. Startup self-tests (LBIST/MBIST, SafeTlib), then **SMU init**.
+6. `Mcu_Init`, `Port_Init`, drivers, `EcuM_Init` → start OS.
+
+**Is NVM initialized at startup? When?** Yes, after drivers, typically in EcuM startup phase two: `Fls_Init` (and `Fee_Init`/`Eep_Init`) → `NvM_Init()` → `NvM_ReadAll()` (triggered by BswM/EcuM; restores RAM mirrors, checks block CRC) → on CRC/ECC failure load ROM defaults and report to DEM. Safety functions must not use NvM data before `ReadAll` completes.
+
+### 18.3 Memory partitioning and linker sections
+**Memory partitioning:** splitting memory into regions with defined access rights per OS-Application / task / core, enforced by the MPU; the linker places each partition's code, data and stack in its own region (spatial FFI).
+
+| Section | Content | Startup handling |
+|---|---|---|
+| `.text` | Code | Executes from flash |
+| `.rodata` | `const` data, strings | Stays in flash |
+| `.data` | Initialized globals | Copied flash → RAM |
+| `.bss` | Zero-initialized globals | Zeroed in RAM (also initializes ECC) |
+| `.sdata` / `.sbss` | Small data via base register (TriCore) | Like `.data` / `.bss` |
+| `.stack` / `.heap` | Stacks, heap (avoid heap in safety code) | Initialized or guarded |
+| `.csa` | Context save areas (TriCore) | Linked list built at startup |
+| `.noinit` | Survives reset (e.g. fault log) | Not cleared |
+
+### 18.4 OS protection
+AUTOSAR OS (SC3/SC4) protection mechanisms: **memory protection** (illegal data/code access), **timing protection** (exceeded budgets/arrival rates), **service protection** (invalid OS calls), **privilege separation** (trusted vs non-trusted).
+
+| | Trusted OS-Application | Non-trusted OS-Application |
+|---|---|---|
+| CPU mode | Privileged (supervisor) | User mode |
+| Memory | Everything allowed by config | Own MPU regions only |
+| Service protection | Limited | Full |
+| Use | Safety / BSW code | QM / lower-trust code |
+
+A non-trusted app can call **trusted functions** (controlled entry points into privileged code). "Trusted" means privileged, not "proven correct".
+
+**Protection hook:** `ProtectionHook(StatusType)` is called on a protection violation (`E_OS_PROTECTION_MEMORY / _TIME / _ARRIVAL / _LOCKED / _EXCEPTION`). Return value selects the reaction: ignore (where allowed), terminate task/ISR, terminate OS-Application, terminate and restart OS-Application, or shut down the OS.
+**Error hook:** `ErrorHook(StatusType)` is called when an OS *service* returns an error (e.g. `E_OS_LIMIT`, `E_OS_ID`) — for service errors and logging; protection hook is for protection violations. Per-application `ErrorHook_<App>` also exists.
+**Timing violation:** breach of timing protection — execution budget exceeded, inter-arrival time violated (activated too often), or lock time exceeded (resource/interrupt lock held too long) → protection hook. Different from a WdgM deadline miss, which is caught by supervision.
+**Deadlock:** tasks wait on each other forever (A holds R1 wants R2; B holds R2 wants R1). Single core: OSEK/AUTOSAR resources use the **priority ceiling protocol**, which prevents it. Multicore spinlocks can deadlock. Prevention: lock ordering, short bounded lock times, no blocking calls while holding a lock. Detection: lock-time protection, WdgM alive/deadline.
+**Memory violation:** access outside permitted range/permission (write to code or `const`, another partition, stack overflow) → MPU trap → `E_OS_PROTECTION_MEMORY` → protection hook.
+**Why memory protection, and how to detect violations?** So a bug in QM/low-ASIL code can't corrupt safety data (spatial FFI). Detection: MPU trap → trap handler/ProtectionHook; stack guards/canaries; ECC + SMU alarms for HW corruption; CRC on critical data for silent corruption.
+
+### 18.5 SMU Core vs Standby, and state transitions
+- **SMU Core:** main SMU in the core power domain; monitors alarms from ECC, lockstep, clock/voltage monitors, MBIST, buses etc.; configures reactions (interrupt, NMI, reset); drives the **FSP error pin** to tell external hardware the MCU is faulty.
+- **SMU Standby:** (TC3xx) separate SMU in the standby domain; keeps monitoring standby-domain alarms (standby supply, standby controller) while the core domain is off/low-power, and can signal faults or wake-up. Confirm scope in the device manual.
+
+| Transition | Trigger |
+|---|---|
+| **Start → Run** | After reset SMU is in START; software unlocks, configures, locks, issues RUN |
+| **Run → Fault** | Alarm configured to activate FSP occurs (or software trigger); error pin signals fault, configured reaction runs (interrupt / NMI / reset) |
+| **Fault → Run** | Cause handled, alarm status cleared, software issues release-FSP; if an alarm is still active the SMU stays in FAULT; some alarms are configured to reset instead |
+
+**Handler flow:** alarm → read alarm group status → identify source → store to DEM → take reaction → clear alarm → release FSP.
+
+### 18.6 Fail-safe, limp-home, graceful shutdown
+- **Fail-safe:** on a fault the system goes to a safe state (torque off, outputs de-energized) even if functionality is lost. **Fail-operational** keeps running (steering/braking redundancy); **fail-silent** just stops sending.
+- **Limp-home:** degraded operation with reduced functionality (limited torque/speed, fixed gear) so the driver can reach a workshop; sits between full operation and fail-safe shutdown.
+- **Graceful shutdown:** controlled move to the safe state within the FTTI: drive outputs safe, store fault data (`NvM_WriteAll` / DEM), notify other ECUs, then `EcuM_GoDown` / `ShutdownOS`. Differs from an abrupt reset where nothing is saved.
+
+### 18.7 Watchdog
+- **Functionality:** detects a hung CPU or lost program flow; software must service it within a set time, else it resets or raises an alarm. AURIX: per-core watchdogs + **Safety Watchdog** (SCU). AUTOSAR: **WdgM** (supervision) → **WdgIf** → **Wdg** driver → hardware.
+- **Window watchdog:** refresh must fall *inside* a time window; too early or too late is a failure — catches a runaway loop refreshing too fast, which a plain timeout watchdog misses.
+- **Servicing:** AURIX access is **password-protected** (password access, then modify access, with ENDINIT protection). In AUTOSAR a periodic `WdgM_MainFunction` checks all supervised entities and only then calls `Wdg_SetTriggerCondition`. Never refresh blindly from idle task or ISR.
+
+### 18.8 Fault storage and fault classification
+**How do you store a fault?** DEM: `Dem_SetEventStatus(FAILED)` records event, DTC and freeze frame, persisted via NvM. Also: SMU alarm status registers (read in the handler); a `.noinit` RAM log for faults that trigger immediate reset. DET is development-only, not for production storage.
+
+| | Hardware fault | Software fault |
+|---|---|---|
+| Detected by | SMU alarms: ECC, lockstep mismatch, clock/voltage monitor, MBIST fail, bus error | E2E, plausibility, WdgM failure, assertion, OS protection violation |
+| Nature | Random: transient, intermittent or permanent | Systematic: reproducible |
+
+Gray cases (e.g. a memory violation) can be either; use alarm source, recurrence, ECC error counts and fault pattern to decide.
+
+---
+
+## 19. One-Minute Answer Templates
 
 **ISO 26262 summary**
 "ISO 26262 is the automotive functional safety standard covering the full lifecycle of E/E systems. Hazards are analysed in HARA and classified into ASIL A–D by severity, exposure and controllability, which scales development and verification rigor. For hardware we show coverage through SPFM, LFM and PMHF; for software we apply MISRA C, traceability, ASIL-scaled testing and freedom-from-interference measures."
@@ -472,7 +609,7 @@ Example phrasing:
 
 ---
 
-## 19. Quick-Revision Checklist
+## 20. Quick-Revision Checklist
 - [ ] ASIL = S × E × C; QM, A–D; decomposition + DFA
 - [ ] SPFM/LFM/PMHF targets; DC 60/90/99%
 - [ ] FTTI, safe state, latent vs single-point vs multiple-point
@@ -487,3 +624,8 @@ Example phrasing:
 - [ ] MCAL examples ready (ADC/SPI/CAN checks, register read-back), phrased as safety mechanisms with ASIL
 - [ ] Every mechanism: ASIL, safe state, reaction time within FTTI, verification method
 - [ ] SG → FSR → TSR example ready (§14); AURIX equivalents SMU / MTU / SafeTlib (§15)
+- [ ] Exposure scale E1–E4, ASIL lookup (sum shortcut), HARA vs TARA (§2)
+- [ ] SMU init sequence and START → RUN → FAULT → RUN (§18)
+- [ ] Startup order, NvM_ReadAll timing, linker sections (§18)
+- [ ] OS protection: trusted vs non-trusted, protection hook vs error hook, timing/memory violation (§18)
+- [ ] Window watchdog, WdgM servicing, fail-safe vs limp-home vs graceful shutdown (§18)
