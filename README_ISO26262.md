@@ -299,7 +299,7 @@ Receiver status: `E2E_P_OK`, `WRONGCRC`, `REPEATED`, `WRONGSEQUENCE`, `NONEWDATA
 ### 11.6 Other safety blocks and HW mechanisms by fault source
 | Fault source | Block / mechanism |
 |---|---|
-| CPU | **Lockstep** (delayed lockstep e200z cores), SW core test (CorTst), LBIST |
+| CPU | **Lockstep** (delayed lockstep e200z cores, see §11.8), SW core test (CorTst), LBIST |
 | Flash | ECC, CRC, FlsTst |
 | RAM | ECC, MBIST, RamTst (March), **MEMU** logging |
 | Registers | Read-back, redundant config, write-protect/lock |
@@ -314,6 +314,38 @@ Receiver status: `E2E_P_OK`, `WRONGCRC`, `REPEATED`, `WRONGSEQUENCE`, `NONEWDATA
 
 ### 11.7 Your MCAL safety measures
 Register read-back after write, ADC group redundancy/plausibility, SPI/CAN with E2E/CRC, timeout protection, DMA integrity checks.
+
+### 11.8 Lockstep — CPU fault detection (NXP and AURIX)
+
+**What it is:** two identical CPU cores execute the **same instruction stream** with the same inputs. A **comparator** checks their outputs every cycle. Any mismatch means a hardware fault in one of the cores and raises an alarm. It is a **detection** mechanism, not correction: the reaction is a reset, NMI or safe state, not a continued run.
+
+```
+ Inputs ──► Main core ──────┐
+        │                   ├──► Comparator ──► mismatch ──► SMU / FCCU alarm ──► reset / NMI / safe state
+        └─► Checker core ───┘
+              (delayed by ~2 cycles in "delayed lockstep")
+```
+
+| Aspect | Detail |
+|---|---|
+| **Detects** | Random HW faults in the CPU: transient (SEU/soft error), intermittent, permanent (stuck-at) — anything that makes the two cores' outputs differ |
+| **Diagnostic coverage** | High (~99%) for the CPU core, which is why it lets a single MCU reach ASIL C/D without a second chip |
+| **Does NOT detect** | **Systematic software faults** (both cores run the same bug), **memory faults** (needs ECC, MBIST), and faults outside the compared interface |
+| **Delayed lockstep** | The checker runs a few cycles (typically 2) behind the main core, with physical separation. This reduces **common-cause failures** (a clock glitch, voltage spike or EMI hitting both cores in the same cycle). |
+| **What is compared** | Core *outputs* at the boundary (bus/memory interface, control signals), not every internal register. A fault in an unused internal register can stay **latent** until it propagates. |
+| **Comparator itself** | Can fail too (a dead comparator hides mismatches), so it needs a **self-test** at startup: inject a deliberate mismatch and confirm the alarm fires. |
+| **Cost** | Area and power of a duplicate core; in lockstep mode only one core's worth of performance is available |
+
+**Combine with:** LBIST (latent logic faults at startup), SW core test (**CorTst**, periodic), ECC/MBIST (memories), watchdogs and program-flow monitoring (software faults).
+
+**NXP MPC57xx:** e200z cores run in **Lockstep Mode (LSM)** or **Decoupled Parallel Mode (DPM)**, chosen at boot (device configuration record).
+- **LSM:** safety mode, redundant checking via the redundancy checker unit; one logical core.
+- **DPM:** both cores run independent software for **performance**, but **lockstep protection is lost**, so safety must come from other mechanisms.
+- Mismatches are reported to the **FCCU**.
+
+**Infineon AURIX:** selected TriCore CPUs have a hidden **lockstep checker core** (not visible to software, not extra performance). Device dependent: on multicore TC3xx parts only some cores have a checker. Mismatches raise **SMU** alarms. Check which cores are lockstep-protected for your derivative in the Safety Manual, and place ASIL software on those cores.
+
+> **Interview answer:** "Lockstep runs two cores on identical inputs with a comparator on the outputs, usually with the checker delayed a couple of cycles to avoid common-cause faults. It gives high diagnostic coverage for random CPU faults, transient or permanent, but only detects. A mismatch goes to the FCCU/SMU, which drives reset or safe state. It doesn't cover systematic software bugs or memories, so it's combined with ECC, MBIST/LBIST, core self-tests and watchdog supervision. The comparator is self-tested at startup."
 
 ---
 
@@ -406,6 +438,15 @@ ASIL, safe state, reaction time within the FTTI, diagnostic coverage, verificati
 **Q25. Give an example of a safety goal → FSR → TSR chain.**
 SG-01 "prevent unintended torque output" → FSR-01 "detect incorrect sensor input and reach safe state within FTTI 50 ms" → TSR-ADC-01 "ADC driver plausibility-checks each result against min/max and reports to DET/DEM".
 
+**Q26. What is lockstep and what does it detect?**
+Two cores run the same instructions, a comparator checks outputs each cycle; detects random HW faults (transient/permanent) in the CPU with high diagnostic coverage. Detection only; mismatch → FCCU/SMU → reset or safe state (§11.8).
+
+**Q27. Why is the checker core delayed? What can lockstep NOT detect?**
+Delay (~2 cycles) plus physical separation avoids common-cause faults hitting both cores identically. It cannot detect systematic software bugs or memory faults, and faults in internal state not visible at the compared outputs can stay latent.
+
+**Q28. What is the NXP LSM vs DPM trade-off?**
+Lockstep Mode gives CPU fault detection (safety) with one logical core; Decoupled Parallel Mode gives two independent cores for performance but loses lockstep, so safety then relies on other mechanisms.
+
 ---
 
 ## 14. Requirement Hierarchy Example (as seen in DOORS)
@@ -456,7 +497,7 @@ Your platform counterpart to the NXP MPC575x section (§11). Names differ by ven
 | Fault collection / reaction | FCCU | **SMU** (Safety Management Unit) |
 | Memory self-test | STCU2 + MBIST | **MTU** (Memory Test Unit) MBIST, startup/online tests |
 | Logic self-test | LBIST via STCU2 | LBIST (device dependent) |
-| CPU checking | Lockstep e200z | Lockstep TriCore (checker cores) |
+| CPU checking | Lockstep e200z (LSM / DPM) | Lockstep TriCore (checker cores); see §11.8 |
 | Memory protection | MPU / SMPU | Memory protection (CPU MPU, bus-level protection) |
 | ECC logging | MEMU | SMU alarms from ECC events |
 | Safety software | Vendor test libraries | **SafeTlib** (self-test library), **SafeTpack** safety manager (Hitex) for TC3xx |
@@ -629,3 +670,4 @@ Gray cases (e.g. a memory violation) can be either; use alarm source, recurrence
 - [ ] Startup order, NvM_ReadAll timing, linker sections (§18)
 - [ ] OS protection: trusted vs non-trusted, protection hook vs error hook, timing/memory violation (§18)
 - [ ] Window watchdog, WdgM servicing, fail-safe vs limp-home vs graceful shutdown (§18)
+- [ ] Lockstep: comparator, delayed checker, detects random CPU faults only, comparator self-test, LSM vs DPM (§11.8)
