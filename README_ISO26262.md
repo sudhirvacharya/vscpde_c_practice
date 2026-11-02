@@ -356,9 +356,110 @@ Yes, treated as QM (black channel); ASIL data is protected end-to-end with E2E i
 **Q23. Which AUTOSAR layers are ASIL-relevant?**
 No fixed assignment; safety MCAL (Wdg, Mcu, test modules), IoHwAb, safety OS, WdgM, E2E, EcuM, and the SWC for the safety goal. See §9.
 
+**Q24. What must every safety requirement / mechanism specify?**
+ASIL, safe state, reaction time within the FTTI, diagnostic coverage, verification method (review, unit test, fault injection, HIL), and traceability up to the safety goal and down to design and tests (see §14).
+
+**Q25. Give an example of a safety goal → FSR → TSR chain.**
+SG-01 "prevent unintended torque output" → FSR-01 "detect incorrect sensor input and reach safe state within FTTI 50 ms" → TSR-ADC-01 "ADC driver plausibility-checks each result against min/max and reports to DET/DEM".
+
 ---
 
-## 14. One-Minute Answer Templates
+## 14. Requirement Hierarchy Example (as seen in DOORS)
+
+**Chain:** Safety Goal (SG) → Functional Safety Requirement (FSR) → Technical Safety Requirement (TSR) → design → code → test.
+
+- **SG-01 (system level, ASIL C):** The system shall prevent unintended torque output.
+- **FSR-01:** The ECU shall detect incorrect sensor input values and transition to a safe state within the FTTI of 50 ms.
+
+### TSRs allocated to software / BSW
+| ID | Requirement | ASIL | Component |
+|---|---|---|---|
+| TSR-ADC-01 | ADC driver plausibility-checks each conversion result against configured min/max and reports a DET/DEM error on violation | C | MCAL ADC |
+| TSR-ADC-02 | ADC driver detects conversion timeout and reports `ADC_E_TIMEOUT` to DEM within 1 ms | B | MCAL ADC |
+| TSR-SPI-01 | SPI handler verifies each transmitted frame with CRC-8 (SAE J1850) and discards frames on mismatch | C | MCAL SPI / complex driver |
+| TSR-CAN-01 | COM stack protects safety-relevant signals with E2E Profile 1 (CRC + alive counter + Data ID) | D | E2E library |
+| TSR-CAN-02 | If E2E check returns `E2E_P01STATUS_WRONGCRC` or `WRONGSEQUENCE` for 3 consecutive cycles, receiver substitutes the signal with its safe default | D | E2E / RTE |
+| TSR-WDG-01 | WdgM performs alive, deadline and logical supervision of safety runnables and triggers reset on failure | D | WdgM |
+| TSR-MEM-01 | Memory driver performs ECC/CRC check on NVM blocks at startup and reports failure to DEM | B | MemIf / NvM |
+| TSR-MPU-01 | Safety-related and QM software separated via MPU so QM code cannot write to ASIL memory regions (FFI) | D | OS / MPU config |
+| TSR-CLK-01 | Clock monitor detects system clock deviation beyond ±10% and triggers safe state | C | MCAL MCU |
+| TSR-DIAG-01 | RAM/Flash start-up self-test (e.g. SMU/MTU MBIST on AURIX) before enabling safety functions | C | Safety library (SafeTlib) |
+
+> Interview note: this is an illustrative set. In practice a TSR inherits the ASIL of the safety goal it implements (here ASIL C) unless the requirement is decomposed, so TSRs rated ASIL D under an ASIL C goal would need justification. Also, `E2E_P01STATUS_*` are the Profile 1 specific status values; `E2E_P_*` (§11.5) are the generic ones.
+
+### Typical attributes of each safety requirement
+- **ASIL** (A/B/C/D or QM)
+- **Safe state** (what the system does on failure)
+- **FTTI / reaction time** (timing constraint)
+- **Diagnostic coverage** (e.g. 90% / 99%)
+- **Verification method** (review, unit test, fault injection, HIL)
+- **Traceability** (up to the safety goal, down to design and test cases)
+
+### Typical MCAL safety mechanisms (recap)
+Plausibility check (ADC), timeout detection, CRC (SPI), E2E (CAN), alive/deadline/logical supervision (WdgM), ECC/CRC (NvM), MPU, clock monitor, start-up self-test.
+
+### Related work products
+HSI (Hardware-Software Interface), FMEA/DFA, safety case, tool qualification (Part 8), and the vendor **Safety Manual** (assumptions of use and measures the integrator must implement).
+
+---
+
+## 15. Infineon AURIX (TC2xx / TC3xx) — Equivalent Safety Blocks
+
+Your platform counterpart to the NXP MPC575x section (§11). Names differ by vendor; confirm in the device Safety Manual.
+
+| Function | NXP MPC57xx | Infineon AURIX |
+|---|---|---|
+| Fault collection / reaction | FCCU | **SMU** (Safety Management Unit) |
+| Memory self-test | STCU2 + MBIST | **MTU** (Memory Test Unit) MBIST, startup/online tests |
+| Logic self-test | LBIST via STCU2 | LBIST (device dependent) |
+| CPU checking | Lockstep e200z | Lockstep TriCore (checker cores) |
+| Memory protection | MPU / SMPU | Memory protection (CPU MPU, bus-level protection) |
+| ECC logging | MEMU | SMU alarms from ECC events |
+| Safety software | Vendor test libraries | **SafeTlib** (self-test library), **SafeTpack** safety manager (Hitex) for TC3xx |
+
+---
+
+## 16. How to Frame MCAL Experience for FuSa Roles
+
+If you implemented timeout detection, DEM/DET error reporting, E2E integration or watchdog integration on ADC, SPI, CAN or DMA, describe them **as safety mechanisms and state the ASIL level** — that is the language FuSa job descriptions use.
+
+Example phrasing:
+> "Implemented ADC plausibility checks and conversion-timeout detection (ASIL C/B) with DEM reporting, integrated E2E Profile 1 on safety CAN signals with safe-default substitution after consecutive failures, and configured WdgM alive/deadline/logical supervision, per the MCAL Safety Manual on AURIX TC2xx."
+
+---
+
+## 17. Resources
+
+*(Links as supplied; I haven't verified they still resolve — AUTOSAR/Infineon sites reorganize often.)*
+
+**AUTOSAR specifications (official, free)**
+- E2E requirements (R20-11): https://www.autosar.org/fileadmin/standards/R20-11/FO/AUTOSAR_RS_E2E.pdf
+- E2E requirements (R19-11): https://www.autosar.org/fileadmin/standards/R19-11/FO/AUTOSAR_RS_E2E.pdf
+- E2E communication protection SRS (up to ASIL D): https://www.autosar.org/fileadmin/standards/R4.2.2/CP/AUTOSAR_SRS_E2E.pdf
+- Watchdog Manager SWS: R23-11 https://www.autosar.org/fileadmin/standards/R23-11/CP/AUTOSAR_CP_SWS_WatchdogManager.pdf · R21-11 https://www.autosar.org/fileadmin/standards/R21-11/CP/AUTOSAR_SWS_WatchdogManager.pdf · R20-11 https://www.autosar.org/fileadmin/standards/R20-11/CP/AUTOSAR_SWS_WatchdogManager.pdf · R19-11 https://www.autosar.org/fileadmin/standards/R19-11/CP/AUTOSAR_SWS_WatchdogManager.pdf · R4.3.1 https://www.autosar.org/fileadmin/standards/R4.3.1/CP/AUTOSAR_SWS_WatchdogManager.pdf
+- Mode Management SRS (includes WdgM requirements, R4.2.2): https://www.autosar.org/fileadmin/standards/R4.2.2/CP/AUTOSAR_SRS_ModeManagement.pdf
+- *Still to find by module name on autosar.org:* Os (protection) and Dem/Det SWS.
+
+**ISO 26262 (paid)**
+- ISO 26262-6:2018 (software level; sample available): https://www.iso.org/standard/68388.html
+
+**Infineon AURIX safety**
+- PRO-SIL / ISO 26262 safety products (safety manuals, SafeTlib/SafeTpack briefs after registration): https://infineon.com/cms/en/product/microcontroller/microcontroller-safety-products-pro-sil-iso26262
+- AURIX Safety Software (SafeTlib, evaluation license request): https://infineon.com/cms/en/tools/aurix-embedded-sw/Safety/infineon
+- AURIX TC3xx functional safety application note (intro): https://documentation.infineon.com/aurixtc3xx/docs/owq1745576218449
+- Hitex SafeTpack (TC3xx): https://www.hitex.com/focus/key-products/safetpack-safety-manager
+- Hitex PRO-SIL SafeTlib (TC2xx): https://www.hitex.com/products/software-components/selftest-libraries/pro-sil-safetlib
+
+**Webinar**
+- Siemens, "Methodologies for obtaining Functional Safety using AUTOSAR" (ISO 26262:2011 vs 2018, FFI, E2E): https://webinars.sw.siemens.com/de-DE/ee-systems-functional-safety/
+
+**Articles and papers**
+- Introduction to Functional Safety (DEV Community, beginner): https://dev.to/rajeshm1/introduction-to-functional-safety-3hg2
+- Evolution of functional safety & security in AUTOSAR (Schmerler, 2012): https://dl.gi.de/handle/20.500.12116/17562
+
+---
+
+## 18. One-Minute Answer Templates
 
 **ISO 26262 summary**
 "ISO 26262 is the automotive functional safety standard covering the full lifecycle of E/E systems. Hazards are analysed in HARA and classified into ASIL A–D by severity, exposure and controllability, which scales development and verification rigor. For hardware we show coverage through SPFM, LFM and PMHF; for software we apply MISRA C, traceability, ASIL-scaled testing and freedom-from-interference measures."
@@ -371,7 +472,7 @@ No fixed assignment; safety MCAL (Wdg, Mcu, test modules), IoHwAb, safety OS, Wd
 
 ---
 
-## 15. Quick-Revision Checklist
+## 19. Quick-Revision Checklist
 - [ ] ASIL = S × E × C; QM, A–D; decomposition + DFA
 - [ ] SPFM/LFM/PMHF targets; DC 60/90/99%
 - [ ] FTTI, safe state, latent vs single-point vs multiple-point
@@ -383,4 +484,6 @@ No fixed assignment; safety MCAL (Wdg, Mcu, test modules), IoHwAb, safety OS, Wd
 - [ ] STCU2 → LBIST + MBIST → FCCU; ECC SECDED + MEMU; SRAM init + scrubbing
 - [ ] Layer-wise ASIL mapping; COM = QM
 - [ ] Tool qualification TI/TD/TCL; SEooC + Safety Manual
-- [ ] MCAL examples ready (ADC/SPI/CAN checks, register read-back)
+- [ ] MCAL examples ready (ADC/SPI/CAN checks, register read-back), phrased as safety mechanisms with ASIL
+- [ ] Every mechanism: ASIL, safe state, reaction time within FTTI, verification method
+- [ ] SG → FSR → TSR example ready (§14); AURIX equivalents SMU / MTU / SafeTlib (§15)
