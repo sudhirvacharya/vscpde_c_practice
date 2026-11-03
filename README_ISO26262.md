@@ -2,6 +2,79 @@
 *Focus: embedded / AUTOSAR MCAL / NXP MPC575x. Verify part-specific details against your derivative's Reference Manual, the MCAL/BSW Safety Manual and the standard itself.*
 *Sources: own notes + ISO 26262-6 software infographic (Khader Basha, LinkedIn: https://www.linkedin.com/feed/update/urn:li:activity:7488924890750918656/).*
 
+## 0. Quick Recap (ISO 26262 / FuSa — Corrected & Rearranged)
+
+### A. Standard Basics
+
+**ISO 26262 parts** (corrected: Part 4 and 5 were swapped)
+- Part 2: Management of functional safety
+- Part 3: Concept phase (item definition, HARA, safety goals)
+- Part 4: System level (technical safety concept, system design, integration, validation)
+- Part 5: Hardware level
+- Part 6: Software level
+- Part 8: Supporting processes (configuration management, change management, verification, tool qualification)
+- Part 9: ASIL-oriented and safety-oriented analyses (decomposition, FMEA, FTA, dependent failures)
+
+**ASIL levels**
+- QM, ASIL A, B, C, D (D is the most stringent). QM means normal quality management is enough.
+
+**ASIL during HARA**
+- ASIL is determined from S (Severity, S0–S3), E (Exposure, E0–E4) and C (Controllability, C0–C3).
+- The output of HARA is safety goals, each with an ASIL.
+
+**V-model (ISO 26262)**
+- Concept phase: item definition → HARA → safety goals → functional safety concept
+- Technical safety concept / system design
+- HW design and SW architecture
+- SW unit design → implementation (coding)
+- Unit verification (the "init verification" in earlier notes)
+- SW integration test → HW/SW integration test
+- System integration test
+- Vehicle validation
+
+**Process requirements**
+- Bidirectional traceability: safety goal → FSR → TSR/SSR ↔ architecture ↔ code ↔ test cases (tools: DOORS, Polarion).
+- Coding standard: MISRA C.
+
+### B. Hardware Safety Mechanisms (MCU level)
+
+- **Lockstep:** two cores execute the same instructions, usually with a small delay. A comparator checks their outputs every cycle. If they match, it passes; if not, it raises an alarm to the SMU. The cores run the same code and are compared; they don't need to "calculate 2+3=5" separately — the example just shows both must produce the same result.
+- **ECC (Error Correction Code):** typically SECDED (single error correct, double error detect). A single-bit error is corrected; a double-bit error is detected and reported as an alarm. Used on Flash, RAM and caches.
+- **SMU (Safety Management Unit):** collects alarms from the CPU, memory, clock, voltage, buses and other monitored modules, and triggers a reaction such as an interrupt, reset or safe state. On NXP MPC575x the equivalent is the FCCU.
+- **Built-in self tests:**
+  - MBIST: memory self-test
+  - LBIST: logic self-test
+  - ADC self-test
+  - ECC check on Flash and RAM
+  - Clock/PLL test
+  - On NXP, BIST is controlled by the STCU2.
+- **Power and voltage monitoring:** detects under-voltage and over-voltage on the supply rails, using on-chip monitors or an external SBC/PMIC.
+- **Reset and clock control:** reset generation and clock monitoring. Not a dedicated safety block on its own: "RCC" is the STM32 name, while AURIX uses SCU/CCU and NXP uses MC_RGM/MC_ME.
+- **Watchdogs:**
+  - Window watchdog: must be serviced inside a time window, so servicing too early or too late is a fault.
+  - External watchdog (SBC): gives independence from the MCU.
+- **CRC:** detects corruption in Flash contents (like a ROM check), in communication, and in NVM data.
+
+### C. Software Safety Mechanisms
+
+- **E2E protection (AUTOSAR E2E library):**
+  - Uses CRC, alive/sequence counter, Data ID and timeout.
+  - Detects corruption, repetition, loss, delay, insertion, masquerading and wrong sequence.
+- **Program flow and timing supervision (AUTOSAR WdgM):**
+  - Alive supervision: is the function running at the expected rate?
+  - Deadline supervision: did it finish within the time limit?
+  - Logical supervision: did it execute in the correct sequence? (the "function or component watchdog")
+- **Data checks:** range check and plausibility check on inputs and signals.
+- **Safe state manager:** takes the system to a safe state when a fault is confirmed.
+- **OS protection and freedom from interference (FFI):**
+  - Memory partitioning with the MPU separates safety and non-safety software (spatial FFI).
+  - Timing protection and CPU-load limits give temporal FFI.
+  - Protected communication between partitions covers exchange of information.
+  - Typically done with AUTOSAR OS-Applications.
+- **Degraded mode:** after a fault the system keeps a reduced but acceptable level of safety or function (fail-operational or limp-home). Different from a full shutdown to the safe state.
+
+---
+
 ---
 
 ## 1. What It Is
